@@ -1,0 +1,51 @@
+<RCC>
+    <qresource prefix="/logo">
+        <file>msc.png</file>
+        <file>mscb.png</file>
+        <file>mscb_icon.ico</file>
+    </qresource>
+    <qresource prefix="/ui">
+        <file>check_here.png</file>
+        <file>icon_file.png</file>
+        <file>icon_folder.png</file>
+        <file>background.png</file>
+        <file>icon_video.png</file>
+        <file>ban_area1.png</file>
+        <file>icon_runner0.png</file>
+        <file>icon_runner1.png</file>
+        <file>icon_runner2.png</file>
+        <file>icon_runner3.png</file>
+    </qresource>
+    <qresource prefix="/event_icons">
+        <file>icons/thmk_event_icon1.png</file>
+        <file>icons/thmk_event_icon2.png</file>
+        <file>icons/thmk_event_icon3.png</file>
+        <file>icons/thmk_event_icon4.png</file>
+        <file>icons/thmk_event_icon5.png</file>
+        <file>icons/thmk_event_icon6.png</file>
+        <file>icons/thmk_event_icon7.png</file>
+        <file>icons/thmk_event_icon8.png</file>
+        <file>icons/thmk_event_icon9.png</file>
+        <file>icons/thmk_event_icon10.png</file>
+        <file>icons/thmk_event_icon11.png</file>
+        <file>icons/thmk_event_icon12.png</file>
+        <file>icons/thmk_event_icon13.png</file>
+        <file>icons/thmk_event_icon14.png</file>
+        <file>icons/thmk_event_icon15.png</file>
+        <file>icons/thmk_event_icon16.png</file>
+    </qresource>
+    <qresource prefix="/menu_func">
+        <file>func/thmk_menu_func1.png</file>
+        <file>func/thmk_menu_func2.png</file>
+        <file>func/thmk_menu_func3.png</file>
+        <file>func/thmk_menu_func4.png</file>
+        <file>func/thmk_menu_func5.png</file>
+        <file>func/thmk_menu_func6.png</file>
+        <file>func/thmk_menu_func7.png</file>
+        <file>func/thmk_menu_func8.png</file>
+        <file>func/thmk_menu_func9.png</file>
+        <file>func/thmk_menu_func10.png</file>
+        <file>func/thmk_menu_func11.png</file>
+        <file>func/thmk_menu_func12.png</file>
+    </qresource>
+</RCC>

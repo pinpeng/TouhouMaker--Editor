@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/shader">
+        <file>shd_base.fsh</file>
+        <file>shd_base.vsh</file>
+        <file>shd_drawtexture.fsh</file>
+        <file>shd_drawtexture.vsh</file>
+    </qresource>
+</RCC>
