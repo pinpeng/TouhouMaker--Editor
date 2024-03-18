@@ -27,13 +27,14 @@ SOURCES += \
     database_save.cpp \
     draw.cpp \
     global.cpp \
-    logModule/logmodule.cpp \
+    logModule/logModule.cpp \
     main.cpp \
     message_box.cpp \
     sprite.cpp \
-    toolkit/fileoperator.cpp \
-    toolkit/timeoperator.cpp \
-    widget_button.cpp \
+    toolkit/fileOperator.cpp \
+    toolkit/timeOperator.cpp \
+    widget/gradientButton.cpp \
+    widget/gradientShadowButton.cpp \
     widget_buttonClose.cpp \
     widget_choosebutton.cpp \
     widget_dragstick.cpp \
@@ -78,15 +79,16 @@ HEADERS += \
     database_main.h \
     draw.h \
     global.h \
-    logModule/logmodule.h \
+    logModule/logModule.h \
     message_box.h \
     qzipreader_p.h \
     qzipwriter_p.h \
     setting.h \
     sprite.h \
-    toolkit/fileoperator.h \
-    toolkit/timeoperator.h \
-    widget_button.h \
+    toolkit/fileOperator.h \
+    toolkit/timeOperator.h \
+    widget/gradientButton.h \
+    widget/gradientShadowButton.h \
     widget_buttonClose.h \
     widget_choosebutton.h \
     widget_dragstick.h \

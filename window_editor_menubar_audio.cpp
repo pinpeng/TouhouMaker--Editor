@@ -9,12 +9,12 @@ Window_editor_menubar_audio::Window_editor_menubar_audio(QWidget *parent) : Smal
 
     db = Global::database();
 
-    button_accept = new Widget_Button(this);
+    button_accept = new GradientButton(this);
     button_accept->setGeometry(720 - 28, 900 - 96, 240, 80);
     button_accept->setText("确定");
     button_accept->setTimer(timer);
 
-    button_cancel = new Widget_Button(this);
+    button_cancel = new GradientButton(this);
     button_cancel->setGeometry(960 - 20, 900 - 96, 240, 80);
     button_cancel->setText("取消");
     button_cancel->setTimer(timer);
@@ -35,7 +35,7 @@ Window_editor_menubar_audio::Window_editor_menubar_audio(QWidget *parent) : Smal
         connect(roundButton[i], SIGNAL(stateChanged()), this, SLOT(updateList()));
     }
 
-    button_openFolder = new Widget_Button(this);
+    button_openFolder = new GradientButton(this);
     button_openFolder->setTimer(timer);
     button_openFolder->setText("打开音频文件夹");
     button_openFolder->setGeometry(816, 64, 400 - 36, 80);
@@ -44,8 +44,8 @@ Window_editor_menubar_audio::Window_editor_menubar_audio(QWidget *parent) : Smal
     itemList = new Widget_ItemList(this);
     itemList->setGeometry(16, 64 + 80, 1200 - 36, 580);
 
-    button_add = new Widget_Button(this);
-    button_del = new Widget_Button(this);
+    button_add = new GradientButton(this);
+    button_del = new GradientButton(this);
     button_add->setGeometry(12, 724, 580, 80);
     button_add->setText("新建");
     button_add->setTimer(timer);

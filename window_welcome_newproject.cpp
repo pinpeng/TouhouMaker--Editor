@@ -21,7 +21,7 @@ Window_welcome_newProject::Window_welcome_newProject(QWidget *parent) : SmallWin
     lineEdit_projectPosition->setGeometry(32, 248, 896, 80);
     lineEdit_projectPosition->setText("");
 
-    button_changePostion = new Widget_Button(this);
+    button_changePostion = new GradientButton(this);
     button_changePostion->setGeometry(32 + 896, 248, 240, 80);
     button_changePostion->setText("浏览...");
     button_changePostion->setTimer(timer);
@@ -50,12 +50,12 @@ Window_welcome_newProject::Window_welcome_newProject(QWidget *parent) : SmallWin
     buttonBox_type->addButton(round_empty);
     buttonBox_type->addButton(round_example);
 
-    button_accept = new Widget_Button(this);
+    button_accept = new GradientButton(this);
     button_accept->setGeometry(320, 386, 240, 80);
     button_accept->setText("创建");
     button_accept->setTimer(timer);
 
-    button_cancel = new Widget_Button(this);
+    button_cancel = new GradientButton(this);
     button_cancel->setGeometry(640, 386, 240, 80);
     button_cancel->setText("取消");
     button_cancel->setTimer(timer);

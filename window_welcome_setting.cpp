@@ -8,12 +8,12 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
     setFixedSize(1200, 640);
     setWindowTitle("设置（部分设置可能需要重启程序才能应用）");
 
-    button_accept = new Widget_Button(this);
+    button_accept = new GradientButton(this);
     button_accept->setGeometry(320, 546, 240, 80);
     button_accept->setText("确定");
     button_accept->setTimer(timer);
 
-    button_cancel = new Widget_Button(this);
+    button_cancel = new GradientButton(this);
     button_cancel->setGeometry(640, 546, 240, 80);
     button_cancel->setText("取消");
     button_cancel->setTimer(timer);
@@ -33,7 +33,7 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
 
     chooseButton_color->setIndex(Global::setting.global_color_group);
 
-    button_custom = new Widget_Button(this);
+    button_custom = new GradientButton(this);
     button_custom->setGeometry(960 - 32, 64, 240, 80);
     button_custom->setText("参数文件");
     button_custom->setTimer(timer);

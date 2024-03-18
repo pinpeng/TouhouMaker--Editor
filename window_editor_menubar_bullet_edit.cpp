@@ -100,7 +100,7 @@ void Window_editor_menubar_bullet_edit::paintEvent(QPaintEvent *)
 
 void Window_editor_menubar_bullet_edit::mousePressEvent(QMouseEvent *event)
 {
-    mousePressFunc(event);
+//    mousePressFunc(event);
 
     float mx = event->pos().x();
     float my = event->pos().y();

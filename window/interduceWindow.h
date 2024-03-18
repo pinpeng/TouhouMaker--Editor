@@ -1,7 +1,7 @@
-#ifndef WINDOW_WELCOME_MAIN_H
-#define WINDOW_WELCOME_MAIN_H
+#ifndef INTERDUCE_WINDOW_H
+#define INTERDUCE_WINDOW_H
 
-#include "widget_button.h"
+#include "widget/gradientButton.h"
 
 #include "window/smallWindow.h"
 #include "window_welcome_newproject.h"
@@ -11,16 +11,16 @@
 
 #include "draw.h"
 
-class Window_welcome_main : public SmallWindow
+class InterduceWindow : public SmallWindow
 {
     Q_OBJECT
 
 public:
 
-    explicit Window_welcome_main(QWidget *parent = nullptr);
-    ~Window_welcome_main();
+    explicit InterduceWindow(QWidget *parent = nullptr);
+    ~InterduceWindow() = default;
 
-    void paintEvent(QPaintEvent *);
+//    void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *event);
 
 
@@ -38,10 +38,10 @@ private:
     bool show_last = false;
     QString show_last_name;
 
-    Widget_Button *buttonNewProj;
-    Widget_Button *buttonOpenProj;
-    Widget_Button *buttonSetting;
-    Widget_Button *buttonHelp;
+    GradientButton *buttonNewProj;
+    GradientButton *buttonOpenProj;
+    GradientButton *buttonSetting;
+    GradientButton *buttonHelp;
 
 
     Window_welcome_newProject *win_newProj;
@@ -51,4 +51,4 @@ private:
 
 };
 
-#endif // WINDOW_WELCOME_MAIN_H
+#endif // INTERDUCE_WINDOW_H

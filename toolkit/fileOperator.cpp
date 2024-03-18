@@ -1,4 +1,4 @@
-#include "fileoperator.h"
+#include "fileOperator.h"
 #include <QDir>
 
 namespace ToolKit{

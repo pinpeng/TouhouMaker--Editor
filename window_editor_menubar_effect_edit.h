@@ -4,7 +4,7 @@
 #include "window/smallWindow.h"
 
 #include "widget_lineEdit.h"
-#include "widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget_roundbutton.h"
 #include "widget_choosebutton.h"
 

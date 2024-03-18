@@ -7,12 +7,12 @@ Window_editor_menubar_setting::Window_editor_menubar_setting(QWidget *parent) : 
 
     db = Global::database();
 
-    button_accept = new Widget_Button(this);
+    button_accept = new GradientButton(this);
     button_accept->setGeometry(580, 704, 240, 80);
     button_accept->setText("确定");
     button_accept->setTimer(timer);
 
-    button_cancel = new Widget_Button(this);
+    button_cancel = new GradientButton(this);
     button_cancel->setGeometry(836, 704, 240, 80);
     button_cancel->setText("取消");
     button_cancel->setTimer(timer);
@@ -61,7 +61,7 @@ Window_editor_menubar_setting::Window_editor_menubar_setting(QWidget *parent) : 
     if(db.info.setting_reading_aciton == 2) roundButton_ra_dynamic->setChecked(true);
     if(db.info.setting_reading_aciton == 3) roundButton_ra_custom->setChecked(true);
 
-    button_ra_custom = new Widget_Button(this);
+    button_ra_custom = new GradientButton(this);
     button_ra_custom->setTimer(timer);
     button_ra_custom->setText("自定义行为...");
     button_ra_custom->setGeometry(850, 280, 320, 80);
@@ -86,7 +86,7 @@ Window_editor_menubar_setting::Window_editor_menubar_setting(QWidget *parent) : 
     lineEdit_name->setGeometry(480, 510, 480, 80);
     lineEdit_name->setText(db.info.projectName);
 
-    button_reset_name = new Widget_Button(this);
+    button_reset_name = new GradientButton(this);
     button_reset_name->setTimer(timer);
     button_reset_name->setText("重置");
     button_reset_name->setGeometry(964, 510, 205, 80);
@@ -99,11 +99,11 @@ Window_editor_menubar_setting::Window_editor_menubar_setting(QWidget *parent) : 
     itemList_lan->setHeadWidthList({64, 64});
     itemList_lan->setGeometry(16, 124, 440, 580);
 
-    button_lan_add = new Widget_Button(this);
+    button_lan_add = new GradientButton(this);
     button_lan_add->setTimer(timer);
     button_lan_add->setText("添加");
     button_lan_add->setGeometry(16, 704, 220, 80);
-    button_lan_del = new Widget_Button(this);
+    button_lan_del = new GradientButton(this);
     button_lan_del->setTimer(timer);
     button_lan_del->setText("删除");
     button_lan_del->setGeometry(16 + 220, 704, 220, 80);

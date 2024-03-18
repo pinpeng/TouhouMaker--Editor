@@ -35,7 +35,7 @@ void Window_editor_menubar_effect_edit0::paintEvent(QPaintEvent *)
 
 void Window_editor_menubar_effect_edit0::mousePressEvent(QMouseEvent *event)
 {
-    if(mousePressFunc(event)) return;
+//    if(mousePressFunc(event)) return;
 }
 
 void Window_editor_menubar_effect_edit0::end()
@@ -75,7 +75,7 @@ void Window_editor_menubar_effect_edit1::paintEvent(QPaintEvent *)
 
 void Window_editor_menubar_effect_edit1::mousePressEvent(QMouseEvent *event)
 {
-    if(mousePressFunc(event)) return;
+//    if(mousePressFunc(event)) return;
 }
 
 void Window_editor_menubar_effect_edit1::end()
@@ -116,7 +116,7 @@ void Window_editor_menubar_effect_edit2::paintEvent(QPaintEvent *)
 
 void Window_editor_menubar_effect_edit2::mousePressEvent(QMouseEvent *event)
 {
-    if(mousePressFunc(event)) return;
+//    if(mousePressFunc(event)) return;
 }
 
 void Window_editor_menubar_effect_edit2::end()

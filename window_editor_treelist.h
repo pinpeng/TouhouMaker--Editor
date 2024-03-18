@@ -7,7 +7,7 @@
 
 #include <QGraphicsEffect>
 
-#include "widget_button.h"
+#include "widget/gradientButton.h"
 
 
 

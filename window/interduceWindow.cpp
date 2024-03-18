@@ -8,7 +8,7 @@
 #include <QDesktopServices>
 #include <QApplication>
 
-Window_welcome_main::Window_welcome_main(QWidget *parent) : SmallWindow(parent)
+InterduceWindow::InterduceWindow(QWidget *parent) : SmallWindow(parent)
 {
     setFixedSize(720, 560);
     setWindowTitle("欢迎使用THMK");
@@ -20,11 +20,10 @@ Window_welcome_main::Window_welcome_main(QWidget *parent) : SmallWindow(parent)
         show_last_name = Global::setting.global_last_name;
     }
 
-    buttonNewProj   = new Widget_Button(this);
-    buttonOpenProj  = new Widget_Button(this);
-    buttonSetting   = new Widget_Button(this);
-    buttonHelp      = new Widget_Button(this);
-
+    buttonNewProj   = new GradientButton(this);
+    buttonOpenProj  = new GradientButton(this);
+    buttonSetting   = new GradientButton(this);
+    buttonHelp      = new GradientButton(this);
 
     buttonNewProj->setText("新建项目");
     buttonNewProj->setGeometry(240, 185, 240, 80);
@@ -57,55 +56,51 @@ Window_welcome_main::Window_welcome_main(QWidget *parent) : SmallWindow(parent)
     //newStart();
 }
 
-Window_welcome_main::~Window_welcome_main() {
+//void InterduceWindow::paintEvent(QPaintEvent *) {
 
-}
+//    Draw::smallWindow(this, this);
 
-void Window_welcome_main::paintEvent(QPaintEvent *) {
+//    QDir dir(Global::setting.global_last_path);
+//    if(dir.exists() && !Global::setting.global_last_path.isEmpty()) {
+//        show_last = true;
+//        show_last_name = Global::setting.global_last_name;
+//    }
 
-    Draw::smallWindow(this, this);
+//    float w_l = rect().x() + 8;
+//    float w_r = rect().right() - 8;
+//    float w_t = rect().y() + 8;
+//    float w_b = rect().bottom() - 8;
 
-    QDir dir(Global::setting.global_last_path);
-    if(dir.exists() && !Global::setting.global_last_path.isEmpty()) {
-        show_last = true;
-        show_last_name = Global::setting.global_last_name;
-    }
+//    Draw::begin(this);
+//    Draw::setAntialising(true);
 
-    float w_l = rect().x() + 8;
-    float w_r = rect().right() - 8;
-    float w_t = rect().y() + 8;
-    float w_b = rect().bottom() - 8;
+//    Draw::sprite(Sprite(logo_mscb), width() / 2 - 256, w_t + 50);
+//    setPenColor_c(c_theme);
+//    Draw::setTextDefault();
+//    Draw::setTextSize(12);
+//    Draw::text(w_l + 32, w_b - 12, "Ver 0.1.1 测试版\n(C)2024 Meboxen Studio", Qt::AlignLeft | Qt::AlignBottom);
 
-    Draw::begin(this);
-    Draw::setAntialising(true);
+//    Draw::sprite_size(Sprite(ui_author_web), w_r - 160, w_b - 144, 144, 144);
 
-    Draw::sprite(Sprite(logo_mscb), width() / 2 - 256, w_t + 50);
-    setPenColor_c(c_theme);
-    Draw::setTextDefault();
-    Draw::setTextSize(12);
-    Draw::text(w_l + 32, w_b - 12, "Ver 0.1.1 测试版\n(C)2024 Meboxen Studio", Qt::AlignLeft | Qt::AlignBottom);
+//    if(show_last) {
+//        setPenColor_c(c_theme);
+//        setBrushColor_c(c_theme);
+//        Draw::triangle(w_l + 480, w_t + 310, w_l + 480 + 20, w_t + 300 - 15, w_l + 480 + 30, w_t + 300, 4);
+//        setBrushColor_c(c_backgroundMain);
+//        Draw::roundRect(w_l + 495, w_t + 280 - 40, w_l + 685, w_t + 280 + 20, 4, 4);
+//        Draw::setTextSize(10);
+//        Draw::font.setBold(1);
+//        Draw::text_line_with_length(w_l + 505, w_t + 246, "上次打开的项目：", 155, Qt::AlignLeft | Qt::AlignTop);
+//        Draw::text_line_with_length(w_l + 505, w_t + 270, show_last_name, 155, Qt::AlignLeft | Qt::AlignTop);
+//        Draw::font.setBold(0);
+//    }
 
-    Draw::sprite_size(Sprite(ui_author_web), w_r - 160, w_b - 144, 144, 144);
+//    Draw::end();
+//}
 
-    if(show_last) {
-        setPenColor_c(c_theme);
-        setBrushColor_c(c_theme);
-        Draw::triangle(w_l + 480, w_t + 310, w_l + 480 + 20, w_t + 300 - 15, w_l + 480 + 30, w_t + 300, 4);
-        setBrushColor_c(c_backgroundMain);
-        Draw::roundRect(w_l + 495, w_t + 280 - 40, w_l + 685, w_t + 280 + 20, 4, 4);
-        Draw::setTextSize(10);
-        Draw::font.setBold(1);
-        Draw::text_line_with_length(w_l + 505, w_t + 246, "上次打开的项目：", 155, Qt::AlignLeft | Qt::AlignTop);
-        Draw::text_line_with_length(w_l + 505, w_t + 270, show_last_name, 155, Qt::AlignLeft | Qt::AlignTop);
-        Draw::font.setBold(0);
-    }
-
-    Draw::end();
-}
-
-void Window_welcome_main::mousePressEvent(QMouseEvent *event)
+void InterduceWindow::mousePressEvent(QMouseEvent *event)
 {
-    mousePress(event);
+//    mousePress(event);
     if(event->button() == Qt::LeftButton) {
         float w_l = rect().x() + 8;
         float w_r = rect().right() - 8;
@@ -138,7 +133,7 @@ void Window_welcome_main::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void Window_welcome_main::newProj()
+void InterduceWindow::newProj()
 {
     win_newProj = new Window_welcome_newProject();
     win_newProj->setWindowModality(Qt::ApplicationModal);
@@ -147,7 +142,7 @@ void Window_welcome_main::newProj()
     connect(win_newProj, SIGNAL(requestClose()), this, SLOT(newStart()));
 }
 
-void Window_welcome_main::openProj()
+void InterduceWindow::openProj()
 {
     QString str = QFileDialog::getOpenFileName(this, "打开项目文件", "./", "(*.thmkproj)");
     if(!str.isEmpty())
@@ -169,7 +164,7 @@ void Window_welcome_main::openProj()
     }
 }
 
-void Window_welcome_main::setting()
+void InterduceWindow::setting()
 {
     win_setting = new Window_welcome_setting();
     win_setting->setWindowModality(Qt::ApplicationModal);
@@ -177,14 +172,14 @@ void Window_welcome_main::setting()
     win_setting->show();
 }
 
-void Window_welcome_main::help()
+void InterduceWindow::help()
 {
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(QApplication::applicationDirPath() + "/help.pdf"))) {
         Message_Box::play(this, "帮不了你了");
     }
 }
 
-void Window_welcome_main::newStart()
+void InterduceWindow::newStart()
 {
     win_editor = new Window_editor_main();
     win_editor->homepage = this;
@@ -194,7 +189,7 @@ void Window_welcome_main::newStart()
     close();
 }
 
-void Window_welcome_main::openStart()
+void InterduceWindow::openStart()
 {
     win_editor = new Window_editor_main();
     win_editor->homepage = this;

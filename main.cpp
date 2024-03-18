@@ -10,7 +10,7 @@
 #include <qt_windows.h>
 #include <QDesktopWidget>
 #include <QFontDatabase>
-#include "logModule/logmodule.h"
+#include "logModule/logModule.h"
 #include "configure/ConfAgent.h"
 
 float getWindowsScale() {
@@ -58,7 +58,7 @@ str += "2024年1月29日";
     auto tmp = QFontDatabase::applicationFontFamilies(Draw::font_id);
     //a.setFont(QFont(tmp[0]));
     a.setFont(ConfAgent::GetInstance().GetFont(Configure::FONT_JCYT_500W));
-    Window_welcome_main w;
+    InterduceWindow w;
     w.show();
     int ret = a.exec();
     Shd::release();

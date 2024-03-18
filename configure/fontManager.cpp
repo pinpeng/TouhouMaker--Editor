@@ -1,6 +1,6 @@
 #include "configure/fontManager.h"
 #include <QFontDatabase>
-#include "toolkit/fileoperator.h"
+#include "toolkit/fileOperator.h"
 #include "QtDebug"
 
 namespace Configure{

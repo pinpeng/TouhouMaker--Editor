@@ -14,7 +14,7 @@
 #include "draw.h"
 
 #include "window/smallWindow.h"
-#include "widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget_roundbutton.h"
 
 class Window_editor_timeline_insert : public SmallWindow

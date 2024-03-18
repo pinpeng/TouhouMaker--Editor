@@ -11,6 +11,7 @@ SmallWindow::SmallWindow(QWidget *parent) : QWidget(parent)
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
     setWindowOpacity(0.0);
+    setWindowOpacity(100);
 
     timer = new BaseThread;
     connect(timer, SIGNAL(timeout()), this, SLOT(baseAlphaChange()));

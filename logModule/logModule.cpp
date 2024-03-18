@@ -1,10 +1,10 @@
-#include "logModule/logmodule.h"
+#include "logModule/logModule.h"
 #include <QMutexLocker>
 #include <QFile>
 #include <QDateTime>
 #include <QTextStream>
-#include "toolkit/fileoperator.h"
-#include "toolkit/timeoperator.h"
+#include "toolkit/fileOperator.h"
+#include "toolkit/timeOperator.h"
 
 namespace LogModule {
 

@@ -10,12 +10,12 @@ Window_ask::Window_ask(QString _text, QWidget *parent) : SmallWindow(parent)
 
     text = _text;
 
-    button_accept = new Widget_Button(this);
+    button_accept = new GradientButton(this);
     button_accept->setGeometry(160 - 8, 144, 240, 80);
     button_accept->setText("确定");
     button_accept->setTimer(timer);
 
-    button_cancel = new Widget_Button(this);
+    button_cancel = new GradientButton(this);
     button_cancel->setGeometry(400 + 8, 144, 240, 80);
     button_cancel->setText("取消");
     button_cancel->setTimer(timer);
@@ -56,12 +56,12 @@ Window_ask_ex::Window_ask_ex(QString _title, Database *_db, QWidget *parent) : S
 
     db = _db;
 
-    button_accept = new Widget_Button(this);
+    button_accept = new GradientButton(this);
     button_accept->setGeometry(160 - 8, 160 - 96, 240, 80);
     button_accept->setText("确定");
     button_accept->setTimer(timer);
 
-    button_cancel = new Widget_Button(this);
+    button_cancel = new GradientButton(this);
     button_cancel->setGeometry(400 + 8, 160 - 96, 240, 80);
     button_cancel->setText("取消");
     button_cancel->setTimer(timer);
@@ -448,7 +448,7 @@ void Window_ask_ex::addFindButton(QString _text, int _type, int _group, int *_in
     idList[page][i] = id;
     textList[page][i] = _text;
 
-    w_findButton[id] = new Widget_Button(this);
+    w_findButton[id] = new GradientButton(this);
     w_findButton[id]->show();
     w_findButton[id]->setTimer(timer);
     w_findButton[id]->setText("更改");
@@ -482,7 +482,7 @@ void Window_ask_ex::addFindButton(QString _text, int _type, int _group, float *_
     idList[page][i] = id;
     textList[page][i] = _text;
 
-    w_findButton[id] = new Widget_Button(this);
+    w_findButton[id] = new GradientButton(this);
     w_findButton[id]->show();
     w_findButton[id]->setTimer(timer);
     w_findButton[id]->setText("更改");

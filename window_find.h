@@ -2,7 +2,7 @@
 #define WINDOW_FIND_IMAGE_H
 
 #include "window/smallWindow.h"
-#include "widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget_lineEdit.h"
 #include "widget_itemlist.h"
 #include "widget_roundbutton.h"
@@ -44,8 +44,8 @@ private:
     QButtonGroup *buttonBox_type;
 
     Widget_LineEdit *lineEdit;
-    Widget_Button *button_find;
-    Widget_Button *button_noone;
+    GradientButton *button_find;
+    GradientButton *button_noone;
 
     Widget_ItemList *itemList;
 

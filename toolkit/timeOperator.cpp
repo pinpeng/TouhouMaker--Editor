@@ -1,4 +1,4 @@
-#include "timeoperator.h"
+#include "timeOperator.h"
 #include <QDateTime>
 
 namespace ToolKit {
