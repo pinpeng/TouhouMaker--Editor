@@ -5,7 +5,7 @@
 #include "sprite.h"
 #include "draw.h"
 
-#include "window_welcome_main.h"
+#include "window/interduceWindow.h"
 
 #include <qt_windows.h>
 #include <QDesktopWidget>
