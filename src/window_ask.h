@@ -11,7 +11,7 @@
 
 #include "window_find.h"
 
-#include "database.h"
+#include "dataSet/database/database.h"
 
 class Window_ask : public SmallWindow
 {

@@ -9,7 +9,7 @@
 #include <QDir>
 #include <QtMath>
 
-#include "database.h"
+#include "dataSet/database/database.h"
 #include "setting.h"
 #include "sprite.h"
 #include "draw.h"

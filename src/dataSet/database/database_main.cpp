@@ -3,7 +3,7 @@
 #include <QDir>
 
 #include "global.h"
-#include "database.h"
+#include "dataSet/database/database.h"
 
 DB_UI_TITLE::DB_UI_TITLE()
 {

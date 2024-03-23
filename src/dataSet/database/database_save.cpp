@@ -1,4 +1,4 @@
-#include "database.h"
+#include "dataSet/database/database.h"
 
 #include <QDir>
 #include <QTextStream>
@@ -109,11 +109,13 @@ bool Database::read(QString basePath) {
     file.setFileName(basePath + "/stage/index0.txt");
     if(!file.open(QIODevice::ReadOnly)) return 1; fin.setDevice(&file);
     for(int i = 0; i < tmp_stage_size[0]; i ++) {
+        // 读取关卡数据
         DB_STAGE _stage;
         _stage.id = fin.readLine().toInt();
         _stage.name = fin.readLine();
         _stage.length = fin.readLine().toInt();
         int _events_size = fin.readLine().toInt();
+        // 从关卡数据中读取事件数据
         for(int j = 0; j < _events_size; j ++) {
             DB_STAGE_EVENT _event;
             _event.id = fin.readLine().toInt();
@@ -178,7 +180,7 @@ bool Database::read(QString basePath) {
     for(int i = 0; i < tmp_enemy_size; i ++) {
         DB_enemy _enemy;
         int _tmp_id = fin.readLine().toInt();
-        _enemy.__id = fin.readLine().toInt();
+        // _enemy.__id = fin.readLine().toInt();
         _enemy.name = fin.readLine();
         _enemy.image_id = fin.readLine().toInt();
         int _data_size = fin.readLine().toInt();
@@ -454,7 +456,7 @@ bool Database::save() {
     if(!file.open(QIODevice::WriteOnly)) return 1; fout.setDevice(&file);
     for(auto i = enemy.begin(); i != enemy.end(); i ++) {
         fout << QString::number(i.key()) << "\n" <<
-                QString::number(i.value().__id) << "\n" << i.value().name << "\n" <<
+                // QString::number(i.value().__id) << "\n" << i.value().name << "\n" <<
                 QString::number(i.value().image_id) << "\n" <<
                 QString::number(i->data.size()) << "\n";
         for(auto k = i->data.begin(); k != i->data.end(); k ++) {

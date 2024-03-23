@@ -4,13 +4,13 @@
 #include <QWidget>
 #include <QTimer>
 
-#include "database.h"
+#include "dataSet/database/database.h"
 #include "draw.h"
 
 #include <QWidget>
 #include <QTimer>
 
-#include "database.h"
+#include "dataSet/database/database.h"
 #include "draw.h"
 
 #include "window/smallWindow.h"

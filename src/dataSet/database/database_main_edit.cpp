@@ -3,7 +3,7 @@
 #include <QDir>
 #include <QLabel>
 #include "global.h"
-#include "database.h"
+#include "dataSet/database/database.h"
 
 #include "window_editor_stage.h"
 #include "window_editor_main.h"
