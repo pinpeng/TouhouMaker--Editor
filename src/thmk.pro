@@ -1,6 +1,7 @@
 QT       += core gui
 QT       += gui-private
 QT       += opengl
+QT       += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,13 +19,15 @@ SOURCES += \
     basethread.cpp \
     configure/confAgent.cpp \
     configure/fontManager.cpp \
-    database.cpp \
-    database_define.cpp \
-    database_define_edit.cpp \
-    database_info.cpp \
-    database_main.cpp \
-    database_main_edit.cpp \
-    database_save.cpp \
+    # database
+    dataSet/database/sqliteUtil.cpp \
+    dataSet/database/database.cpp \
+    dataSet/database/entity/database_define.cpp \
+    dataSet/database/database_define_edit.cpp \
+    dataSet/database/database_info.cpp \
+    dataSet/database/database_main.cpp \
+    dataSet/database/database_main_edit.cpp \
+    dataSet/database/database_save.cpp \
     draw.cpp \
     global.cpp \
     logModule/logmodule.cpp \
@@ -71,11 +74,12 @@ HEADERS += \
     basethread.h \
     configure/confAgent.h \
     configure/fontManager.h \
-    dataSet/dataSetAgent.h \
-    database.h \
-    database_define.h \
-    database_info.h \
-    database_main.h \
+    # database
+    dataSet/database/sqliteUtil.h \
+    dataSet/database/database.h \
+    dataSet/database/entity/database_define.h \
+    dataSet/database/database_info.h \
+    dataSet/database/database_main.h \
     draw.h \
     global.h \
     logModule/logmodule.h \
