@@ -2,9 +2,9 @@
 #define WINDOW_FIND_DICTIONARY_H
 
 #include "window_small.h"
-#include "widget_button.h"
-#include "widget_lineEdit.h"
-#include "widget_itemlist.h"
+#include "widget/widget_button.h"
+#include "widget/widget_lineEdit.h"
+#include "widget/widget_itemlist.h"
 
 #include "global.h"
 

@@ -24,7 +24,7 @@ Window_welcome_newProject::Window_welcome_newProject(QWidget *parent) : SmallWin
     button_changePostion = new Widget_Button(this);
     button_changePostion->setGeometry(32 + 896, 248, 240, 80);
     button_changePostion->setText("浏览...");
-    button_changePostion->setTimer(timer);
+    button_changePostion->setTimer(_timer);
 
     connect(button_changePostion, SIGNAL(pressed()), this, SLOT(findDir()));
 
@@ -33,18 +33,18 @@ Window_welcome_newProject::Window_welcome_newProject(QWidget *parent) : SmallWin
     round_base = new Widget_RoundButton(this);
     round_base->setText("基本项目");
     round_base->setGeometry(250, 336, 240, 40);
-    round_base->setTimer(timer);
+    round_base->setTimer(_timer);
     round_base->setChecked(true);
 
     round_empty = new Widget_RoundButton(this);
     round_empty->setText("空白项目");
     round_empty->setGeometry(450, 336, 240, 40);
-    round_empty->setTimer(timer);
+    round_empty->setTimer(_timer);
 
     round_example = new Widget_RoundButton(this);
     round_example->setText("示例项目");
     round_example->setGeometry(650, 336, 240, 40);
-    round_example->setTimer(timer);
+    round_example->setTimer(_timer);
 
     buttonBox_type->addButton(round_base);
     buttonBox_type->addButton(round_empty);
@@ -53,12 +53,12 @@ Window_welcome_newProject::Window_welcome_newProject(QWidget *parent) : SmallWin
     button_accept = new Widget_Button(this);
     button_accept->setGeometry(320, 386, 240, 80);
     button_accept->setText("创建");
-    button_accept->setTimer(timer);
+    button_accept->setTimer(_timer);
 
     button_cancel = new Widget_Button(this);
     button_cancel->setGeometry(640, 386, 240, 80);
     button_cancel->setText("取消");
-    button_cancel->setTimer(timer);
+    button_cancel->setTimer(_timer);
 
     connect(button_accept, SIGNAL(pressed()), this, SLOT(createProject()));
     connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));

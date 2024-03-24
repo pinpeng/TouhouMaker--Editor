@@ -3,11 +3,11 @@
 
 #include "window/smallWindow.h"
 
-#include "widget_button.h"
-#include "widget_choosebutton.h"
-#include "widget_lineEdit.h"
-#include "widget_dragstick.h"
-#include "widget_textEdit.h"
+#include "widget/widget_button.h"
+#include "widget/widget_choosebutton.h"
+#include "widget/widget_lineEdit.h"
+#include "widget/widget_dragstick.h"
+#include "widget/widget_textEdit.h"
 
 #include "window_find.h"
 

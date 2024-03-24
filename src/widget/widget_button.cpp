@@ -1,15 +1,18 @@
-#include "widget_button.h"
+#include "widget/widget_button.h"
 
 #include <QMouseEvent>
 #include "draw.h"
 
 #include <QtMath>
+#include "globalSource/SourceAgent.h"
 
 Widget_Button::Widget_Button(QWidget *parent) : QPushButton(parent)
 {
     setFocusPolicy(Qt::NoFocus);
     setFixedHeight(80);
     text = "New Button";
+    auto& timer = SourceAgent::GetInstance().GetTimer(GlobalSource::TIMER_REPAINT);
+    connect(timer.data(), SIGNAL(timeout()), this, SLOT(timeoutRepaint()));
 }
 
 void Widget_Button::setText(QString _text) {
@@ -18,7 +21,7 @@ void Widget_Button::setText(QString _text) {
 
 void Widget_Button::setTimer(BaseThread *thread)
 {
-    connect(thread, SIGNAL(timeout()), this, SLOT(timeoutRepaint()));
+
 }
 
 void Widget_Button::timeoutRepaint()

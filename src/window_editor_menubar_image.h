@@ -2,10 +2,10 @@
 #define WINDOW_EDITOR_MENUBAR_IMAGE_H
 
 #include "window/smallWindow.h"
-#include "widget_button.h"
-#include "widget_roundbutton.h"
-#include "widget_lineEdit.h"
-#include "widget_itemlist.h"
+#include "widget/widget_button.h"
+#include "widget/widget_roundbutton.h"
+#include "widget/widget_lineEdit.h"
+#include "widget/widget_itemlist.h"
 
 #include "global.h"
 

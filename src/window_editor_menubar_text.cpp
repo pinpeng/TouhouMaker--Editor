@@ -10,7 +10,7 @@ Window_editor_menubar_text_edit::Window_editor_menubar_text_edit(Database *_db, 
     setWindowTitle("编辑文本 ID=" + QString::number(file->__id));
 
     chooseButton_language = new Widget_ChooseButton(this);
-    chooseButton_language->setTimer(timer);
+    chooseButton_language->setTimer(_timer);
     chooseButton_language->addTextList(db->info.language);
     chooseButton_language->setGeometry(32 + 548, 64, 360, 80);
     connect(chooseButton_language, SIGNAL(indexChanged(int)), this, SLOT(languageChanged(int)));
@@ -48,7 +48,7 @@ void Window_editor_menubar_text_edit::end()
 {
     file->setText(language_last, textEdit->text());
 
-    isClosing = true;
+    _isClosing = true;
     emit closed();
 }
 
@@ -63,18 +63,18 @@ Window_editor_menubar_text::Window_editor_menubar_text(QWidget *parent) : SmallW
     button_accept = new Widget_Button(this);
     button_accept->setGeometry(720 - 28, 900 - 96, 240, 80);
     button_accept->setText("确定");
-    button_accept->setTimer(timer);
+    button_accept->setTimer(_timer);
 
     button_cancel = new Widget_Button(this);
     button_cancel->setGeometry(960 - 20, 900 - 96, 240, 80);
     button_cancel->setText("取消");
-    button_cancel->setTimer(timer);
+    button_cancel->setTimer(_timer);
 
     connect(button_accept, SIGNAL(pressed()), this, SLOT(accept()));
     connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));
 
     chooseButton = new Widget_ChooseButton(this);
-    chooseButton->setTimer(timer);
+    chooseButton->setTimer(_timer);
     chooseButton->addTextList(db.info.language);
     chooseButton->setGeometry(816, 64, 400 - 36, 80);
     connect(chooseButton, SIGNAL(indexChanged(int)), this, SLOT(updateList()));

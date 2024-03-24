@@ -26,7 +26,7 @@ Window_editor_menubar_bullet_edit::Window_editor_menubar_bullet_edit(Database *_
     chooseButton_type->setGeometry(32 + 900, 64 + 80 * 0, 440, 80);
     chooseButton_type->addTextList(_list);
     chooseButton_type->setIndex(file->data["type"]);
-    chooseButton_type->setTimer(timer);
+    chooseButton_type->setTimer(_timer);
 
     _list.clear();
     _list << "离开屏幕" << "离开较远" << "不消失";
@@ -34,7 +34,7 @@ Window_editor_menubar_bullet_edit::Window_editor_menubar_bullet_edit(Database *_
     chooseButton_range->setGeometry(32 + 200, 64 + 80 * 1, 440, 80);
     chooseButton_range->addTextList(_list);
     chooseButton_range->setIndex(file->data["range"]);
-    chooseButton_range->setTimer(timer);
+    chooseButton_range->setTimer(_timer);
 
     lineEdit_collision = new Widget_LineEdit(this);
     lineEdit_collision->setGeometry(32 + 900, 64 + 80 * 1, 440, 80);
@@ -100,7 +100,7 @@ void Window_editor_menubar_bullet_edit::paintEvent(QPaintEvent *)
 
 void Window_editor_menubar_bullet_edit::mousePressEvent(QMouseEvent *event)
 {
-    mousePressFunc(event);
+    SmallWindow::mousePressEvent(event);
 
     float mx = event->pos().x();
     float my = event->pos().y();
@@ -138,7 +138,7 @@ void Window_editor_menubar_bullet_edit::end()
     file->data["range"] = chooseButton_range->getIndex();
     float tmp = lineEdit_collision->text().toFloat();
     file->data["collision"] = qMax(-1.0f, qMin(tmp, 100.0f));
-    isClosing = true;
+    _isClosing = true;
     emit closed();
 }
 

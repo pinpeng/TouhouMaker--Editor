@@ -3,10 +3,10 @@
 
 #include "window/smallWindow.h"
 
-#include "widget_lineEdit.h"
-#include "widget_button.h"
-#include "widget_roundbutton.h"
-#include "widget_choosebutton.h"
+#include "widget/widget_lineEdit.h"
+#include "widget/widget_button.h"
+#include "widget/widget_roundbutton.h"
+#include "widget/widget_choosebutton.h"
 
 #include "global.h"
 
@@ -19,7 +19,7 @@ public:
     explicit Window_editor_menubar_effect_edit0(Database *_db, DB_effect *_file, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
-    void mousePressEvent(QMouseEvent *event) override;
+    // void mousePressEvent(QMouseEvent *event) override;
 
 private:
     Database *db;
@@ -41,7 +41,7 @@ public:
     explicit Window_editor_menubar_effect_edit1(Database *_db, DB_effect *_file, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
-    void mousePressEvent(QMouseEvent *event) override;
+    // void mousePressEvent(QMouseEvent *event) override;
 
 private:
     Database *db;
@@ -63,7 +63,7 @@ public:
     explicit Window_editor_menubar_effect_edit2(Database *_db, DB_effect *_file, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
-    void mousePressEvent(QMouseEvent *event) override;
+    // void mousePressEvent(QMouseEvent *event) override;
 
 private:
     Database *db;

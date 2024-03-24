@@ -1,7 +1,7 @@
 #ifndef WINDOW_WELCOME_MAIN_H
 #define WINDOW_WELCOME_MAIN_H
 
-#include "widget_button.h"
+#include "widget/widget_button.h"
 
 #include "window/smallWindow.h"
 #include "window_welcome_newproject.h"

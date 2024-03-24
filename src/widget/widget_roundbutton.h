@@ -31,6 +31,7 @@ public:
 
     void slow();
     void setTimer(BaseThread *thread);
+    inline void setTimer(QTimer& timer){}
 
 private slots:
     void timeoutRepaint();

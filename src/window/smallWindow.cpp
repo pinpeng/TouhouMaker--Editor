@@ -1,4 +1,5 @@
 #include "window/smallWindow.h"
+#include "globalSource/sourceAgent.h"
 
 void SmallWindow::paintEvent(QPaintEvent *) {
     Draw::smallWindow(this, this);
@@ -6,89 +7,76 @@ void SmallWindow::paintEvent(QPaintEvent *) {
 
 SmallWindow::SmallWindow(QWidget *parent) : QWidget(parent)
 {
+    // QTimer& timer = SourceAgent::GetInstance().ge
     setWindowIcon(QIcon(":/logo/mscb_icon.ico"));
     setMinimumSize(200, 180);
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
     setWindowOpacity(0.0);
 
-    timer = new BaseThread;
-    connect(timer, SIGNAL(timeout()), this, SLOT(baseAlphaChange()));
-    timer->start();
-
-    buttonClose = new Widget_ButtonClose(this);
-    connect(buttonClose, SIGNAL(pressed()), this, SLOT(end()));
-    connect(timer, SIGNAL(timeout()), buttonClose, SLOT(timeoutRepaint()));
+    // timer = new BaseThread;
+    _closeButton = new CloseButton(this);
+    connect(_closeButton, SIGNAL(pressed()), this, SLOT(end()));
+    connect(&_timer, SIGNAL(timeout()), this, SLOT(baseAlphaChange()));
+    _timer.start(1000/60);
 }
 
 SmallWindow::~SmallWindow()
 {
-    timer->quit();
-    timer->wait();
-    delete timer;
+    // timer->quit();
+    // timer->wait();
+    // delete timer;
 }
 
 void SmallWindow::mousePressEvent(QMouseEvent *event) {
-    mousePress(event);
-}
-
-void SmallWindow::mouseMoveEvent(QMouseEvent *event) {
-    mouseMove(event);
-}
-
-void SmallWindow::mouseReleaseEvent(QMouseEvent *) {
-    mouseRelease();
-}
-
-void SmallWindow::mousePress(QMouseEvent *event)
-{
-    if(mousePressFunc(event)) return;
-}
-
-bool SmallWindow::mousePressFunc(QMouseEvent *event)
-{
-    if(isClosing) return true;
+    if(_isClosing) return;
     if(event->button() == Qt::LeftButton) {
         if(event->pos().y() > rect().y() + 8 && event->pos().y() < rect().y() + 56) {
-            isMoving = true;
+            _isMoving = true;
             startMovingPos = event->pos();
         }
     }
-    return false;
 }
 
-void SmallWindow::mouseMove(QMouseEvent *event)
-{
-    if(isMoving) { move(pos() + event->pos() - startMovingPos); }
+void SmallWindow::mouseMoveEvent(QMouseEvent *event) {
+    if(_isMoving) { move(pos() + event->pos() - startMovingPos); }
 }
 
-void SmallWindow::mouseRelease()
-{
-    isMoving = false;
+void SmallWindow::mouseReleaseEvent(QMouseEvent *) {
+    _isMoving = false;
 }
 
 void SmallWindow::end()
 {
-    isClosing = true;
+    _isClosing = true;
     emit closed();
 }
 
 void SmallWindow::baseAlphaChange()
 {
+    // 如果不是当前窗口，直接返回
     if(!isActiveWindow()) {
         return;
     }
-    if(!isClosing) {
-        if(baseAlpha < 1.0) {
-            baseAlpha = qMin(baseAlpha + 0.1, 1.0);
-            setWindowOpacity(baseAlpha);
+    // 如果不是正在关闭，则透明度提升
+    if(!_isClosing) {
+        if(_windowOpacity < 1.0) {
+            _windowOpacity = qMin(_windowOpacity + 0.1, 1.0);
+            setWindowOpacity(_windowOpacity);
         }
-    } else {
-        if(baseAlpha > 0.0) {
-            baseAlpha = qMax(baseAlpha - 0.1, 0.0);
-            setWindowOpacity(baseAlpha);
-        } else close();
+    }
+    // 如果正在关闭 
+    else {
+        // 透明度没降为0,则降透明度
+        if(_windowOpacity > 0.0) {
+            _windowOpacity = qMax(_windowOpacity - 0.1, 0.0);
+            setWindowOpacity(_windowOpacity);
+        }
+        // 透明度降为0,则关闭窗口 
+        else if(_windowOpacity <= 0.0){
+            close();
+        }
     }
 
-    buttonClose->setGeometry(rect().right() - 60, rect().top() + 12, 40, 40);
+    _closeButton->setGeometry(rect().right() - 60, rect().top() + 12, 40, 40);
 }

@@ -1,4 +1,4 @@
-#include "widget_textEdit.h"
+#include "widget/widget_textEdit.h"
 
 #include "draw.h"
 

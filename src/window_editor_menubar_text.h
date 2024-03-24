@@ -2,13 +2,13 @@
 #define WINDOW_EDITOR_MENUBAR_TEXT_H
 
 #include "window/smallWindow.h"
-#include "widget_button.h"
-#include "widget_roundbutton.h"
-#include "widget_lineEdit.h"
-#include "widget_textEdit.h"
-#include "widget_itemlist.h"
+#include "widget/widget_button.h"
+#include "widget/widget_roundbutton.h"
+#include "widget/widget_lineEdit.h"
+#include "widget/widget_textEdit.h"
+#include "widget/widget_itemlist.h"
 
-#include "widget_choosebutton.h"
+#include "widget/widget_choosebutton.h"
 #include "window_ask.h"
 
 #include "global.h"

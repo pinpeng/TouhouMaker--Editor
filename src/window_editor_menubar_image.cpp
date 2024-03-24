@@ -13,12 +13,12 @@ Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Smal
     button_accept = new Widget_Button(this);
     button_accept->setGeometry(1120 - 28, 900 - 96, 240, 80);
     button_accept->setText("确定");
-    button_accept->setTimer(timer);
+    button_accept->setTimer(_timer);
 
     button_cancel = new Widget_Button(this);
     button_cancel->setGeometry(1360 - 20, 900 - 96, 240, 80);
     button_cancel->setText("取消");
-    button_cancel->setTimer(timer);
+    button_cancel->setTimer(_timer);
 
     connect(button_accept, SIGNAL(pressed()), this, SLOT(accept()));
     connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));
@@ -31,13 +31,13 @@ Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Smal
         roundButton[i] = new Widget_RoundButton(this);
         roundButton[i]->setText(_text[i]);
         roundButton[i]->setGeometry(48 + 120 * i, 84, 120, 60);
-        roundButton[i]->setTimer(timer);
+        roundButton[i]->setTimer(_timer);
         select_group->addButton(roundButton[i]);
         connect(roundButton[i], SIGNAL(stateChanged()), this, SLOT(updateList()));
     }
 
     button_openFolder = new Widget_Button(this);
-    button_openFolder->setTimer(timer);
+    button_openFolder->setTimer(_timer);
     button_openFolder->setText("打开图像文件夹");
     button_openFolder->setGeometry(616 - 60, 64, 400 - 36, 80);
     connect(button_openFolder, SIGNAL(pressed()), this, SLOT(openFolder()));
@@ -49,10 +49,10 @@ Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Smal
     button_del = new Widget_Button(this);
     button_add->setGeometry(12, 724, 450, 80);
     button_add->setText("新建");
-    button_add->setTimer(timer);
+    button_add->setTimer(_timer);
     button_del->setGeometry(500 - 30, 724, 450, 80);
     button_del->setText("删除");
-    button_del->setTimer(timer);
+    button_del->setTimer(_timer);
 
     connect(button_add, SIGNAL(pressed()), this, SLOT(add()));
     connect(button_del, SIGNAL(pressed()), this, SLOT(del()));

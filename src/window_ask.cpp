@@ -13,12 +13,12 @@ Window_ask::Window_ask(QString _text, QWidget *parent) : SmallWindow(parent)
     button_accept = new Widget_Button(this);
     button_accept->setGeometry(160 - 8, 144, 240, 80);
     button_accept->setText("确定");
-    button_accept->setTimer(timer);
+    button_accept->setTimer(_timer);
 
     button_cancel = new Widget_Button(this);
     button_cancel->setGeometry(400 + 8, 144, 240, 80);
     button_cancel->setText("取消");
-    button_cancel->setTimer(timer);
+    button_cancel->setTimer(_timer);
 
     connect(button_accept, SIGNAL(pressed()), this, SLOT(accept_slot()));
     connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));
@@ -59,12 +59,12 @@ Window_ask_ex::Window_ask_ex(QString _title, Database *_db, QWidget *parent) : S
     button_accept = new Widget_Button(this);
     button_accept->setGeometry(160 - 8, 160 - 96, 240, 80);
     button_accept->setText("确定");
-    button_accept->setTimer(timer);
+    button_accept->setTimer(_timer);
 
     button_cancel = new Widget_Button(this);
     button_cancel->setGeometry(400 + 8, 160 - 96, 240, 80);
     button_cancel->setText("取消");
-    button_cancel->setTimer(timer);
+    button_cancel->setTimer(_timer);
 
     connect(button_accept, SIGNAL(pressed()), this, SLOT(accept_slot()));
     connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));
@@ -342,7 +342,7 @@ void Window_ask_ex::addChooseButton(QString _text, int *_index, QStringList _str
     w_chooseButton[id] = new Widget_ChooseButton(this);
 
     w_chooseButton[id]->show();
-    w_chooseButton[id]->setTimer(timer);
+    w_chooseButton[id]->setTimer(_timer);
     w_chooseButton[id]->addTextList(_str_list);
     w_chooseButton[id]->setIndex(*_index);
     w_chooseButton_data_i[id] = _index;
@@ -368,7 +368,7 @@ void Window_ask_ex::addChooseButton(QString _text, float *_index, QStringList _s
     w_chooseButton[id] = new Widget_ChooseButton(this);
 
     w_chooseButton[id]->show();
-    w_chooseButton[id]->setTimer(timer);
+    w_chooseButton[id]->setTimer(_timer);
     w_chooseButton[id]->addTextList(_str_list);
     w_chooseButton[id]->setIndex(*_index);
     w_chooseButton_data_f[id] = _index;
@@ -394,7 +394,7 @@ void Window_ask_ex::addDragStick(QString _text, int *_val, float min, float max,
 
     w_dragStick[id] = new Widget_DragStick(this);
     w_dragStick[id]->show();
-    w_dragStick[id]->setTimer(timer);
+    w_dragStick[id]->setTimer(_timer);
     w_dragStick[id]->setRange(min, max);
     w_dragStick[id]->setValue(*_val);
     w_dragStick[id]->setText(_val_text);
@@ -422,7 +422,7 @@ void Window_ask_ex::addDragStick(QString _text, float *_val, float min, float ma
 
     w_dragStick[id] = new Widget_DragStick(this);
     w_dragStick[id]->show();
-    w_dragStick[id]->setTimer(timer);
+    w_dragStick[id]->setTimer(_timer);
     w_dragStick[id]->setRange(min, max);
     w_dragStick[id]->setValue(*_val);
     w_dragStick[id]->setText(_val_text);
@@ -450,7 +450,7 @@ void Window_ask_ex::addFindButton(QString _text, int _type, int _group, int *_in
 
     w_findButton[id] = new Widget_Button(this);
     w_findButton[id]->show();
-    w_findButton[id]->setTimer(timer);
+    w_findButton[id]->setTimer(_timer);
     w_findButton[id]->setText("更改");
     w_findButton_type[id] = _type;
     w_findButton_group[id] = _group;
@@ -484,7 +484,7 @@ void Window_ask_ex::addFindButton(QString _text, int _type, int _group, float *_
 
     w_findButton[id] = new Widget_Button(this);
     w_findButton[id]->show();
-    w_findButton[id]->setTimer(timer);
+    w_findButton[id]->setTimer(_timer);
     w_findButton[id]->setText("更改");
     w_findButton_type[id] = _type;
     w_findButton_group[id] = _group;

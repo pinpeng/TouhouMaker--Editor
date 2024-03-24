@@ -29,25 +29,25 @@ Window_welcome_main::Window_welcome_main(QWidget *parent) : SmallWindow(parent)
     buttonNewProj->setText("新建项目");
     buttonNewProj->setGeometry(240, 185, 240, 80);
     buttonNewProj->show();
-    buttonNewProj->setTimer(timer);
+    buttonNewProj->setTimer(_timer);
     connect(buttonNewProj, SIGNAL(pressed()), this, SLOT(newProj()));
 
     buttonOpenProj->setText("打开...");
     buttonOpenProj->setGeometry(240, 265, 240, 80);
     buttonOpenProj->show();
-    buttonOpenProj->setTimer(timer);
+    buttonOpenProj->setTimer(_timer);
     connect(buttonOpenProj, SIGNAL(pressed()), this, SLOT(openProj()));
 
     buttonSetting->setText("程序设置");
     buttonSetting->setGeometry(240, 345, 240, 80);
     buttonSetting->show();
-    buttonSetting->setTimer(timer);
+    buttonSetting->setTimer(_timer);
     connect(buttonSetting, SIGNAL(pressed()), this, SLOT(setting()));
 
     buttonHelp->setText("帮助");
     buttonHelp->setGeometry(240, 425, 240, 80);
     buttonHelp->show();
-    buttonHelp->setTimer(timer);
+    buttonHelp->setTimer(_timer);
     connect(buttonHelp, SIGNAL(pressed()), this, SLOT(help()));
 
     //Window_editor_stage_tips *tips = new Window_editor_stage_tips();
@@ -105,7 +105,7 @@ void Window_welcome_main::paintEvent(QPaintEvent *) {
 
 void Window_welcome_main::mousePressEvent(QMouseEvent *event)
 {
-    mousePress(event);
+    SmallWindow::mousePressEvent(event);
     if(event->button() == Qt::LeftButton) {
         float w_l = rect().x() + 8;
         float w_r = rect().right() - 8;

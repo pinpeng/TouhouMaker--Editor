@@ -3,7 +3,6 @@
 
 #include <QPushButton>
 #include <QTimer>
-
 #include <QGraphicsEffect>
 
 #include "basethread.h"
@@ -27,7 +26,7 @@ public:
 
     void setText(QString _text);
     void setTimer(BaseThread *thread);
-
+    inline void setTimer(QTimer& thread){}
     float getAlpha() { return alpha; }
     QString getText() { return text; }
 

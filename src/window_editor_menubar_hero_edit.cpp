@@ -15,7 +15,7 @@ Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db
     file = _file;
 
     chooseButton_language = new Widget_ChooseButton(this);
-    chooseButton_language->setTimer(timer);
+    chooseButton_language->setTimer(_timer);
     chooseButton_language->addTextList(db->info.language);
     chooseButton_language->setGeometry(32 + 160, 64, 480, 80);
     connect(chooseButton_language, SIGNAL(indexChanged(int)), this, SLOT(languageChanged(int)));
@@ -25,22 +25,22 @@ Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db
     lineEdit->setText(db->getText(file->name, 0));
 
     chooseButton_bullet = new Widget_ChooseButton(this);
-    chooseButton_bullet->setTimer(timer);
+    chooseButton_bullet->setTimer(_timer);
     chooseButton_bullet->addTextList({"无弹幕", "仅弹幕1", "仅弹幕2", "两种弹幕"});
     chooseButton_bullet->setGeometry(32 + 320, 64 + 80 * 2, 320, 80);
     chooseButton_bullet->setIndex(file->bullet_type);
 
     button_bullet1 = new Widget_Button(this);
-    button_bullet1->setTimer(timer);
+    button_bullet1->setTimer(_timer);
     button_bullet1->setText("设置弹幕1");
     button_bullet1->setGeometry(24, 64 + 80 * 3, 320, 80);
     button_bullet2 = new Widget_Button(this);
-    button_bullet2->setTimer(timer);
+    button_bullet2->setTimer(_timer);
     button_bullet2->setText("设置弹幕2");
     button_bullet2->setGeometry(32 + 320, 64 + 80 * 3, 320, 80);
 
     chooseButton_skill = new Widget_ChooseButton(this);
-    chooseButton_skill->setTimer(timer);
+    chooseButton_skill->setTimer(_timer);
     chooseButton_skill->addTextList({"无符卡", "仅符卡1", "仅符卡2", "两种符卡"});
     chooseButton_skill->setGeometry(32 + 320, 64 + 80 * 4, 320, 80);
     chooseButton_skill->setIndex(file->skill_type);
@@ -49,7 +49,7 @@ Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db
     lineEdit_s1->setText(db->getText(file->skill[0].name, 0));
     lineEdit_s1->setGeometry(240 - 28, 64 + 80 * 5, 920, 80);
     button_skill1 = new Widget_Button(this);
-    button_skill1->setTimer(timer);
+    button_skill1->setTimer(_timer);
     button_skill1->setText("设置");
     button_skill1->setGeometry(1140, 64 + 80 * 5, 240, 80);
 
@@ -57,7 +57,7 @@ Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db
     lineEdit_s2->setText(db->getText(file->skill[1].name, 0));
     lineEdit_s2->setGeometry(240 - 28, 64 + 80 * 6, 920, 80);
     button_skill2 = new Widget_Button(this);
-    button_skill2->setTimer(timer);
+    button_skill2->setTimer(_timer);
     button_skill2->setText("设置");
     button_skill2->setGeometry(1140, 64 + 80 * 6, 240, 80);
 
@@ -110,11 +110,12 @@ void Window_editor_menubar_hero_edit0::paintEvent(QPaintEvent *)
     Draw::end();
 }
 
-void Window_editor_menubar_hero_edit0::mousePressEvent(QMouseEvent *event)
-{
-    if(mousePressFunc(event)) return;
+// void Window_editor_menubar_hero_edit0::mousePressEvent(QMouseEvent *event)
+// {
+//     SmallWindow::mousePressEvent(event);
+//     // if(mousePressFunc(event)) return;
 
-}
+// }
 
 void Window_editor_menubar_hero_edit0::end()
 {
@@ -124,7 +125,7 @@ void Window_editor_menubar_hero_edit0::end()
     file->bullet_type = chooseButton_bullet->getIndex();
     file->skill_type = chooseButton_skill->getIndex();
 
-    isClosing = true;
+    _isClosing = true;
     emit closed();
 
 }
@@ -165,7 +166,7 @@ Window_editor_menubar_hero_edit1::Window_editor_menubar_hero_edit1(Database *_db
     chooseButton_range->setGeometry(32 + 200, 64 + 80 * 1, 440, 80);
     chooseButton_range->addTextList(_list);
     chooseButton_range->setIndex(file->data["range"]);
-    chooseButton_range->setTimer(timer);
+    chooseButton_range->setTimer(_timer);
 
     lineEdit_collision = new Widget_LineEdit(this);
     lineEdit_collision->setGeometry(32 + 900, 64 + 80 * 1, 440, 80);
@@ -231,7 +232,7 @@ void Window_editor_menubar_hero_edit1::paintEvent(QPaintEvent *)
 
 void Window_editor_menubar_hero_edit1::mousePressEvent(QMouseEvent *event)
 {
-    mousePressFunc(event);
+    SmallWindow::mousePressEvent(event);
 
     float mx = event->pos().x();
     float my = event->pos().y();
@@ -316,7 +317,7 @@ void Window_editor_menubar_hero_edit1::end()
     file->data["range"] = chooseButton_range->getIndex();
     float tmp = lineEdit_collision->text().toFloat();
     file->data["collision"] = qBound(-1.0f, tmp, 100.0f);
-    isClosing = true;
+    _isClosing = true;
     emit closed();
 
 }
@@ -352,7 +353,7 @@ Window_editor_menubar_hero_edit2::Window_editor_menubar_hero_edit2(Database *_db
     file = _file;
 
     chooseButton_language = new Widget_ChooseButton(this);
-    chooseButton_language->setTimer(timer);
+    chooseButton_language->setTimer(_timer);
     chooseButton_language->addTextList(db->info.language);
     chooseButton_language->setGeometry(32 + 160, 64, 540, 80);
     connect(chooseButton_language, SIGNAL(indexChanged(int)), this, SLOT(languageChanged(int)));
@@ -504,7 +505,7 @@ void Window_editor_menubar_hero_edit2::languageChanged(int _index)
 void Window_editor_menubar_hero_edit2::end()
 {
     db->setText(file->name, language_last, lineEdit->text());
-    isClosing = true;
+    _isClosing = true;
     emit closed();
 
 }

@@ -20,12 +20,12 @@ Window_editor_menubar_image_edit::Window_editor_menubar_image_edit(Database *_db
     button_open = new Widget_Button(this);
     button_open->setGeometry(32 + 260, 64 + 80 * 1, 240, 80);
     button_open->setText("打开...");
-    button_open->setTimer(timer);
+    button_open->setTimer(_timer);
 
     button_preview = new Widget_Button(this);
     button_preview->setGeometry(32 + 500, 64 + 80 * 1, 240, 80);
     button_preview->setText("预览");
-    button_preview->setTimer(timer);
+    button_preview->setTimer(_timer);
 
     connect(button_open, SIGNAL(pressed()), this, SLOT(open()));
     connect(button_preview, SIGNAL(pressed()), this, SLOT(preview()));
@@ -120,7 +120,7 @@ void Window_editor_menubar_image_edit::end()
 {
     file->name = lineEdit->text();
 
-    isClosing = true;
+    _isClosing = true;
     emit closed();
 }
 

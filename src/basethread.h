@@ -16,7 +16,7 @@ protected:
     void run();
 
 private:
-    QTimer *timer;
+    QTimer *_timer;
 
 public slots:
     void timeoutRequest();

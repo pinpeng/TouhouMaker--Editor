@@ -11,12 +11,12 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
     button_accept = new Widget_Button(this);
     button_accept->setGeometry(320, 546, 240, 80);
     button_accept->setText("确定");
-    button_accept->setTimer(timer);
+    button_accept->setTimer(_timer);
 
     button_cancel = new Widget_Button(this);
     button_cancel->setGeometry(640, 546, 240, 80);
     button_cancel->setText("取消");
-    button_cancel->setTimer(timer);
+    button_cancel->setTimer(_timer);
 
     connect(button_accept, SIGNAL(pressed()), this, SLOT(save()));
     connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));
@@ -29,27 +29,27 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
     chooseButton_color->addText("浅灰");
     chooseButton_color->addText("深色");
     chooseButton_color->addText("自定义");
-    chooseButton_color->setTimer(timer);
+    chooseButton_color->setTimer(_timer);
 
     chooseButton_color->setIndex(Global::setting.global_color_group);
 
     button_custom = new Widget_Button(this);
     button_custom->setGeometry(960 - 32, 64, 240, 80);
     button_custom->setText("参数文件");
-    button_custom->setTimer(timer);
+    button_custom->setTimer(_timer);
     connect(button_custom, SIGNAL(pressed()), this, SLOT(color_custom()));
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     dragStick_scale_editor = new Widget_DragStick(this);
     dragStick_scale_editor->setGeometry(640 - 32, 144, 560, 80);
-    dragStick_scale_editor->setTimer(timer);
+    dragStick_scale_editor->setTimer(_timer);
     dragStick_scale_editor->setRange(50, 150);
     dragStick_scale_editor->setValue(Global::setting.editor_scale * 100.0);
 
     dragStick_scale_timeline = new Widget_DragStick(this);
     dragStick_scale_timeline->setGeometry(640 - 32, 224, 560, 80);
-    dragStick_scale_timeline->setTimer(timer);
+    dragStick_scale_timeline->setTimer(_timer);
     dragStick_scale_timeline->setRange(50, 150);
     dragStick_scale_timeline->setValue(Global::setting.timeline_scale * 100.0);
 
@@ -59,7 +59,7 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
     chooseButton_antialising->setGeometry(640 - 32, 304, 560, 70);
     chooseButton_antialising->addText("开启（较慢）");
     chooseButton_antialising->addText("关闭（较快）");
-    chooseButton_antialising->setTimer(timer);
+    chooseButton_antialising->setTimer(_timer);
     if(Global::setting.stage_antialising == true)  chooseButton_antialising->setIndex(0);
     if(Global::setting.stage_antialising == false) chooseButton_antialising->setIndex(1);
 
@@ -70,7 +70,7 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
     chooseButton_tips->addText("全部开启");
     chooseButton_tips->addText("仅重要提示");
     chooseButton_tips->addText("关闭并隐藏");
-    chooseButton_tips->setTimer(timer);
+    chooseButton_tips->setTimer(_timer);
     chooseButton_tips->setIndex(Global::setting.tips_action);
 */
 }

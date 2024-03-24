@@ -3,10 +3,10 @@
 
 #include "window/smallWindow.h"
 
-#include "widget_lineEdit.h"
-#include "widget_button.h"
-#include "widget_roundbutton.h"
-#include "widget_choosebutton.h"
+#include "widget/widget_lineEdit.h"
+#include "widget/widget_button.h"
+#include "widget/widget_roundbutton.h"
+#include "widget/widget_choosebutton.h"
 
 #include "global.h"
 

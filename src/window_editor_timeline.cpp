@@ -77,9 +77,10 @@ void Window_editor_timeline_insert::paintEvent(QPaintEvent *)
 
 void Window_editor_timeline_insert::mousePressEvent(QMouseEvent *event)
 {
-
-    if(mousePressFunc(event)) return;
-
+    if(_isClosing){
+        return;
+    }
+    SmallWindow::mousePressEvent(event);
     if(event->button() == Qt::LeftButton) {
         float mx = event->x();
         float my = event->y();

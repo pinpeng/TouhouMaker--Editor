@@ -4,12 +4,12 @@
 #include <QWidget>
 #include <QMouseEvent>
 #include <QPaintEvent>
+#include <QTimer>
 
-#include "widget_buttonClose.h"
+#include "widget/closeButton.h"
 #include "message_box.h"
-
 #include "draw.h"
-#include "basethread.h"
+// #include "basethread.h"
 
 class SmallWindow : public QWidget
 {
@@ -25,24 +25,18 @@ public:
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *) override;
 
-    void mousePress(QMouseEvent *event);
-    bool mousePressFunc(QMouseEvent *event);
-
-    void mouseMove(QMouseEvent *event);
-    void mouseRelease();
-
-    BaseThread *timer;
-
-    bool isClosing = false;
+protected:
+    QTimer _timer;
+    bool _isClosing = false;
+    
 private:
-
-    bool isMoving = false;
+    bool _isMoving = false;
     QPoint startMovingPos;
 
-    float baseAlpha = 0.0;
+    float _windowOpacity = 0.0;
 
 
-    Widget_ButtonClose *buttonClose;
+    CloseButton* _closeButton;
 
 public slots:
 

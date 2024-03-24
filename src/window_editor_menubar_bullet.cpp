@@ -10,12 +10,12 @@ Window_editor_menubar_bullet::Window_editor_menubar_bullet(QWidget *parent) : Sm
     button_accept = new Widget_Button(this);
     button_accept->setGeometry(720 - 28, 900 - 96, 240, 80);
     button_accept->setText("确定");
-    button_accept->setTimer(timer);
+    button_accept->setTimer(_timer);
 
     button_cancel = new Widget_Button(this);
     button_cancel->setGeometry(960 - 20, 900 - 96, 240, 80);
     button_cancel->setText("取消");
-    button_cancel->setTimer(timer);
+    button_cancel->setTimer(_timer);
 
     connect(button_accept, SIGNAL(pressed()), this, SLOT(accept()));
     connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));
@@ -27,7 +27,7 @@ Window_editor_menubar_bullet::Window_editor_menubar_bullet(QWidget *parent) : Sm
         roundButton[i] = new Widget_RoundButton(this);
         roundButton[i]->setText(_text[i]);
         roundButton[i]->setGeometry(48 + 180 * i, 84, 180, 60);
-        roundButton[i]->setTimer(timer);
+        roundButton[i]->setTimer(_timer);
         select_group->addButton(roundButton[i]);
         connect(roundButton[i], SIGNAL(stateChanged()), this, SLOT(updateList()));
     }
@@ -39,10 +39,10 @@ Window_editor_menubar_bullet::Window_editor_menubar_bullet(QWidget *parent) : Sm
     button_del = new Widget_Button(this);
     button_add->setGeometry(12, 724, 580, 80);
     button_add->setText("新建");
-    button_add->setTimer(timer);
+    button_add->setTimer(_timer);
     button_del->setGeometry(600, 724, 580, 80);
     button_del->setText("删除");
-    button_del->setTimer(timer);
+    button_del->setTimer(_timer);
 
     connect(button_add, SIGNAL(pressed()), this, SLOT(add()));
     connect(button_del, SIGNAL(pressed()), this, SLOT(del()));

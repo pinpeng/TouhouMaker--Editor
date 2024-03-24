@@ -14,12 +14,12 @@ Window_editor_menubar_setting_language::Window_editor_menubar_setting_language(Q
     button_accept = new Widget_Button(this);
     button_accept->setGeometry(80 - 8, 144, 240, 80);
     button_accept->setText("确定");
-    button_accept->setTimer(timer);
+    button_accept->setTimer(_timer);
 
     button_cancel = new Widget_Button(this);
     button_cancel->setGeometry(320 + 8, 144, 240, 80);
     button_cancel->setText("取消");
-    button_cancel->setTimer(timer);
+    button_cancel->setTimer(_timer);
 
     connect(button_accept, SIGNAL(pressed()), this, SLOT(accept()));
     connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));

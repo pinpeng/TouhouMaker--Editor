@@ -33,15 +33,16 @@ void Window_editor_menubar_effect_edit0::paintEvent(QPaintEvent *)
     Draw::end();
 }
 
-void Window_editor_menubar_effect_edit0::mousePressEvent(QMouseEvent *event)
-{
-    if(mousePressFunc(event)) return;
-}
+// void Window_editor_menubar_effect_edit0::mousePressEvent(QMouseEvent *event)
+// {
+//     SmallWindow::mousePressEvent(event);
+//     // if(mousePressFunc(event)) return;
+// }
 
 void Window_editor_menubar_effect_edit0::end()
 {
     file->name = lineEdit->text();
-    isClosing = true;
+    _isClosing = true;
     emit closed();
 }
 
@@ -73,15 +74,16 @@ void Window_editor_menubar_effect_edit1::paintEvent(QPaintEvent *)
     Draw::end();
 }
 
-void Window_editor_menubar_effect_edit1::mousePressEvent(QMouseEvent *event)
-{
-    if(mousePressFunc(event)) return;
-}
+// void Window_editor_menubar_effect_edit1::mousePressEvent(QMouseEvent *event)
+// {
+//     SmallWindow::mousePressEvent(event);
+//     // if(mousePressFunc(event)) return;
+// }
 
 void Window_editor_menubar_effect_edit1::end()
 {
     file->name = lineEdit->text();
-    isClosing = true;
+    _isClosing = true;
     emit closed();
 }
 
@@ -114,15 +116,16 @@ void Window_editor_menubar_effect_edit2::paintEvent(QPaintEvent *)
     Draw::end();
 }
 
-void Window_editor_menubar_effect_edit2::mousePressEvent(QMouseEvent *event)
-{
-    if(mousePressFunc(event)) return;
-}
+// void Window_editor_menubar_effect_edit2::mousePressEvent(QMouseEvent *event)
+// {
+//     SmallWindow::mousePressEvent(event);
+//     // if(mousePressFunc(event)) return;
+// }
 
 void Window_editor_menubar_effect_edit2::end()
 {
     file->name = lineEdit->text();
-    isClosing = true;
+    _isClosing = true;
     emit closed();
 }
 

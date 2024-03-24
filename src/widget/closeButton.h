@@ -4,21 +4,22 @@
 #include <QPushButton>
 #include <QTimer>
 
-class Widget_ButtonClose : public QPushButton
+/**
+ * @brief 关闭按钮，重写了绘制函数，会在鼠标悬浮时使X旋转
+*/
+class CloseButton : public QPushButton
 {
     Q_OBJECT
 
-private:
-    //QTimer *timer;
-    float alpha = 0;
-
 public:
-    explicit Widget_ButtonClose(QWidget *parent = nullptr);
-
+    explicit CloseButton(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *) override;
 
 public slots:
     void timeoutRepaint();
+
+private:
+    float _alpha;
 };
 
 #endif // WIDGET_BUTTONCLOSE_H

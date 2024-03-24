@@ -14,7 +14,7 @@ Window_find_character::Window_find_character(Database *_db, QWidget *parent) : W
     button_find = new Widget_Button(this);
     button_find->setGeometry(960 - 32, 64, 240, 80);
     button_find->setText("搜索");
-    button_find->setTimer(timer);
+    button_find->setTimer(_timer);
 
     itemList = new Widget_ItemList(this);
     itemList->setGeometry(32, 144, 1200 - 64, 640 - 16);

@@ -42,6 +42,7 @@ public:
 
     void setText(QString _text) { text = _text; }
     void setTimer(BaseThread *thread);
+    inline void setTimer(QTimer& timer){}
 
     void setRange(float _min, float _max) { minval = _min; maxval = _max; }
     float getMin() { return minval; }

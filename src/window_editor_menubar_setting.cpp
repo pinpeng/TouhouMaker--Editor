@@ -10,23 +10,23 @@ Window_editor_menubar_setting::Window_editor_menubar_setting(QWidget *parent) : 
     button_accept = new Widget_Button(this);
     button_accept->setGeometry(580, 704, 240, 80);
     button_accept->setText("确定");
-    button_accept->setTimer(timer);
+    button_accept->setTimer(_timer);
 
     button_cancel = new Widget_Button(this);
     button_cancel->setGeometry(836, 704, 240, 80);
     button_cancel->setText("取消");
-    button_cancel->setTimer(timer);
+    button_cancel->setTimer(_timer);
 
     connect(button_accept, SIGNAL(pressed()), this, SLOT(accept()));
     connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));
 
     /*buttonBox_start_with_logo = new QButtonGroup(this);
     roundButton_swl_yes = new Widget_RoundButton(this);
-    roundButton_swl_yes->setTimer(timer);
+    roundButton_swl_yes->setTimer(_timer);
     roundButton_swl_yes->setText("使用");
     roundButton_swl_yes->setGeometry(480, 128, 160, 48);
     roundButton_swl_no = new Widget_RoundButton(this);
-    roundButton_swl_no->setTimer(timer);
+    roundButton_swl_no->setTimer(_timer);
     roundButton_swl_no->setText("不使用");
     roundButton_swl_no->setGeometry(720, 128, 160, 48);
 
@@ -37,19 +37,19 @@ Window_editor_menubar_setting::Window_editor_menubar_setting(QWidget *parent) : 
 
     buttonBox_reading_action= new QButtonGroup(this);
     roundButton_ra_default = new Widget_RoundButton(this);
-    roundButton_ra_default->setTimer(timer);
+    roundButton_ra_default->setTimer(_timer);
     roundButton_ra_default->setText("不管（推荐）");
     roundButton_ra_default->setGeometry(480, 240, 200, 48);
     roundButton_ra_static = new Widget_RoundButton(this);
-    roundButton_ra_static->setTimer(timer);
+    roundButton_ra_static->setTimer(_timer);
     roundButton_ra_static->setText("强制静态");
     roundButton_ra_static->setGeometry(720, 240, 200, 48);
     roundButton_ra_dynamic = new Widget_RoundButton(this);
-    roundButton_ra_dynamic->setTimer(timer);
+    roundButton_ra_dynamic->setTimer(_timer);
     roundButton_ra_dynamic->setText("强制动态");
     roundButton_ra_dynamic->setGeometry(960, 240, 200, 48);
     roundButton_ra_custom = new Widget_RoundButton(this);
-    roundButton_ra_custom->setTimer(timer);
+    roundButton_ra_custom->setTimer(_timer);
     roundButton_ra_custom->setText("对每一项进行自定义");
     roundButton_ra_custom->setGeometry(480, 300, 320, 48);
     buttonBox_reading_action->addButton(roundButton_ra_default);
@@ -62,18 +62,18 @@ Window_editor_menubar_setting::Window_editor_menubar_setting(QWidget *parent) : 
     if(db.info.setting_reading_aciton == 3) roundButton_ra_custom->setChecked(true);
 
     button_ra_custom = new Widget_Button(this);
-    button_ra_custom->setTimer(timer);
+    button_ra_custom->setTimer(_timer);
     button_ra_custom->setText("自定义行为...");
     button_ra_custom->setGeometry(850, 280, 320, 80);
     connect(button_ra_custom, SIGNAL(pressed()), this, SLOT(ra_custom()));
 
     buttonBox_using_cg_collection = new QButtonGroup(this);
     roundButton_ucc_yes = new Widget_RoundButton(this);
-    roundButton_ucc_yes->setTimer(timer);
+    roundButton_ucc_yes->setTimer(_timer);
     roundButton_ucc_yes->setText("使用");
     roundButton_ucc_yes->setGeometry(480, 410, 160, 48);
     roundButton_ucc_no = new Widget_RoundButton(this);
-    roundButton_ucc_no->setTimer(timer);
+    roundButton_ucc_no->setTimer(_timer);
     roundButton_ucc_no->setText("不使用");
     roundButton_ucc_no->setGeometry(720, 410, 160, 48);
 
@@ -87,7 +87,7 @@ Window_editor_menubar_setting::Window_editor_menubar_setting(QWidget *parent) : 
     lineEdit_name->setText(db.info.projectName);
 
     button_reset_name = new Widget_Button(this);
-    button_reset_name->setTimer(timer);
+    button_reset_name->setTimer(_timer);
     button_reset_name->setText("重置");
     button_reset_name->setGeometry(964, 510, 205, 80);
     connect(button_reset_name, SIGNAL(pressed()), this, SLOT(reset_projectName()));
@@ -100,11 +100,11 @@ Window_editor_menubar_setting::Window_editor_menubar_setting(QWidget *parent) : 
     itemList_lan->setGeometry(16, 124, 440, 580);
 
     button_lan_add = new Widget_Button(this);
-    button_lan_add->setTimer(timer);
+    button_lan_add->setTimer(_timer);
     button_lan_add->setText("添加");
     button_lan_add->setGeometry(16, 704, 220, 80);
     button_lan_del = new Widget_Button(this);
-    button_lan_del->setTimer(timer);
+    button_lan_del->setTimer(_timer);
     button_lan_del->setText("删除");
     button_lan_del->setGeometry(16 + 220, 704, 220, 80);
 

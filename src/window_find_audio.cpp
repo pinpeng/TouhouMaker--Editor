@@ -14,7 +14,7 @@ Window_find_audio::Window_find_audio(Database *_db, QWidget *parent) : Window_sm
     button_find = new Widget_Button(this);
     button_find->setGeometry(960 - 32, 64 + 48, 240, 80);
     button_find->setText("搜索");
-    button_find->setTimer(timer);
+    button_find->setTimer(_timer);
 
     buttonBox_type = new QButtonGroup(this);
     roundButton_all = new Widget_RoundButton(this);
@@ -28,17 +28,17 @@ Window_find_audio::Window_find_audio(Database *_db, QWidget *parent) : Window_sm
 
     roundButton_all->setText("所有");
     roundButton_all->setGeometry(64, 68, 180, 80);
-    roundButton_all->setTimer(timer);
+    roundButton_all->setTimer(_timer);
     roundButton_all->setChecked(true);
     roundButton_1->setText("仅音乐");
     roundButton_1->setGeometry(64 + 180, 68, 180, 80);
-    roundButton_1->setTimer(timer);
+    roundButton_1->setTimer(_timer);
     roundButton_2->setText("仅音效");
     roundButton_2->setGeometry(64 + 360, 68, 180, 80);
-    roundButton_2->setTimer(timer);
+    roundButton_2->setTimer(_timer);
     roundButton_3->setText("仅配音");
     roundButton_3->setGeometry(64 + 540, 68, 180, 80);
-    roundButton_3->setTimer(timer);
+    roundButton_3->setTimer(_timer);
 
     itemList = new Widget_ItemList(this);
     itemList->setGeometry(32, 144 + 48, 1200 - 64, 640 - 16);

@@ -17,8 +17,9 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 SOURCES += \
     basethread.cpp \
-    configure/confAgent.cpp \
-    configure/fontManager.cpp \
+    globalSource/SourceAgent.cpp \
+    globalSource/fontManager.cpp \
+    globalSource/timerManager.cpp \
     # database
     dataSet/database/sqliteUtil.cpp \
     dataSet/database/database.cpp \
@@ -36,14 +37,14 @@ SOURCES += \
     sprite.cpp \
     toolkit/fileoperator.cpp \
     toolkit/timeoperator.cpp \
-    widget_button.cpp \
-    widget_buttonClose.cpp \
-    widget_choosebutton.cpp \
-    widget_dragstick.cpp \
-    widget_itemlist.cpp \
-    widget_lineEdit.cpp \
-    widget_roundbutton.cpp \
-    widget_textEdit.cpp \
+    widget/widget_button.cpp \
+    widget/closeButton.cpp \
+    widget/widget_choosebutton.cpp \
+    widget/widget_dragstick.cpp \
+    widget/widget_itemlist.cpp \
+    widget/widget_lineEdit.cpp \
+    widget/widget_roundbutton.cpp \
+    widget/widget_textEdit.cpp \
     window/interduceWindow.cpp \
     window_ask.cpp \
     window_editor_main.cpp \
@@ -72,8 +73,9 @@ SOURCES += \
 
 HEADERS += \
     basethread.h \
-    configure/confAgent.h \
-    configure/fontManager.h \
+    globalSource/SourceAgent.h \
+    globalSource/fontManager.h \
+    globalSource/timerManager.h \
     # database
     dataSet/database/sqliteUtil.h \
     dataSet/database/database.h \
@@ -90,14 +92,14 @@ HEADERS += \
     sprite.h \
     toolkit/fileoperator.h \
     toolkit/timeoperator.h \
-    widget_button.h \
-    widget_buttonClose.h \
-    widget_choosebutton.h \
-    widget_dragstick.h \
-    widget_itemlist.h \
-    widget_lineEdit.h \
-    widget_roundbutton.h \
-    widget_textEdit.h \
+    widget/widget_button.h \
+    widget/closeButton.h \
+    widget/widget_choosebutton.h \
+    widget/widget_dragstick.h \
+    widget/widget_itemlist.h \
+    widget/widget_lineEdit.h \
+    widget/widget_roundbutton.h \
+    widget/widget_textEdit.h \
     window/interduceWindow.h \
     window_ask.h \
     window_editor_main.h \

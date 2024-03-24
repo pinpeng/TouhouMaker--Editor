@@ -31,6 +31,7 @@ public:
     void mousePressEvent(QMouseEvent *event) override;
 
     void setTimer(BaseThread *thread);
+    inline void setTimer(QTimer& timer){}
 
     void setIndex(int _index) { index = _index; };
     int getIndex() { return index; }

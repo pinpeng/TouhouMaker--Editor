@@ -1,4 +1,4 @@
-#include "widget_dragstick.h"
+#include "widget/widget_dragstick.h"
 
 #include <QMouseEvent>
 #include "draw.h"
