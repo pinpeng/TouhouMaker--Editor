@@ -58,7 +58,7 @@ str += "2024年1月29日";
     auto tmp = QFontDatabase::applicationFontFamilies(Draw::font_id);
     //a.setFont(QFont(tmp[0]));
     a.setFont(SourceAgent::GetInstance().GetFont(GlobalSource::FONT_JCYT_500W));
-    Window_welcome_main w;
+    InterduceWindow w;
     w.show();
     int ret = a.exec();
     Shd::release();

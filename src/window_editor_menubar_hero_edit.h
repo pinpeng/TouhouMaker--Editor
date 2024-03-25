@@ -4,7 +4,7 @@
 #include "window/smallWindow.h"
 
 #include "widget/widget_lineEdit.h"
-#include "widget/widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 #include "widget/widget_choosebutton.h"
 
@@ -30,11 +30,11 @@ private:
     Widget_LineEdit *lineEdit;
 
     Widget_ChooseButton *chooseButton_bullet;
-    Widget_Button *button_bullet1;
-    Widget_Button *button_bullet2;
+    GradientButton *button_bullet1;
+    GradientButton *button_bullet2;
     Widget_ChooseButton *chooseButton_skill;
-    Widget_Button *button_skill1;
-    Widget_Button *button_skill2;
+    GradientButton *button_skill1;
+    GradientButton *button_skill2;
     Widget_LineEdit *lineEdit_s1;
     Widget_LineEdit *lineEdit_s2;
 

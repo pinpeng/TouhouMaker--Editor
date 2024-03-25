@@ -29,15 +29,15 @@ Window_find::Window_find(Database *_db, int _type, int _group, int *_index, QWid
     lineEdit->setGeometry(32, 64, 720 - 64, 80);
     lineEdit->setText("");
 
-    button_find = new Widget_Button(this);
+    button_find = new GradientButton(this);
     button_find->setGeometry(720 - 32, 64, 240, 80);
     button_find->setText("搜索");
-    button_find->setTimer(_timer);
+    // button_find->setTimer(_timer);
 
-    button_noone = new Widget_Button(this);
+    button_noone = new GradientButton(this);
     button_noone->setGeometry(32, 804, 960 - 64, 80);
     button_noone->setText("取消选择");
-    button_noone->setTimer(_timer);
+    // button_noone->setTimer(_timer);
 
     itemList = new Widget_ItemList(this);
     itemList->setGeometry(16, 64 + 80, 1000 - 76, 660);
@@ -78,15 +78,15 @@ Window_find::Window_find(Database *_db, int _type, int _group, float *_index, QW
     lineEdit->setGeometry(32, 64, 720 - 64, 80);
     lineEdit->setText("");
 
-    button_find = new Widget_Button(this);
+    button_find = new GradientButton(this);
     button_find->setGeometry(720 - 32, 64, 240, 80);
     button_find->setText("搜索");
-    button_find->setTimer(_timer);
+    // button_find->setTimer(_timer);
 
-    button_noone = new Widget_Button(this);
+    button_noone = new GradientButton(this);
     button_noone->setGeometry(32, 804, 960 - 64, 80);
     button_noone->setText("取消选择");
-    button_noone->setTimer(_timer);
+    // button_noone->setTimer(_timer);
 
     itemList = new Widget_ItemList(this);
     itemList->setGeometry(16, 64 + 80, 1000 - 76, 660);

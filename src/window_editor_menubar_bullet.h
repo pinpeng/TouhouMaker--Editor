@@ -2,7 +2,7 @@
 #define WINDOW_EDITOR_MENUBAR_BULLET_H
 
 #include "window/smallWindow.h"
-#include "widget/widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 #include "widget/widget_lineEdit.h"
 #include "widget/widget_itemlist.h"
@@ -31,11 +31,11 @@ private:
 
     Widget_ItemList *itemList;
 
-    Widget_Button *button_add;
-    Widget_Button *button_del;
+    GradientButton *button_add;
+    GradientButton *button_del;
 
-    Widget_Button *button_accept;
-    Widget_Button *button_cancel;
+    GradientButton *button_accept;
+    GradientButton *button_cancel;
 
     Window_editor_menubar_bullet_edit *window_editor;
 

@@ -3,7 +3,7 @@
 
 #include "window/smallWindow.h"
 
-#include "widget/widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget/widget_choosebutton.h"
 #include "widget/widget_lineEdit.h"
 #include "widget/widget_dragstick.h"
@@ -27,8 +27,8 @@ public:
 private:
     QString text;
 
-    Widget_Button *button_accept;
-    Widget_Button *button_cancel;
+    GradientButton *button_accept;
+    GradientButton *button_cancel;
 
 public slots:
     void accept_slot();
@@ -114,8 +114,8 @@ public:
 private:
     Database *db;
 
-    Widget_Button *button_accept;
-    Widget_Button *button_cancel;
+    GradientButton *button_accept;
+    GradientButton *button_cancel;
 
     int page_number = 1;
     int page = 0;
@@ -142,7 +142,7 @@ private:
     int *w_dragStick_data_i[16];
     float *w_dragStick_data_f[16];
 
-    Widget_Button *w_findButton[16];
+    GradientButton *w_findButton[16];
     int *w_findButton_data_i[16];
     float *w_findButton_data_f[16];
     int w_findButton_type[16];

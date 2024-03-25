@@ -21,6 +21,9 @@ public:
 
     virtual void paintEvent(QPaintEvent *) override;
 
+    /**
+     * @brief 实现标题栏拖拽窗口效果
+    */
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *) override;

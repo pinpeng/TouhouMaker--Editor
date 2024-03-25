@@ -4,7 +4,7 @@
 #include "window/smallWindow.h"
 
 #include "widget/widget_lineEdit.h"
-#include "widget/widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 
 
@@ -24,7 +24,7 @@ private:
     Widget_LineEdit *lineEdit_projectName;
     Widget_LineEdit *lineEdit_projectPosition;
 
-    Widget_Button *button_changePostion;
+    GradientButton *button_changePostion;
 
     QButtonGroup *buttonBox_type;
 
@@ -32,8 +32,8 @@ private:
     Widget_RoundButton * round_empty;
     Widget_RoundButton * round_example;
 
-    Widget_Button *button_accept;
-    Widget_Button *button_cancel;
+    GradientButton *button_accept;
+    GradientButton *button_cancel;
 
 
 signals:

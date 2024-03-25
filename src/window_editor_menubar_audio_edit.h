@@ -4,7 +4,7 @@
 #include "window/smallWindow.h"
 
 #include "widget/widget_lineEdit.h"
-#include "widget/widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 
 #include "global.h"
@@ -24,8 +24,8 @@ private:
     DB_audio *file;
 
     Widget_LineEdit *lineEdit;
-    Widget_Button *button_open;
-    Widget_Button *button_preview;
+    GradientButton *button_open;
+    GradientButton *button_preview;
 
     QString state_arr[2] = {"未保存", "已保存"};
 

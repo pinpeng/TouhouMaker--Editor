@@ -2,7 +2,7 @@
 #define WINDOW_EDITOR_MENUBAR_TEXT_H
 
 #include "window/smallWindow.h"
-#include "widget/widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 #include "widget/widget_lineEdit.h"
 #include "widget/widget_textEdit.h"
@@ -57,8 +57,8 @@ private:
 
     Widget_ItemList *itemList;
 
-    Widget_Button *button_accept;
-    Widget_Button *button_cancel;
+    GradientButton *button_accept;
+    GradientButton *button_cancel;
 
     Window_editor_menubar_text_edit *window_editor;
 

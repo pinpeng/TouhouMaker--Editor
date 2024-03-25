@@ -1,30 +1,30 @@
-#ifndef WINDOW_EDITOR_TREELIST_RENAME_H
-#define WINDOW_EDITOR_TREELIST_RENAME_H
+// #ifndef WINDOW_EDITOR_TREELIST_RENAME_H
+// #define WINDOW_EDITOR_TREELIST_RENAME_H
 
-#include "window_small.h"
-#include "widget/widget_button.h"
-#include "widget/widget_lineEdit.h"
+// #include "window_small.h"
+// #include "widget/gradientButton.h"
+// #include "widget/widget_lineEdit.h"
 
-class Window_editor_treelist_rename : public Window_small
-{
-    Q_OBJECT
+// class Window_editor_treelist_rename : public Window_small
+// {
+//     Q_OBJECT
 
-public:
+// public:
 
-    explicit Window_editor_treelist_rename(QString _text, int _id, QWidget *parent = nullptr);
+//     explicit Window_editor_treelist_rename(QString _text, int _id, QWidget *parent = nullptr);
 
-    void paintEvent(QPaintEvent *);
+//     void paintEvent(QPaintEvent *);
 
-private:
-    int id;
-    QString name;
-    Widget_LineEdit *lineEdit;
-    Widget_Button *button_accept;
-    Widget_Button *button_cancel;
+// private:
+//     int id;
+//     QString name;
+//     Widget_LineEdit *lineEdit;
+//     GradientButton *button_accept;
+//     GradientButton *button_cancel;
 
-public slots:
-    void accept();
+// public slots:
+//     void accept();
 
-};
+// };
 
-#endif // WINDOW_EDITOR_TREELIST_RENAME_H
+// #endif // WINDOW_EDITOR_TREELIST_RENAME_H

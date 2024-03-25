@@ -37,7 +37,7 @@ SOURCES += \
     sprite.cpp \
     toolkit/fileoperator.cpp \
     toolkit/timeoperator.cpp \
-    widget/widget_button.cpp \
+    widget/gradientButton.cpp \
     widget/closeButton.cpp \
     widget/widget_choosebutton.cpp \
     widget/widget_dragstick.cpp \
@@ -92,7 +92,7 @@ HEADERS += \
     sprite.h \
     toolkit/fileoperator.h \
     toolkit/timeoperator.h \
-    widget/widget_button.h \
+    widget/gradientButton.h \
     widget/closeButton.h \
     widget/widget_choosebutton.h \
     widget/widget_dragstick.h \

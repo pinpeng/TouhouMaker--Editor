@@ -2,7 +2,7 @@
 #define WINDOW_EDITOR_MENUBAR_AUDIO_H
 
 #include "window/smallWindow.h"
-#include "widget/widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 #include "widget/widget_lineEdit.h"
 #include "widget/widget_itemlist.h"
@@ -30,15 +30,15 @@ private:
     QButtonGroup *select_group;
     Widget_RoundButton *roundButton[3];
 
-    Widget_Button *button_openFolder;
+    GradientButton *button_openFolder;
 
     Widget_ItemList *itemList;
 
-    Widget_Button *button_add;
-    Widget_Button *button_del;
+    GradientButton *button_add;
+    GradientButton *button_del;
 
-    Widget_Button *button_accept;
-    Widget_Button *button_cancel;
+    GradientButton *button_accept;
+    GradientButton *button_cancel;
 
     QString state_arr[2] = {"未保存", "已保存"};
 

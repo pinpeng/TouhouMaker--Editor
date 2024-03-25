@@ -11,7 +11,7 @@ Window_find_audio::Window_find_audio(Database *_db, QWidget *parent) : Window_sm
     lineEdit->setGeometry(32, 64 + 48, 960 - 64, 80);
     lineEdit->setText("");
 
-    button_find = new Widget_Button(this);
+    button_find = new GradientButton(this);
     button_find->setGeometry(960 - 32, 64 + 48, 240, 80);
     button_find->setText("搜索");
     button_find->setTimer(_timer);

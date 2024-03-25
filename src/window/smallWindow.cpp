@@ -2,6 +2,7 @@
 #include "globalSource/sourceAgent.h"
 
 void SmallWindow::paintEvent(QPaintEvent *) {
+    // TODO... 重构Draw模块
     Draw::smallWindow(this, this);
 }
 
@@ -23,9 +24,6 @@ SmallWindow::SmallWindow(QWidget *parent) : QWidget(parent)
 
 SmallWindow::~SmallWindow()
 {
-    // timer->quit();
-    // timer->wait();
-    // delete timer;
 }
 
 void SmallWindow::mousePressEvent(QMouseEvent *event) {

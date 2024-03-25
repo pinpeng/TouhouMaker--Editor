@@ -2,7 +2,7 @@
 #define WINDOW_EDITOR_MENUBAR_HERO_H
 
 #include "window/smallWindow.h"
-#include "widget/widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 #include "widget/widget_choosebutton.h"
 #include "widget/widget_lineEdit.h"
@@ -34,11 +34,11 @@ private:
     QButtonGroup *select_group;
     Widget_RoundButton *roundButton[3];
 
-    Widget_Button *button_add;
-    Widget_Button *button_del;
+    GradientButton *button_add;
+    GradientButton *button_del;
 
-    Widget_Button *button_accept;
-    Widget_Button *button_cancel;
+    GradientButton *button_accept;
+    GradientButton *button_cancel;
 
     Window_editor_menubar_hero_edit0 *window_editor0;
     Window_editor_menubar_hero_edit1 *window_editor1;

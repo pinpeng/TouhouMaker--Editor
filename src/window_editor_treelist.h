@@ -7,11 +7,9 @@
 
 #include <QGraphicsEffect>
 
-#include "widget/widget_button.h"
-
-
-
+#include "widget/gradientButton.h"
 #include "dataSet/database/database.h"
+#include "basethread.h"
 
 class Window_editor_main;
 

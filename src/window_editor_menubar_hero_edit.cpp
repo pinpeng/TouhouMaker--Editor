@@ -30,12 +30,12 @@ Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db
     chooseButton_bullet->setGeometry(32 + 320, 64 + 80 * 2, 320, 80);
     chooseButton_bullet->setIndex(file->bullet_type);
 
-    button_bullet1 = new Widget_Button(this);
-    button_bullet1->setTimer(_timer);
+    button_bullet1 = new GradientButton(this);
+    // button_bullet1->setTimer(_timer);
     button_bullet1->setText("设置弹幕1");
     button_bullet1->setGeometry(24, 64 + 80 * 3, 320, 80);
-    button_bullet2 = new Widget_Button(this);
-    button_bullet2->setTimer(_timer);
+    button_bullet2 = new GradientButton(this);
+    // button_bullet2->setTimer(_timer);
     button_bullet2->setText("设置弹幕2");
     button_bullet2->setGeometry(32 + 320, 64 + 80 * 3, 320, 80);
 
@@ -48,16 +48,16 @@ Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db
     lineEdit_s1 = new Widget_LineEdit(this);
     lineEdit_s1->setText(db->getText(file->skill[0].name, 0));
     lineEdit_s1->setGeometry(240 - 28, 64 + 80 * 5, 920, 80);
-    button_skill1 = new Widget_Button(this);
-    button_skill1->setTimer(_timer);
+    button_skill1 = new GradientButton(this);
+    // button_skill1->setTimer(_timer);
     button_skill1->setText("设置");
     button_skill1->setGeometry(1140, 64 + 80 * 5, 240, 80);
 
     lineEdit_s2 = new Widget_LineEdit(this);
     lineEdit_s2->setText(db->getText(file->skill[1].name, 0));
     lineEdit_s2->setGeometry(240 - 28, 64 + 80 * 6, 920, 80);
-    button_skill2 = new Widget_Button(this);
-    button_skill2->setTimer(_timer);
+    button_skill2 = new GradientButton(this);
+    // button_skill2->setTimer(_timer);
     button_skill2->setText("设置");
     button_skill2->setGeometry(1140, 64 + 80 * 6, 240, 80);
 

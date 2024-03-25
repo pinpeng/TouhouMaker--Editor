@@ -2,7 +2,7 @@
 #define WINDOW_FIND_AUDIO_H
 
 #include "window/smallWindow.h"
-#include "widget/widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget/widget_lineEdit.h"
 #include "widget/widget_itemlist.h"
 #include "widget/widget_roundbutton.h"
@@ -30,7 +30,7 @@ private:
     Widget_RoundButton *roundButton_3;
 
     Widget_LineEdit *lineEdit;
-    Widget_Button *button_find;
+    GradientButton *button_find;
     Widget_ItemList *itemList;
 
 public slots:

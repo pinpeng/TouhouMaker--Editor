@@ -3,7 +3,7 @@
 
 #include "window/smallWindow.h"
 
-#include "widget/widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 #include "widget/widget_choosebutton.h"
 #include "widget/widget_lineEdit.h"
@@ -22,11 +22,11 @@ public:
 
 private:
 
-    Widget_Button *button_accept;
-    Widget_Button *button_cancel;
+    GradientButton *button_accept;
+    GradientButton *button_cancel;
 
     Widget_ChooseButton *chooseButton_color;
-    Widget_Button *button_custom;
+    GradientButton *button_custom;
 
     Widget_DragStick *dragStick_scale_editor;
     Widget_DragStick *dragStick_scale_timeline;

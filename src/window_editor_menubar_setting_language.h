@@ -4,7 +4,7 @@
 #include "window/smallWindow.h"
 
 #include "widget/widget_lineEdit.h"
-#include "widget/widget_button.h"
+#include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 
 #include "global.h"
@@ -22,8 +22,8 @@ private:
 
     Widget_LineEdit *lineEdit;
 
-    Widget_Button *button_accept;
-    Widget_Button *button_cancel;
+    GradientButton *button_accept;
+    GradientButton *button_cancel;
 
 public slots:
     void accept();

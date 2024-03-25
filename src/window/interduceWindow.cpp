@@ -1,5 +1,4 @@
 #include "window/interduceWindow.h"
-
 #include <QFileDialog>
 #include "global.h"
 #include "sprite.h"
@@ -8,7 +7,7 @@
 #include <QDesktopServices>
 #include <QApplication>
 
-Window_welcome_main::Window_welcome_main(QWidget *parent) : SmallWindow(parent)
+InterduceWindow::InterduceWindow(QWidget *parent) : SmallWindow(parent)
 {
     setFixedSize(720, 560);
     setWindowTitle("欢迎使用THMK");
@@ -20,50 +19,24 @@ Window_welcome_main::Window_welcome_main(QWidget *parent) : SmallWindow(parent)
         show_last_name = Global::setting.global_last_name;
     }
 
-    buttonNewProj   = new Widget_Button(this);
-    buttonOpenProj  = new Widget_Button(this);
-    buttonSetting   = new Widget_Button(this);
-    buttonHelp      = new Widget_Button(this);
+    _newProjectButton   =   new GradientButton("新建项目",QRect(240, 185, 240, 80),this);
+    _openProjectButton  =   new GradientButton("打开...",QRect(240, 265, 240, 80),this);
+    _settingButton      =   new GradientButton("程序设置",QRect(240, 345, 240, 80),this);
+    _helpButton         =   new GradientButton("帮助",QRect(240, 425, 240, 80),this);
 
-
-    buttonNewProj->setText("新建项目");
-    buttonNewProj->setGeometry(240, 185, 240, 80);
-    buttonNewProj->show();
-    buttonNewProj->setTimer(_timer);
-    connect(buttonNewProj, SIGNAL(pressed()), this, SLOT(newProj()));
-
-    buttonOpenProj->setText("打开...");
-    buttonOpenProj->setGeometry(240, 265, 240, 80);
-    buttonOpenProj->show();
-    buttonOpenProj->setTimer(_timer);
-    connect(buttonOpenProj, SIGNAL(pressed()), this, SLOT(openProj()));
-
-    buttonSetting->setText("程序设置");
-    buttonSetting->setGeometry(240, 345, 240, 80);
-    buttonSetting->show();
-    buttonSetting->setTimer(_timer);
-    connect(buttonSetting, SIGNAL(pressed()), this, SLOT(setting()));
-
-    buttonHelp->setText("帮助");
-    buttonHelp->setGeometry(240, 425, 240, 80);
-    buttonHelp->show();
-    buttonHelp->setTimer(_timer);
-    connect(buttonHelp, SIGNAL(pressed()), this, SLOT(help()));
-
-    //Window_editor_stage_tips *tips = new Window_editor_stage_tips();
-    //tips->show();
-//    connect(buttonHelp, SIGNAL(pressed()), this, SLOT(help()));
-
-    //newStart();
+    connect(_newProjectButton, SIGNAL(pressed()), this, SLOT(newProjectSlot()));
+    connect(_openProjectButton, SIGNAL(pressed()), this, SLOT(openProjectSlot()));
+    connect(_settingButton, SIGNAL(pressed()), this, SLOT(settingSlot()));
+    connect(_helpButton, SIGNAL(pressed()), this, SLOT(helpSlot()));
 }
 
-Window_welcome_main::~Window_welcome_main() {
+InterduceWindow::~InterduceWindow() {
 
 }
 
-void Window_welcome_main::paintEvent(QPaintEvent *) {
+void InterduceWindow::paintEvent(QPaintEvent *event) {
 
-    Draw::smallWindow(this, this);
+    SmallWindow::paintEvent(event);
 
     QDir dir(Global::setting.global_last_path);
     if(dir.exists() && !Global::setting.global_last_path.isEmpty()) {
@@ -79,6 +52,7 @@ void Window_welcome_main::paintEvent(QPaintEvent *) {
     Draw::begin(this);
     Draw::setAntialising(true);
 
+    // TODO... 后续修改成按钮
     Draw::sprite(Sprite(logo_mscb), width() / 2 - 256, w_t + 50);
     setPenColor_c(c_theme);
     Draw::setTextDefault();
@@ -88,6 +62,7 @@ void Window_welcome_main::paintEvent(QPaintEvent *) {
     Draw::sprite_size(Sprite(ui_author_web), w_r - 160, w_b - 144, 144, 144);
 
     if(show_last) {
+        // TODO... 后续修改成按钮
         setPenColor_c(c_theme);
         setBrushColor_c(c_theme);
         Draw::triangle(w_l + 480, w_t + 310, w_l + 480 + 20, w_t + 300 - 15, w_l + 480 + 30, w_t + 300, 4);
@@ -103,10 +78,11 @@ void Window_welcome_main::paintEvent(QPaintEvent *) {
     Draw::end();
 }
 
-void Window_welcome_main::mousePressEvent(QMouseEvent *event)
+void InterduceWindow::mousePressEvent(QMouseEvent *event)
 {
     SmallWindow::mousePressEvent(event);
     if(event->button() == Qt::LeftButton) {
+        // TODO... 后续修改成按钮
         float w_l = rect().x() + 8;
         float w_r = rect().right() - 8;
         float w_t = rect().y() + 8;
@@ -117,6 +93,7 @@ void Window_welcome_main::mousePressEvent(QMouseEvent *event)
         if(w_r - 160 < mx && w_b - 100 < my) {
             QDesktopServices::openUrl(QUrl("https://space.bilibili.com/179047896"));
         }
+        // TODO... 后续修改成按钮
         if(show_last) {
             if(w_l + 490 < mx && mx < w_l + 690 && w_t + 280 - 50 < my && my < w_t + 280 + 30) {
                 QString str = Global::setting.global_last_path;
@@ -131,23 +108,23 @@ void Window_welcome_main::mousePressEvent(QMouseEvent *event)
                     Global::setting.global_last_name = Global::databaseInfo().projectName;
                     Global::setting.global_last_path = Global::databaseInfo().projectPosition;
                     Global::setting.save();
-                    openStart();
+                    openStartSlot();
                 }
             }
         }
     }
 }
 
-void Window_welcome_main::newProj()
+void InterduceWindow::newProjectSlot()
 {
     win_newProj = new Window_welcome_newProject();
     win_newProj->setWindowModality(Qt::ApplicationModal);
     win_newProj->setAttribute(Qt::WA_DeleteOnClose);
     win_newProj->show();
-    connect(win_newProj, SIGNAL(requestClose()), this, SLOT(newStart()));
+    connect(win_newProj, SIGNAL(requestClose()), this, SLOT(newStartSlot()));
 }
 
-void Window_welcome_main::openProj()
+void InterduceWindow::openProjectSlot()
 {
     QString str = QFileDialog::getOpenFileName(this, "打开项目文件", "./", "(*.thmkproj)");
     if(!str.isEmpty())
@@ -164,12 +141,12 @@ void Window_welcome_main::openProj()
             Global::setting.global_last_name = Global::databaseInfo().projectName;
             Global::setting.global_last_path = Global::databaseInfo().projectPosition;
             Global::setting.save();
-            openStart();
+            openStartSlot();
         }
     }
 }
 
-void Window_welcome_main::setting()
+void InterduceWindow::settingSlot()
 {
     win_setting = new Window_welcome_setting();
     win_setting->setWindowModality(Qt::ApplicationModal);
@@ -177,14 +154,14 @@ void Window_welcome_main::setting()
     win_setting->show();
 }
 
-void Window_welcome_main::help()
+void InterduceWindow::helpSlot()
 {
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(QApplication::applicationDirPath() + "/help.pdf"))) {
         Message_Box::play(this, "帮不了你了");
     }
 }
 
-void Window_welcome_main::newStart()
+void InterduceWindow::newStartSlot()
 {
     win_editor = new Window_editor_main();
     win_editor->homepage = this;
@@ -194,7 +171,7 @@ void Window_welcome_main::newStart()
     close();
 }
 
-void Window_welcome_main::openStart()
+void InterduceWindow::openStartSlot()
 {
     win_editor = new Window_editor_main();
     win_editor->homepage = this;
