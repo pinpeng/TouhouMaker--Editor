@@ -7,7 +7,7 @@ Window_editor_menubar_setting_language::Window_editor_menubar_setting_language(Q
 
     str = _str;
 
-    lineEdit = new Widget_LineEdit(this);
+    lineEdit = new EllipticalLineEdit(this);
     lineEdit->setGeometry(32, 64, 640 - 64, 80);
     lineEdit->setText(*str);
 
@@ -28,7 +28,7 @@ Window_editor_menubar_setting_language::Window_editor_menubar_setting_language(Q
 void Window_editor_menubar_setting_language::accept()
 {
     if(lineEdit->text().size() > 9) {
-        Message("名称太长啦");
+        TransparentDialog::play("名称太长啦");
         return;
     }
     *str = lineEdit->text();

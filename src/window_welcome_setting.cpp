@@ -94,7 +94,7 @@ void Window_welcome_setting::color_custom()
 {
     if(!QFile::exists(QApplication::applicationDirPath() + "/color.ini")) Col::save();
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(QApplication::applicationDirPath() + "/color.ini"))) {
-        Message("打不开文件啊");
+        TransparentDialog::play("打不开文件啊");
     }
 }
 

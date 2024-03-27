@@ -115,27 +115,27 @@ void Window_editor_main::backToHome()
 void Window_editor_main::undo()
 {
     if(Global::databaseUndo()) {
-        Message_Box::play(this, "撤销");
+        TransparentDialog::play(this, "撤销");
         emit stageUpdateList(-1);
-    } else Message_Box::play(this, "撤销失败");
+    } else TransparentDialog::play(this, "撤销失败");
 }
 
 void Window_editor_main::redo()
 {
 
     if(Global::databaseRedo()) {
-        Message_Box::play(this, "重做");
+        TransparentDialog::play(this, "重做");
         emit stageUpdateList(-1);
-    } else Message_Box::play(this, "重做失败");
+    } else TransparentDialog::play(this, "重做失败");
 }
 
 void Window_editor_main::save()
 {
     if(Global::database().save()) {
-        Message("保存失败");
+        TransparentDialog::play("保存失败");
         send_tips(2);
     } else {
-        Message("保存成功");
+        TransparentDialog::play("保存成功");
         send_tips(1);
     }
 }
@@ -143,16 +143,16 @@ void Window_editor_main::save()
 void Window_editor_main::pack()
 {
     if(Global::database().save()) {
-        Message("保存失败");
+        TransparentDialog::play("保存失败");
         send_tips(4);
     } else {
         if(Global::database().pack()) {
-            Message("导出失败");
+            TransparentDialog::play("导出失败");
             send_tips(4);
         } else {
             send_tips(3);
             if(!QDesktopServices::openUrl(QUrl::fromLocalFile(Global::databaseInfo().projectPosition + "/output"))) {
-                Message("无法打开文件夹");
+                TransparentDialog::play("无法打开文件夹");
             }
         }
     }

@@ -3,7 +3,7 @@
 
 #include "window/smallWindow.h"
 
-#include "widget/widget_lineEdit.h"
+#include "widget/ellipticalLineEdit.h"
 #include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 #include "widget/widget_choosebutton.h"
@@ -29,10 +29,10 @@ private:
 
     int group;
 
-    Widget_LineEdit *lineEdit_name;
+    EllipticalLineEdit *lineEdit_name;
     Widget_ChooseButton *chooseButton_type;
     Widget_ChooseButton *chooseButton_range;
-    Widget_LineEdit *lineEdit_collision;
+    EllipticalLineEdit *lineEdit_collision;
 
     float code_scroll_top = 0;
 

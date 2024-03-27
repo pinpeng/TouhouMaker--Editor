@@ -3,7 +3,7 @@
 
 #include "window/smallWindow.h"
 
-#include "widget/widget_lineEdit.h"
+#include "widget/ellipticalLineEdit.h"
 #include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 #include "widget/widget_choosebutton.h"
@@ -27,7 +27,7 @@ private:
 
     int language_last = 0;
     Widget_ChooseButton *chooseButton_language;
-    Widget_LineEdit *lineEdit;
+    EllipticalLineEdit *lineEdit;
 
     Widget_ChooseButton *chooseButton_bullet;
     GradientButton *button_bullet1;
@@ -35,8 +35,8 @@ private:
     Widget_ChooseButton *chooseButton_skill;
     GradientButton *button_skill1;
     GradientButton *button_skill2;
-    Widget_LineEdit *lineEdit_s1;
-    Widget_LineEdit *lineEdit_s2;
+    EllipticalLineEdit *lineEdit_s1;
+    EllipticalLineEdit *lineEdit_s2;
 
 public slots:
     void end() override;
@@ -63,14 +63,14 @@ private:
 
     QLabel *label;
 
-    Widget_LineEdit *lineEdit_name;
-    Widget_LineEdit *lineEdit_hp;
+    EllipticalLineEdit *lineEdit_name;
+    EllipticalLineEdit *lineEdit_hp;
     Widget_ChooseButton *chooseButton_range;
-    Widget_LineEdit *lineEdit_collision;
+    EllipticalLineEdit *lineEdit_collision;
 
     float code_scroll_top = 0;
 
-    Widget_LineEdit *lineEdit;
+    EllipticalLineEdit *lineEdit;
 
 public slots:
     void end() override;
@@ -98,7 +98,7 @@ private:
 
     int language_last = 0;
     Widget_ChooseButton *chooseButton_language;
-    Widget_LineEdit *lineEdit;
+    EllipticalLineEdit *lineEdit;
 
 public slots:
     void end() override;

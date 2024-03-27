@@ -7,7 +7,7 @@
 
 //     db = _db;
 
-//     lineEdit = new Widget_LineEdit(this);
+//     lineEdit = new EllipticalLineEdit(this);
 //     lineEdit->setGeometry(32, 64, 960 - 64, 80);
 //     lineEdit->setText("");
 
@@ -53,7 +53,7 @@
 //         }
 //     }
 //     itemList->setItems(tmpList);
-//     Message_Box::play(this, "找到" + QString::number(tmpList.size()) + "项");
+//     TransparentDialog::play(this, "找到" + QString::number(tmpList.size()) + "项");
 // }
 
 // void Window_find_dictionary::getPosition(int pos)

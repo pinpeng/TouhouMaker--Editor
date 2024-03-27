@@ -82,7 +82,7 @@ Window_editor_menubar_setting::Window_editor_menubar_setting(QWidget *parent) : 
     if(db.info.setting_using_cg_collection == 0) roundButton_ucc_yes->setChecked(true);
     if(db.info.setting_using_cg_collection == 1) roundButton_ucc_no->setChecked(true);*/
 
-    lineEdit_name = new Widget_LineEdit(this);
+    lineEdit_name = new EllipticalLineEdit(this);
     lineEdit_name->setGeometry(480, 510, 480, 80);
     lineEdit_name->setText(db.info.projectName);
 
@@ -177,19 +177,19 @@ void Window_editor_menubar_setting::lan_del()
 {
     int tmp = itemList_lan->index();
     if(tmp < 0) {
-        Message("没选怎么删除呀");
+        TransparentDialog::play("没选怎么删除呀");
         return;
     }
     if(tmp == 0) {
-        Message("必须保留一项");
+        TransparentDialog::play("必须保留一项");
         return;
     }
     if(tmp != itemList_lan->getItemSize() - 1) {
-        Message("只能删最后一项");
+        TransparentDialog::play("只能删最后一项");
         return;
     }
     db.info.language.removeAt(tmp);
-    Message("删除成功");
+    TransparentDialog::play("删除成功");
     updateList();
 }
 

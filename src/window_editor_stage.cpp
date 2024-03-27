@@ -386,13 +386,13 @@ void Window_editor_stage::lb_game(QRectF _rect, float mx, float my, float ss)
         if(_flag != 3) {
             auto runner_path = QApplication::applicationDirPath() + "/debug/debugger.exe";
             if(!QFile::exists(runner_path)) {
-                Message_Box::play(this, "解释器丢失");
+                TransparentDialog::play(this, "解释器丢失");
                 return;
             }
 
             bool flag = Global::database().pack();
             if(flag) {
-                Message_Box::play(this, "导出失败");
+                TransparentDialog::play(this, "导出失败");
                 return;
             }
 
@@ -405,7 +405,7 @@ void Window_editor_stage::lb_game(QRectF _rect, float mx, float my, float ss)
 
             resFile.setFileName(QApplication::applicationDirPath() + "/debug/debug.txt");
             if(!resFile.open(QIODevice::WriteOnly)) {
-                Message_Box::play(this, "数据写入失败");
+                TransparentDialog::play(this, "数据写入失败");
                 return;
             }
 
@@ -465,7 +465,7 @@ void Window_editor_stage::lb_game(QRectF _rect, float mx, float my, float ss)
 
             runnerProcess->start(runner_path, QStringList(runner_path));
             Sleep(200);
-            Message_Box::play(this, "开始启动");
+            TransparentDialog::play(this, "开始启动");
 
             HWND hwnd = FindWindow(nullptr, L"THMK DEBUG RUNNER");
             if(hwnd != nullptr) {
@@ -504,7 +504,7 @@ void Window_editor_stage::lb_game(QRectF _rect, float mx, float my, float ss)
                 runnerWidget->setEnabled(true);
                 repaint();
             } else {
-                Message_Box::play(this, "无法连接程序");
+                TransparentDialog::play(this, "无法连接程序");
                 return;
             }
 
@@ -527,13 +527,13 @@ void Window_editor_stage::lb_game(QRectF _rect, float mx, float my, float ss)
                 runnerProcess->close();
             }
             runner_state = RUNNER_STATE::IDLE;
-            Message_Box::play(this, "停止");
+            TransparentDialog::play(this, "停止");
 
             runnerWidget->close();
             repaint();
 
         } else {
-            Message_Box::play(this, "请先关闭程序");
+            TransparentDialog::play(this, "请先关闭程序");
         }
     } break;
 

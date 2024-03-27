@@ -3,7 +3,7 @@
 
 #include "window/smallWindow.h"
 
-#include "widget/widget_lineEdit.h"
+#include "widget/ellipticalLineEdit.h"
 #include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 
@@ -20,7 +20,7 @@ public:
 private:
     QString *str;
 
-    Widget_LineEdit *lineEdit;
+    EllipticalLineEdit *lineEdit;
 
     GradientButton *button_accept;
     GradientButton *button_cancel;

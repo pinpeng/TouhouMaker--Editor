@@ -160,7 +160,7 @@ void Window_editor_menubar_image::editAudio(int _index)
 void Window_editor_menubar_image::openFolder()
 {
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(Global::databaseInfo().projectPosition + "/image"))) {
-        Message("无法打开文件夹");
+        TransparentDialog::play("无法打开文件夹");
     }
 }
 
@@ -188,7 +188,7 @@ void Window_editor_menubar_image::add()
 void Window_editor_menubar_image::del()
 {
     int index = itemList->index();
-    if(index == -1) { Message_Box::play(this, "未选中项目"); return; }
+    if(index == -1) { TransparentDialog::play(this, "未选中项目"); return; }
 
     for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) db.image_delete(i, itemList->getItem(index).text[0].toInt());
 

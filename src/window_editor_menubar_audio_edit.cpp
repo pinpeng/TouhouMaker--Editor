@@ -1,6 +1,6 @@
 #include "window_editor_menubar_audio_edit.h"
 
-#include "message_box.h"
+#include "widget/transparentDialog.h"
 
 #include <QFileDialog>
 #include <QDesktopServices>
@@ -13,7 +13,7 @@ Window_editor_menubar_audio_edit::Window_editor_menubar_audio_edit(Database *_db
     db = _db;
     file = _file;
 
-    lineEdit = new Widget_LineEdit(this);
+    lineEdit = new EllipticalLineEdit(this);
     lineEdit->setGeometry(32 + 120, 64 + 80 * 0, 620, 80);
     lineEdit->setText(file->name);
 
@@ -34,7 +34,7 @@ Window_editor_menubar_audio_edit::Window_editor_menubar_audio_edit(Database *_db
         QString basePath = Global::database().info.projectPosition;
         basePath = basePath + "/audio/" + QString::number(file->__id) + ".ogg";
         if(!QFile::exists(basePath)) {
-            Message_Box::play(this, "音频已丢失");
+            TransparentDialog::play(this, "音频已丢失");
             file->state = 0;
         }
     }
@@ -62,13 +62,13 @@ void Window_editor_menubar_audio_edit::open()
     if(!str.isEmpty()) {
         QFile fin(str);
         if(!fin.exists()) {
-            Message_Box::play(this, "文件不存在");
+            TransparentDialog::play(this, "文件不存在");
             return;
         } else {
             basePath = basePath + "/audio/" + QString::number(file->__id) + ".ogg";
             if(QFile::exists(basePath)) QFile::remove(basePath);
             if(!fin.copy(str, basePath)) {
-                Message_Box::play(this, "导入失败");
+                TransparentDialog::play(this, "导入失败");
                 return;
             }
             file->state = 1;
@@ -80,14 +80,14 @@ void Window_editor_menubar_audio_edit::open()
 void Window_editor_menubar_audio_edit::preview()
 {
     if(file->state == 0) {
-        Message_Box::play(this, "还没导入哦");
+        TransparentDialog::play(this, "还没导入哦");
         return;
     }
 
     QString basePath = Global::database().info.projectPosition;
     basePath = basePath + "/audio/" + QString::number(file->__id) + ".ogg";
     if(!QFile::exists(basePath)) {
-        Message_Box::play(this, "音频已丢失");
+        TransparentDialog::play(this, "音频已丢失");
         file->state = 0;
         return;
     }

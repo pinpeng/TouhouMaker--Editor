@@ -99,9 +99,9 @@ void InterduceWindow::mousePressEvent(QMouseEvent *event)
                 QString str = Global::setting.global_last_path;
                 Database db;
                 if(db.read(str)) {
-                    Message("无法打开文件");
+                    TransparentDialog::play("无法打开文件");
                 } else {
-                    Message("打开成功");
+                    TransparentDialog::play("打开成功");
                     db.info.projectPosition = str;
                     Global::databaseClean();
                     Global::databaseUpdate(db);
@@ -117,11 +117,11 @@ void InterduceWindow::mousePressEvent(QMouseEvent *event)
 
 void InterduceWindow::newProjectSlot()
 {
-    win_newProj = new Window_welcome_newProject();
-    win_newProj->setWindowModality(Qt::ApplicationModal);
-    win_newProj->setAttribute(Qt::WA_DeleteOnClose);
-    win_newProj->show();
-    connect(win_newProj, SIGNAL(requestClose()), this, SLOT(newStartSlot()));
+    _newProjectWindow = new NewProjectWindow();
+    _newProjectWindow->setWindowModality(Qt::ApplicationModal);
+    _newProjectWindow->setAttribute(Qt::WA_DeleteOnClose);
+    _newProjectWindow->show();
+    connect(_newProjectWindow, SIGNAL(requestClose()), this, SLOT(newStartSlot()));
 }
 
 void InterduceWindow::openProjectSlot()
@@ -132,9 +132,9 @@ void InterduceWindow::openProjectSlot()
         str = QFileInfo(str).absoluteDir().absolutePath();
         Database db;
         if(db.read(str)) {
-            Message("无法打开文件");
+            TransparentDialog::play("无法打开文件");
         } else {
-            Message("打开成功");
+            TransparentDialog::play("打开成功");
             db.info.projectPosition = str;
             Global::databaseClean();
             Global::databaseUpdate(db);
@@ -157,7 +157,7 @@ void InterduceWindow::settingSlot()
 void InterduceWindow::helpSlot()
 {
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(QApplication::applicationDirPath() + "/help.pdf"))) {
-        Message_Box::play(this, "帮不了你了");
+        TransparentDialog::play(this, "帮不了你了");
     }
 }
 

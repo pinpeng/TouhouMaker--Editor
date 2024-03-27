@@ -1,6 +1,6 @@
 #include "window_editor_menubar_hero_edit.h"
 
-#include "message_box.h"
+#include "widget/transparentDialog.h"
 
 #include <QFileDialog>
 #include <QDesktopServices>
@@ -20,7 +20,7 @@ Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db
     chooseButton_language->setGeometry(32 + 160, 64, 480, 80);
     connect(chooseButton_language, SIGNAL(indexChanged(int)), this, SLOT(languageChanged(int)));
 
-    lineEdit = new Widget_LineEdit(this);
+    lineEdit = new EllipticalLineEdit(this);
     lineEdit->setGeometry(32 + 160, 64 + 80 * 1, 480, 80);
     lineEdit->setText(db->getText(file->name, 0));
 
@@ -45,7 +45,7 @@ Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db
     chooseButton_skill->setGeometry(32 + 320, 64 + 80 * 4, 320, 80);
     chooseButton_skill->setIndex(file->skill_type);
 
-    lineEdit_s1 = new Widget_LineEdit(this);
+    lineEdit_s1 = new EllipticalLineEdit(this);
     lineEdit_s1->setText(db->getText(file->skill[0].name, 0));
     lineEdit_s1->setGeometry(240 - 28, 64 + 80 * 5, 920, 80);
     button_skill1 = new GradientButton(this);
@@ -53,7 +53,7 @@ Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db
     button_skill1->setText("设置");
     button_skill1->setGeometry(1140, 64 + 80 * 5, 240, 80);
 
-    lineEdit_s2 = new Widget_LineEdit(this);
+    lineEdit_s2 = new EllipticalLineEdit(this);
     lineEdit_s2->setText(db->getText(file->skill[1].name, 0));
     lineEdit_s2->setGeometry(240 - 28, 64 + 80 * 6, 920, 80);
     button_skill2 = new GradientButton(this);
@@ -152,11 +152,11 @@ Window_editor_menubar_hero_edit1::Window_editor_menubar_hero_edit1(Database *_db
     db = _db;
     file = _file;
 
-    lineEdit_name = new Widget_LineEdit(this);
+    lineEdit_name = new EllipticalLineEdit(this);
     lineEdit_name->setGeometry(32 + 200, 64 + 80 * 0, 440, 80);
     lineEdit_name->setText(file->name);
 
-    lineEdit_hp = new Widget_LineEdit(this);
+    lineEdit_hp = new EllipticalLineEdit(this);
     lineEdit_hp->setGeometry(32 + 900, 64 + 80 * 0, 440, 80);
     lineEdit_hp->setText(QString::number(file->data["hp"]));
 
@@ -168,7 +168,7 @@ Window_editor_menubar_hero_edit1::Window_editor_menubar_hero_edit1(Database *_db
     chooseButton_range->setIndex(file->data["range"]);
     chooseButton_range->setTimer(_timer);
 
-    lineEdit_collision = new Widget_LineEdit(this);
+    lineEdit_collision = new EllipticalLineEdit(this);
     lineEdit_collision->setGeometry(32 + 900, 64 + 80 * 1, 440, 80);
     lineEdit_collision->setText(QString::number(file->data["collision"]));
 
@@ -251,14 +251,14 @@ void Window_editor_menubar_hero_edit1::mousePressEvent(QMouseEvent *event)
         if(!str.isEmpty()) {
             QFile fin(str);
             if(!fin.exists()) {
-                Message_Box::play(this, "文件不存在");
+                TransparentDialog::play(this, "文件不存在");
                 return;
             } else {
                 QString suffix = QFileInfo(fin).suffix();
                 basePath = basePath + "/image/" + QString::number(file->image_id) + "." + suffix;
                 if(QFile::exists(basePath)) QFile::remove(basePath);
                 if(!fin.copy(str, basePath)) {
-                    Message_Box::play(this, "导入失败");
+                    TransparentDialog::play(this, "导入失败");
                     return;
                 }
                 if(suffix == "png") db->image[4][file->image_id].state = 1;
@@ -358,7 +358,7 @@ Window_editor_menubar_hero_edit2::Window_editor_menubar_hero_edit2(Database *_db
     chooseButton_language->setGeometry(32 + 160, 64, 540, 80);
     connect(chooseButton_language, SIGNAL(indexChanged(int)), this, SLOT(languageChanged(int)));
 
-    lineEdit = new Widget_LineEdit(this);
+    lineEdit = new EllipticalLineEdit(this);
     lineEdit->setGeometry(32 + 160, 64 + 80 * 1, 540, 80);
     lineEdit->setText(db->getText(file->name, 0));
 
@@ -452,14 +452,14 @@ void Window_editor_menubar_hero_edit2::mousePressEvent(QMouseEvent *event)
         if(!str.isEmpty()) {
             QFile fin(str);
             if(!fin.exists()) {
-                Message_Box::play(this, "文件不存在");
+                TransparentDialog::play(this, "文件不存在");
                 return;
             } else {
                 QString suffix = QFileInfo(fin).suffix();
                 basePath = basePath + "/image/" + QString::number(file->image_id[ind]) + "." + suffix;
                 if(QFile::exists(basePath)) QFile::remove(basePath);
                 if(!fin.copy(str, basePath)) {
-                    Message_Box::play(this, "导入失败");
+                    TransparentDialog::play(this, "导入失败");
                     return;
                 }
                 if(suffix == "png") db->image[4][file->image_id[ind]].state = 1;

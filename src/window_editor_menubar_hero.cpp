@@ -119,7 +119,7 @@ void Window_editor_menubar_hero::editHero(int _index)
 void Window_editor_menubar_hero::editHeroStart(int _index)
 {
     if(roundButton[0]->isChecked()) {
-        Message("功能开发中");
+        TransparentDialog::play("功能开发中");
         /*
         window_editor0 = new Window_editor_menubar_hero_edit0(&db, &db.hero[_index]);
         connect(window_editor0, SIGNAL(closed()), this, SLOT(updateList()));
@@ -157,7 +157,7 @@ void Window_editor_menubar_hero::add()
 void Window_editor_menubar_hero::del()
 {
     int index = itemList->index();
-    if(index == -1) { Message_Box::play(this, "未选中项目"); return; }
+    if(index == -1) { TransparentDialog::play(this, "未选中项目"); return; }
     if(roundButton[0]->isChecked()) db.hero_delete( itemList->getItem(index).text[0].toInt());
     if(roundButton[1]->isChecked()) db.enemy_delete(itemList->getItem(index).text[0].toInt());
     if(roundButton[2]->isChecked()) db.boss_delete( itemList->getItem(index).text[0].toInt());

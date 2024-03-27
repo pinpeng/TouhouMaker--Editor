@@ -3,7 +3,7 @@
 
 // #include "window_small.h"
 // #include "widget/gradientButton.h"
-// #include "widget/widget_lineEdit.h"
+// #include "widget/ellipticalLineEdit.h"
 
 // class Window_editor_treelist_rename : public Window_small
 // {
@@ -18,7 +18,7 @@
 // private:
 //     int id;
 //     QString name;
-//     Widget_LineEdit *lineEdit;
+//     EllipticalLineEdit *lineEdit;
 //     GradientButton *button_accept;
 //     GradientButton *button_cancel;
 

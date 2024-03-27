@@ -3,7 +3,7 @@
 
 #include "window/smallWindow.h"
 
-#include "widget/widget_lineEdit.h"
+#include "widget/ellipticalLineEdit.h"
 #include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 #include "widget/widget_choosebutton.h"
@@ -25,7 +25,7 @@ private:
     Database *db;
     DB_effect *file;
 
-    Widget_LineEdit *lineEdit;
+    EllipticalLineEdit *lineEdit;
 
 public slots:
     void end() override;
@@ -47,7 +47,7 @@ private:
     Database *db;
     DB_effect *file;
 
-    Widget_LineEdit *lineEdit;
+    EllipticalLineEdit *lineEdit;
 
 public slots:
     void end() override;
@@ -69,7 +69,7 @@ private:
     Database *db;
     DB_effect *file;
 
-    Widget_LineEdit *lineEdit;
+    EllipticalLineEdit *lineEdit;
 
 public slots:
     void end() override;

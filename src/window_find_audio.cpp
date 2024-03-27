@@ -7,7 +7,7 @@ Window_find_audio::Window_find_audio(Database *_db, QWidget *parent) : Window_sm
 
     db = _db;
 
-    lineEdit = new Widget_LineEdit(this);
+    lineEdit = new EllipticalLineEdit(this);
     lineEdit->setGeometry(32, 64 + 48, 960 - 64, 80);
     lineEdit->setText("");
 
@@ -120,7 +120,7 @@ void Window_find_audio::find()
     }
 
     itemList->setItems(tmpList);
-    Message_Box::play(this, "找到" + QString::number(tmpList.size()) + "项");
+    TransparentDialog::play(this, "找到" + QString::number(tmpList.size()) + "项");
 }
 
 void Window_find_audio::getPosition(int pos)

@@ -25,7 +25,7 @@ Window_find::Window_find(Database *_db, int _type, int _group, int *_index, QWid
         setWindowTitle("搜索音频");
     }
 
-    lineEdit = new Widget_LineEdit(this);
+    lineEdit = new EllipticalLineEdit(this);
     lineEdit->setGeometry(32, 64, 720 - 64, 80);
     lineEdit->setText("");
 
@@ -74,7 +74,7 @@ Window_find::Window_find(Database *_db, int _type, int _group, float *_index, QW
         setWindowTitle("搜索音频");
     }
 
-    lineEdit = new Widget_LineEdit(this);
+    lineEdit = new EllipticalLineEdit(this);
     lineEdit->setGeometry(32, 64, 720 - 64, 80);
     lineEdit->setText("");
 
@@ -168,7 +168,7 @@ void Window_find::find()
 
     itemList->setItemList(tmpList);
 
-    Message_Box::play(this, "找到" + QString::number(tmpList.size()) + "项");
+    TransparentDialog::play(this, "找到" + QString::number(tmpList.size()) + "项");
 }
 
 void Window_find::getPosition(int _index)

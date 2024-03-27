@@ -14,7 +14,7 @@
 #include "window_editor_timeline.h"
 
 
-#include "message_box.h"
+#include "widget/transparentDialog.h"
 
 #include "window_ask.h"
 

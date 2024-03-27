@@ -2,7 +2,7 @@
 
 #include "draw.h"
 #include "global.h"
-#include "message_box.h"
+#include "widget/transparentDialog.h"
 
 #include <QDesktopServices>
 #include <QApplication>
@@ -156,7 +156,7 @@ void Window_editor_menubar::pack_final()
     if(QFile::exists(file_path)) {
         QFile test(file_path);
         if(!test.open(QIODevice::ReadWrite)) {
-            Message("文件占用中");
+            TransparentDialog::play("文件占用中");
             return;
         }
         test.close();
@@ -189,7 +189,7 @@ void Window_editor_menubar::pack_final()
     for(int i = 0; i < file_name_list0.size(); i ++) {
         file.setFileName(pack_path + file_name_list0[i]);
         if(!file.exists()) {
-            Message("打包失败");
+            TransparentDialog::play("打包失败");
             delete zip;
             return;
         }
@@ -200,7 +200,7 @@ void Window_editor_menubar::pack_final()
     for(int i = 0; i < file_name_list1.size(); i ++) {
         file.setFileName(runner_path + file_name_list1[i]);
         if(!file.exists()) {
-            Message("打包失败");
+            TransparentDialog::play("打包失败");
             delete zip;
             return;
         }
@@ -213,7 +213,7 @@ void Window_editor_menubar::pack_final()
     delete zip;
 
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(path.path()))) {
-        Message("无法打开文件夹");
+        TransparentDialog::play("无法打开文件夹");
     }
 
 }
@@ -232,10 +232,10 @@ void Window_editor_menubar::backToHome()
 void Window_editor_menubar::save()
 {
     if(Global::database().save()) {
-        Message("保存失败");
+        TransparentDialog::play("保存失败");
         send_tips(2);
     } else {
-        Message("保存成功");
+        TransparentDialog::play("保存成功");
         send_tips(1);
     }
 }
@@ -243,11 +243,11 @@ void Window_editor_menubar::save()
 void Window_editor_menubar::pack()
 {
     if(Global::database().save()) {
-        Message("保存失败");
+        TransparentDialog::play("保存失败");
         send_tips(4);
     } else {
         if(Global::database().pack()) {
-            Message("导出失败");
+            TransparentDialog::play("导出失败");
             send_tips(4);
         } else {
             send_tips(3);
@@ -258,7 +258,7 @@ void Window_editor_menubar::pack()
 
 void Window_editor_menubar::func0()
 {
-    Message("功能开发中");
+    TransparentDialog::play("功能开发中");
     /*
     window_func0 = new Window_editor_menubar_setting();
     window_func0->setWindowModality(Qt::ApplicationModal);
@@ -297,7 +297,7 @@ void Window_editor_menubar::func3()
 
 void Window_editor_menubar::func4()
 {
-    Message("功能开发中");
+    TransparentDialog::play("功能开发中");
     /*
     window_func4 = new Window_editor_menubar_effect();
     window_func4->setWindowModality(Qt::ApplicationModal);
@@ -329,7 +329,7 @@ void Window_editor_menubar::func6()
 void Window_editor_menubar::func7()
 {
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(QApplication::applicationDirPath() + "/help.pdf"))) {
-        Message_Box::play(this, "帮不了你了");
+        TransparentDialog::play(this, "帮不了你了");
         send_tips(0);
     }
 }

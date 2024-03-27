@@ -3,28 +3,28 @@
 
 #include "window/smallWindow.h"
 
-#include "widget/widget_lineEdit.h"
+#include "widget/ellipticalLineEdit.h"
 #include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 
 
-class Window_welcome_newProject : public SmallWindow
+class NewProjectWindow : public SmallWindow
 {
 
     Q_OBJECT
 
 public:
-    explicit Window_welcome_newProject(QWidget *parent = nullptr);
-    ~Window_welcome_newProject();
+    explicit NewProjectWindow(QWidget *parent = nullptr);
+    ~NewProjectWindow();
 
     void paintEvent(QPaintEvent *);
 
 private:
 
-    Widget_LineEdit *lineEdit_projectName;
-    Widget_LineEdit *lineEdit_projectPosition;
+    EllipticalLineEdit * _projectNameLineEdit;
+    EllipticalLineEdit * _projectDirLineEdit;
 
-    GradientButton *button_changePostion;
+    GradientButton * _findProjectButton;
 
     QButtonGroup *buttonBox_type;
 
@@ -32,16 +32,16 @@ private:
     Widget_RoundButton * round_empty;
     Widget_RoundButton * round_example;
 
-    GradientButton *button_accept;
-    GradientButton *button_cancel;
+    GradientButton *_acceptButton;
+    GradientButton *_cancelButton;
 
 
 signals:
     void requestClose();
 
 public slots:
-    void findDir();
-    void createProject();
+    void findOldProjectSlot();
+    void createProjectSlot();
 };
 
 #endif // WINDOW_WELCOME_NEWPROJECT_H

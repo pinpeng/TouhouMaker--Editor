@@ -4,7 +4,7 @@
 #include "window/smallWindow.h"
 #include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
-#include "widget/widget_lineEdit.h"
+#include "widget/ellipticalLineEdit.h"
 #include "widget/widget_itemlist.h"
 
 #include "global.h"
@@ -41,7 +41,7 @@ private:
     Widget_RoundButton *roundButton_ucc_yes;
     Widget_RoundButton *roundButton_ucc_no;*/
 
-    Widget_LineEdit *lineEdit_name;
+    EllipticalLineEdit *lineEdit_name;
     GradientButton *button_reset_name;
 
     Widget_ItemList *itemList_lan;

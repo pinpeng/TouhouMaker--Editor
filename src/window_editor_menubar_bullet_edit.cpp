@@ -1,6 +1,6 @@
 #include "window_editor_menubar_bullet_edit.h"
 
-#include "message_box.h"
+#include "widget/transparentDialog.h"
 
 #include <QFileDialog>
 #include <QDesktopServices>
@@ -16,7 +16,7 @@ Window_editor_menubar_bullet_edit::Window_editor_menubar_bullet_edit(Database *_
     file = _file;
     group = _group;
 
-    lineEdit_name = new Widget_LineEdit(this);
+    lineEdit_name = new EllipticalLineEdit(this);
     lineEdit_name->setGeometry(32 + 200, 64 + 80 * 0, 440, 80);
     lineEdit_name->setText(file->name);
 
@@ -36,7 +36,7 @@ Window_editor_menubar_bullet_edit::Window_editor_menubar_bullet_edit(Database *_
     chooseButton_range->setIndex(file->data["range"]);
     chooseButton_range->setTimer(_timer);
 
-    lineEdit_collision = new Widget_LineEdit(this);
+    lineEdit_collision = new EllipticalLineEdit(this);
     lineEdit_collision->setGeometry(32 + 900, 64 + 80 * 1, 440, 80);
     lineEdit_collision->setText(QString::number(file->data["collision"]));
 

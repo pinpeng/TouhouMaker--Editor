@@ -4,7 +4,7 @@
 #include "widget/gradientButton.h"
 
 #include "window/smallWindow.h"
-#include "window_welcome_newproject.h"
+#include "window/newProjectWindow.h"
 #include "window_welcome_setting.h"
 
 #include "window_editor_main.h"
@@ -44,7 +44,7 @@ private:
     GradientButton *_helpButton;
 
 
-    Window_welcome_newProject *win_newProj;
+    NewProjectWindow *_newProjectWindow;
     Window_welcome_setting *win_setting;
 
     Window_editor_main *win_editor;

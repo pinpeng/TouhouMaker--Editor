@@ -259,7 +259,7 @@ void Window_ask_ex::addLineEdit(QString _text, QString *_str)
     typeList[page][i] = ITEM_TYPE::TEXTLINE_STR;
     idList[page][i] = id;
     textList[page][i] = _text;
-    w_lineEdit[id] = new Widget_LineEdit(this);
+    w_lineEdit[id] = new EllipticalLineEdit(this);
 
     w_lineEdit[id]->show();
     w_lineEdit[id]->setText(*_str);
@@ -284,7 +284,7 @@ void Window_ask_ex::addLineEdit(QString _text, int *_val, float _min, float _max
     else typeList[page][i] = ITEM_TYPE::TEXTLINE_FLOAT_i;
     idList[page][i] = id;
     textList[page][i] = _text;
-    w_lineEdit[id] = new Widget_LineEdit(this);
+    w_lineEdit[id] = new EllipticalLineEdit(this);
 
     w_lineEdit[id]->show();
     w_lineEdit[id]->setText(QString::number(*_val));
@@ -312,7 +312,7 @@ void Window_ask_ex::addLineEdit(QString _text, float *_val, float _min, float _m
     else typeList[page][i] = ITEM_TYPE::TEXTLINE_FLOAT_f;
     idList[page][i] = id;
     textList[page][i] = _text;
-    w_lineEdit[id] = new Widget_LineEdit(this);
+    w_lineEdit[id] = new EllipticalLineEdit(this);
 
     w_lineEdit[id]->show();
     w_lineEdit[id]->setText(QString::number(*_val));

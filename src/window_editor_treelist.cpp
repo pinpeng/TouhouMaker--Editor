@@ -12,7 +12,7 @@
 
 #include <QApplication>
 
-#include "message_box.h"
+#include "widget/transparentDialog.h"
 
 #include "sprite.h"
 
@@ -209,7 +209,7 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
                     mid_y = _top + 60 * ss + (i - 1) * 60 * ss + 30 * ss;
                     if(abs(mx - mid_x) < 14 * ss && abs(my - mid_y) < 14 * ss) {
                         if(i - 1 <= 0) {
-                            Message_Box::play(fatherWindow, "无法上移");
+                            TransparentDialog::play(fatherWindow, "无法上移");
                         } else {
                             db.stage[0].swap(i - 1, i - 2);
                             Global::databaseUpdate(db);
@@ -224,7 +224,7 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
                     mid_x = rect().right() - 72 * ss - 64 * ss;
                     if(abs(mx - mid_x) < 14 * ss && abs(my - mid_y) < 14 * ss) {
                         if(i >= db.stage[0].size()) {
-                            Message_Box::play(fatherWindow, "无法下移");
+                            TransparentDialog::play(fatherWindow, "无法下移");
                         } else {
                             db.stage[0].swap(i - 1, i);
                             Global::databaseUpdate(db);
@@ -239,7 +239,7 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
                     mid_x = rect().right() - 72 * ss - 32 * ss;
                     if(abs(mx - mid_x) < 14 * ss && abs(my - mid_y) < 14 * ss) {
                         if(db.stage[0].size() <= 1) {
-                            Message_Box::play(fatherWindow, "至少保留一个");
+                            TransparentDialog::play(fatherWindow, "至少保留一个");
                         } else {
                             db.stage[0].removeAt(i - 1);
                             Global::databaseUpdate(db);
@@ -298,7 +298,7 @@ void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
                     mid_y = _top + 80 * ss + (i - 1) * 60 * ss;
                     if(abs(mx - mid_x) < 14 * ss && abs(my - mid_y) < 14 * ss) {
                         if(i - 1 <= 0) {
-                            Message_Box::play(fatherWindow, "无法上移");
+                            TransparentDialog::play(fatherWindow, "无法上移");
                         } else {
                             db.stage[1].swap(i - 1, i - 2);
                             Global::databaseUpdate(db);
@@ -313,7 +313,7 @@ void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
                     mid_x = rect().right() - 72 * ss - 64 * ss;
                     if(abs(mx - mid_x) < 14 * ss && abs(my - mid_y) < 14 * ss) {
                         if(i >= db.stage[1].size()) {
-                            Message_Box::play(fatherWindow, "无法下移");
+                            TransparentDialog::play(fatherWindow, "无法下移");
                         } else {
                             db.stage[1].swap(i - 1, i);
                             Global::databaseUpdate(db);
@@ -328,7 +328,7 @@ void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
                     mid_x = rect().right() - 72 * ss - 32 * ss;
                     if(abs(mx - mid_x) < 14 * ss && abs(my - mid_y) < 14 * ss) {
                         if(db.stage[1].size() <= 1) {
-                            Message_Box::play(fatherWindow, "至少保留一个");
+                            TransparentDialog::play(fatherWindow, "至少保留一个");
                         } else {
                             db.stage[1].removeAt(i - 1);
                             Global::databaseUpdate(db);

@@ -1026,7 +1026,7 @@ void Window_editor_timeline::insertEvent(int _time)
     QList<DB_STAGE_EVENT> *_events = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
     for(int i = 0; i < _events->size(); i ++) {
         if(_events->at(i).time == _time) {
-            Message("此处已有事件");
+            TransparentDialog::play("此处已有事件");
             return;
         }
     }

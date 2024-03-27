@@ -3,7 +3,7 @@
 
 #include "window/smallWindow.h"
 #include "widget/gradientButton.h"
-#include "widget/widget_lineEdit.h"
+#include "widget/ellipticalLineEdit.h"
 #include "widget/widget_itemlist.h"
 #include "widget/widget_roundbutton.h"
 
@@ -43,7 +43,7 @@ private:
 
     QButtonGroup *buttonBox_type;
 
-    Widget_LineEdit *lineEdit;
+    EllipticalLineEdit *lineEdit;
     GradientButton *button_find;
     GradientButton *button_noone;
 

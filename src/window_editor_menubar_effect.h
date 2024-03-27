@@ -5,7 +5,7 @@
 #include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 #include "widget/widget_choosebutton.h"
-#include "widget/widget_lineEdit.h"
+#include "widget/ellipticalLineEdit.h"
 #include "widget/widget_itemlist.h"
 
 #include "global.h"

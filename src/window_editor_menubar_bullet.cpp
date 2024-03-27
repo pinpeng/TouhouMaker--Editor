@@ -119,7 +119,7 @@ void Window_editor_menubar_bullet::add()
 void Window_editor_menubar_bullet::del()
 {
     int index = itemList->index();
-    if(index == -1) { Message_Box::play(this, "未选中项目"); return; }
+    if(index == -1) { TransparentDialog::play(this, "未选中项目"); return; }
 
     for(int i = 0; i < 3; i ++) if(roundButton[i]->isChecked()) db.bullet_delete(i, itemList->getItem(index).text[0].toInt());
 

@@ -1,6 +1,6 @@
 #include "window_editor_menubar_effect_edit.h"
 
-#include "message_box.h"
+#include "widget/transparentDialog.h"
 
 #include <QFileDialog>
 #include <QDesktopServices>
@@ -13,7 +13,7 @@ Window_editor_menubar_effect_edit0::Window_editor_menubar_effect_edit0(Database 
     db = _db;
     file = _file;
 
-    lineEdit = new Widget_LineEdit(this);
+    lineEdit = new EllipticalLineEdit(this);
     lineEdit->setGeometry(32 + 160, 64 + 80 * 0, 480, 80);
     lineEdit->setText(file->name);
 }
@@ -54,7 +54,7 @@ Window_editor_menubar_effect_edit1::Window_editor_menubar_effect_edit1(Database 
     db = _db;
     file = _file;
 
-    lineEdit = new Widget_LineEdit(this);
+    lineEdit = new EllipticalLineEdit(this);
     lineEdit->setGeometry(32 + 160, 64 + 80 * 0, 480, 80);
     lineEdit->setText(file->name);
 }
@@ -96,7 +96,7 @@ Window_editor_menubar_effect_edit2::Window_editor_menubar_effect_edit2(Database 
     db = _db;
     file = _file;
 
-    lineEdit = new Widget_LineEdit(this);
+    lineEdit = new EllipticalLineEdit(this);
     lineEdit->setGeometry(32 + 160, 64 + 80 * 0, 480, 80);
     lineEdit->setText(file->name);
 }

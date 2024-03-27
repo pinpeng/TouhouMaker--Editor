@@ -3,7 +3,7 @@
 
 // #include "window_small.h"
 // #include "widget/gradientButton.h"
-// #include "widget/widget_lineEdit.h"
+// #include "widget/ellipticalLineEdit.h"
 // #include "widget/widget_itemlist.h"
 
 // #include "global.h"
@@ -21,7 +21,7 @@
 // private:
 //     Database *db;
 
-//     Widget_LineEdit *lineEdit;
+//     EllipticalLineEdit *lineEdit;
 //     GradientButton *button_find;
 //     Widget_ItemList *itemList;
 

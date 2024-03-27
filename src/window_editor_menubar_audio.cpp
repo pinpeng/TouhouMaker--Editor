@@ -108,7 +108,7 @@ void Window_editor_menubar_audio::editAudio(int _index)
 void Window_editor_menubar_audio::openFolder()
 {
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(Global::databaseInfo().projectPosition + "/audio"))) {
-        Message("无法打开文件夹");
+        TransparentDialog::play("无法打开文件夹");
     }
 }
 
@@ -136,7 +136,7 @@ void Window_editor_menubar_audio::add()
 void Window_editor_menubar_audio::del()
 {
     int index = itemList->index();
-    if(index == -1) { Message_Box::play(this, "未选中项目"); return; }
+    if(index == -1) { TransparentDialog::play(this, "未选中项目"); return; }
 
     for(int i = 0; i < 3; i ++) if(roundButton[i]->isChecked()) db.audio_delete(i, itemList->getItem(index).text[0].toInt());
 

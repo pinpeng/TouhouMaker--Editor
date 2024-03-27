@@ -3,7 +3,7 @@
 
 #include "window/smallWindow.h"
 #include "widget/gradientButton.h"
-#include "widget/widget_lineEdit.h"
+#include "widget/ellipticalLineEdit.h"
 #include "widget/widget_itemlist.h"
 #include "widget/widget_roundbutton.h"
 
@@ -29,7 +29,7 @@ private:
     Widget_RoundButton *roundButton_2;
     Widget_RoundButton *roundButton_3;
 
-    Widget_LineEdit *lineEdit;
+    EllipticalLineEdit *lineEdit;
     GradientButton *button_find;
     Widget_ItemList *itemList;
 

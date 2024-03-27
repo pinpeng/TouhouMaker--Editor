@@ -33,7 +33,7 @@ SOURCES += \
     global.cpp \
     logModule/logmodule.cpp \
     main.cpp \
-    message_box.cpp \
+    widget/transparentDialog.cpp \
     sprite.cpp \
     toolkit/fileoperator.cpp \
     toolkit/timeoperator.cpp \
@@ -42,10 +42,11 @@ SOURCES += \
     widget/widget_choosebutton.cpp \
     widget/widget_dragstick.cpp \
     widget/widget_itemlist.cpp \
-    widget/widget_lineEdit.cpp \
+    widget/ellipticalLineEdit.cpp \
     widget/widget_roundbutton.cpp \
     widget/widget_textEdit.cpp \
     window/interduceWindow.cpp \
+    window/newProjectWindow.cpp \
     window_ask.cpp \
     window_editor_main.cpp \
     window_editor_menubar.cpp \
@@ -68,7 +69,6 @@ SOURCES += \
     window_editor_treelist.cpp \
     window_find.cpp \
     window/smallWindow.cpp \
-    window_welcome_newproject.cpp \
     window_welcome_setting.cpp \
 
 HEADERS += \
@@ -85,7 +85,7 @@ HEADERS += \
     draw.h \
     global.h \
     logModule/logmodule.h \
-    message_box.h \
+    widget/transparentDialog.h \
     qzipreader_p.h \
     qzipwriter_p.h \
     setting.h \
@@ -97,7 +97,7 @@ HEADERS += \
     widget/widget_choosebutton.h \
     widget/widget_dragstick.h \
     widget/widget_itemlist.h \
-    widget/widget_lineEdit.h \
+    widget/ellipticalLineEdit.h \
     widget/widget_roundbutton.h \
     widget/widget_textEdit.h \
     window/interduceWindow.h \
@@ -123,7 +123,7 @@ HEADERS += \
     window_editor_treelist.h \
     window_find.h \
     window/smallWindow.h \
-    window_welcome_newproject.h \
+    window/newProjectWindow.h \
     window_welcome_setting.h
 
 FORMS +=

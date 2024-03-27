@@ -10,7 +10,7 @@
 //     id = _id;
 //     name = _text;
 
-//     lineEdit = new Widget_LineEdit(this);
+//     lineEdit = new EllipticalLineEdit(this);
 //     lineEdit->setGeometry(32, 64, 640 - 64, 80);
 //     lineEdit->setText(_text);
 

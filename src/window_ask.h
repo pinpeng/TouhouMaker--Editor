@@ -5,7 +5,7 @@
 
 #include "widget/gradientButton.h"
 #include "widget/widget_choosebutton.h"
-#include "widget/widget_lineEdit.h"
+#include "widget/ellipticalLineEdit.h"
 #include "widget/widget_dragstick.h"
 #include "widget/widget_textEdit.h"
 
@@ -127,7 +127,7 @@ private:
     Widget_TextEdit *w_textEdit[16];
     QString *w_textEdit_data_s[16];
 
-    Widget_LineEdit *w_lineEdit[16];
+    EllipticalLineEdit *w_lineEdit[16];
     QString *w_lineEdit_data_s[16];
     int *w_lineEdit_data_i[16];
     float *w_lineEdit_data_f[16];

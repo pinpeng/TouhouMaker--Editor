@@ -7,7 +7,7 @@
 #include <QTimer>
 
 #include "widget/closeButton.h"
-#include "message_box.h"
+#include "widget/transparentDialog.h"
 #include "draw.h"
 // #include "basethread.h"
 

@@ -1,6 +1,6 @@
 #include "window_editor_menubar_image_edit.h"
 
-#include "message_box.h"
+#include "widget/transparentDialog.h"
 
 #include <QFileDialog>
 #include <QDesktopServices>
@@ -13,7 +13,7 @@ Window_editor_menubar_image_edit::Window_editor_menubar_image_edit(Database *_db
     db = _db;
     file = _file;
 
-    lineEdit = new Widget_LineEdit(this);
+    lineEdit = new EllipticalLineEdit(this);
     lineEdit->setGeometry(32 + 120, 64 + 80 * 0, 620, 80);
     lineEdit->setText(file->name);
 
@@ -35,7 +35,7 @@ Window_editor_menubar_image_edit::Window_editor_menubar_image_edit(Database *_db
         if(file->state == 1) basePath = basePath + "/image/" + QString::number(file->__id) + ".png";
         if(file->state == 2) basePath = basePath + "/image/" + QString::number(file->__id) + ".gif";
         if(!QFile::exists(basePath)) {
-            Message_Box::play(this, "图像已丢失");
+            TransparentDialog::play(this, "图像已丢失");
             file->state = 0;
         }
     }
@@ -63,7 +63,7 @@ void Window_editor_menubar_image_edit::open()
     if(!str.isEmpty()) {
         QFile fin(str);
         if(!fin.exists()) {
-            Message_Box::play(this, "文件不存在");
+            TransparentDialog::play(this, "文件不存在");
             return;
         } else {
             QString _spr_key = QString::number(file->__id) + "_" + QString::number(file->editTimer);
@@ -78,7 +78,7 @@ void Window_editor_menubar_image_edit::open()
             basePath = basePath + "/image/" + QString::number(file->__id) + "." + suffix;
             if(QFile::exists(basePath)) QFile::remove(basePath);
             if(!fin.copy(str, basePath)) {
-                Message_Box::play(this, "导入失败");
+                TransparentDialog::play(this, "导入失败");
                 return;
             }
 
@@ -101,7 +101,7 @@ void Window_editor_menubar_image_edit::open()
 void Window_editor_menubar_image_edit::preview()
 {
     if(file->state == 0) {
-        Message_Box::play(this, "还没导入哦");
+        TransparentDialog::play(this, "还没导入哦");
         return;
     }
 
@@ -109,7 +109,7 @@ void Window_editor_menubar_image_edit::preview()
     if(file->state == 1) basePath = basePath + "/image/" + QString::number(file->__id) + ".png";
     if(file->state == 2) basePath = basePath + "/image/" + QString::number(file->__id) + ".gif";
     if(!QFile::exists(basePath)) {
-        Message_Box::play(this, "图像已丢失");
+        TransparentDialog::play(this, "图像已丢失");
         file->state = 0;
         return;
     }

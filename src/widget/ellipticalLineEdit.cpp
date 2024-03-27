@@ -1,26 +1,32 @@
-#include "widget/widget_lineEdit.h"
+#include "widget/ellipticalLineEdit.h"
 
 #include "draw.h"
 
-Widget_LineEdit::Widget_LineEdit(QWidget *parent) : QWidget(parent)
+EllipticalLineEdit::EllipticalLineEdit(QWidget *parent) : QWidget(parent)
 {
     setFixedHeight(80);
     Draw::setTextDefault();
-    label = new QLineEdit(this);
-    label->setGeometry(rect().left() + 24, rect().top(), rect().width() - 48, rect().height());
-    label->setFont(Draw::font);
-    label->setAttribute(Qt::WA_TranslucentBackground);
-    label->setStyleSheet("QLineEdit{border-width:0;border-style:outset;background-color:transparent;color:rgb(" +
+    _lebel = new QLineEdit(this);
+    _lebel->setGeometry(rect().left() + 24, rect().top(), rect().width() - 48, rect().height());
+    _lebel->setFont(Draw::font);
+    _lebel->setAttribute(Qt::WA_TranslucentBackground);
+    _lebel->setStyleSheet("QLineEdit{border-width:0;border-style:outset;background-color:transparent;color:rgb(" +
                          QString::number(Color(c_textMain).red()) + "," +
                          QString::number(Color(c_textMain).green()) + "," +
                          QString::number(Color(c_textMain).blue()) + ")}");
-    label->show();
+    _lebel->show();
 
-    connect(label, SIGNAL(textChanged(QString)), this, SLOT(emit_textChanged()));
+    connect(_lebel, SIGNAL(textChanged(QString)), this, SLOT(textChangedSlot()));
 }
 
-void Widget_LineEdit::paintEvent(QPaintEvent *) {
-    label->setGeometry(rect().left() + 24, rect().top(), rect().width() - 48, rect().height());
+EllipticalLineEdit::EllipticalLineEdit(const QString& text,const QRect& rect,QWidget *parent) : EllipticalLineEdit(parent)
+{
+    setText(text);
+    setGeometry(rect);
+}
+
+void EllipticalLineEdit::paintEvent(QPaintEvent *) {
+    _lebel->setGeometry(rect().left() + 24, rect().top(), rect().width() - 48, rect().height());
 
     float w_l = rect().x() + 12;
     float w_r = rect().right() - 8;
@@ -47,15 +53,15 @@ void Widget_LineEdit::paintEvent(QPaintEvent *) {
     Draw::end();
 }
 
-void Widget_LineEdit::setText(QString _text) {
-    label->setText(_text);
+void EllipticalLineEdit::setText(QString _text) {
+    _lebel->setText(_text);
 }
 
-QString Widget_LineEdit::text() {
-    return label->text();
+QString EllipticalLineEdit::text() {
+    return _lebel->text();
 }
 
-void Widget_LineEdit::emit_textChanged()
+void EllipticalLineEdit::textChangedSlot()
 {
     emit textChanged();
 }
