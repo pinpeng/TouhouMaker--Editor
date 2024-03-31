@@ -58,11 +58,9 @@ void LogModule::LogHandler(QtMsgType type,const QMessageLogContext& context,cons
 }
 
 QString LogModule::getCurLogPath(QString date){
-    QString folderPath = ToolKit::FileOperator::GetProjectPath().append("/logs/");
-    if(!ToolKit::FileOperator::CheckDirExists(folderPath)){
-        ToolKit::FileOperator::CreateFolder(folderPath);
-    }
-    return ToolKit::FileOperator::GetProjectPath().append("/logs/").append(date).append(".log");
+    QString folderPath = ToolKit::FileOperator::GetSubModulePath(ToolKit::FileModule::LOG);
+
+    return folderPath.append(date).append(".log");
 }
 
 QString LogModule::getLogLevel(QtMsgType type){

@@ -9,6 +9,9 @@
 #include <QDialog>
 #include <QMessageBox>
 
+/**
+ * @brief 提示框，使用时要用play单例
+*/
 class TransparentDialog : public QDialog
 {
     Q_OBJECT

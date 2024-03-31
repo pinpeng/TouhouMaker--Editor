@@ -2,25 +2,33 @@
 #include "global.h"
 
 #include <QFontDatabase>
+#include "dataSet/editorSetting.h"
 
 float Draw::font_scale = 1.0;
 int Draw::font_id = 0;
 
-QList<QColor> Col::list = QList<QColor>();
+QVector<QColor> Col::list = QVector<QColor>(static_cast<int>(Col::c_end));
 
 void Col::init()
-{
-    list.insert(c_backgroundMain,   QColor(255, 255, 255));
-    list.insert(c_backgroundSub,    QColor(236, 236, 236));
-    list.insert(c_textMain,         QColor(32, 32, 32));
-    list.insert(c_textTitle,        QColor(64, 64, 64));
-    list.insert(c_symbol,           QColor(192, 192, 192));
-    list.insert(c_theme,            QColor(0, 128, 255));
-    list.insert(c_itemEdge,         QColor(128, 128, 128));
-    list.insert(c_inactive,         QColor(32, 32, 32));
-    if(Global::setting.global_color_group == 3) read();
-    switch (Global::setting.global_color_group) {
-    case 1:
+{    
+    Col::list.resize(static_cast<int>(Col::c_end));
+    Col::setThemeColor(Global::setting.themeColor());
+}
+
+void Col::setThemeColor(ThemeColor color){
+    // TODO... 后续Draw当中的主题画笔配置，用json在外部记录
+    switch (color) {
+    case ThemeColor::DEFAULT:
+        Col::list[Col::c_backgroundMain] =   QColor(255, 255, 255);
+        Col::list[Col::c_backgroundSub] =    QColor(236, 236, 236);
+        Col::list[Col::c_textMain] =         QColor(32, 32, 32);
+        Col::list[Col::c_textTitle] =        QColor(64, 64, 64);
+        Col::list[Col::c_symbol] =           QColor(192, 192, 192);
+        Col::list[Col::c_theme] =            QColor(0, 128, 255);
+        Col::list[Col::c_itemEdge] =         QColor(128, 128, 128);
+        Col::list[Col::c_inactive] =         QColor(32, 32, 32);
+        break;
+    case ThemeColor::GRAY:
         Col::list[Col::c_backgroundMain] =    QColor(236, 236, 236);
         Col::list[Col::c_backgroundSub] =     QColor(212, 212, 212);
         Col::list[Col::c_textMain] =          QColor(0, 0, 0);
@@ -31,7 +39,7 @@ void Col::init()
         Col::list[Col::c_itemEdge] =          QColor(108, 108, 108);
         Col::list[Col::c_inactive] =          QColor(16, 16, 16);
         break;
-    case 2:
+    case ThemeColor::DARK:
         Col::list[Col::c_backgroundMain] =    QColor(45, 45, 45);
         Col::list[Col::c_backgroundSub] =     QColor(32, 32, 32);
         Col::list[Col::c_textMain] =          QColor(224, 224, 224);
@@ -42,7 +50,7 @@ void Col::init()
         Col::list[Col::c_itemEdge] =          QColor(160, 160, 160);
         Col::list[Col::c_inactive] =          QColor(128, 128, 128);
         break;
-    case 3:
+    case ThemeColor::CUSTOM:
         read();
         break;
     default:
@@ -113,40 +121,40 @@ QColor Col::mixAlpha(int _col1, int _col2, float _val, float _alpha)
                   c1->blue()  * (1.0 - _val) + c2->blue() *_val, _alpha);
 }
 
-int Shd::now = -1;
-bool Shd::isInited = false;
+// int Shd::now = -1;
+// bool Shd::isInited = false;
 
-QList<QOpenGLShaderProgram*> Shd::list = QList<QOpenGLShaderProgram*>();
+// QList<QOpenGLShaderProgram*> Shd::list = QList<QOpenGLShaderProgram*>();
 
-void Shd::init()
-{
-    if(isInited) return;
-    isInited = true;
-    for(int i = 0; i < 2; i ++) list.append(new QOpenGLShaderProgram());
+// void Shd::init()
+// {
+//     if(isInited) return;
+//     isInited = true;
+//     for(int i = 0; i < 2; i ++) list.append(new QOpenGLShaderProgram());
 
-    list[Shd_Base]->addCacheableShaderFromSourceFile(QOpenGLShader::Vertex,   ":/shader/shd_base.vsh");
-    list[Shd_Base]->addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, ":/shader/shd_base.fsh");
-    list[Shd_Base]->link();
+//     list[Shd_Base]->addCacheableShaderFromSourceFile(QOpenGLShader::Vertex,   ":/shader/shd_base.vsh");
+//     list[Shd_Base]->addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, ":/shader/shd_base.fsh");
+//     list[Shd_Base]->link();
 
-    list[Shd_Base]->setAttributeBuffer("in_position", GL_FLOAT, 0 * sizeof(float), 2, 6 * sizeof(float));
-    list[Shd_Base]->enableAttributeArray("in_position");
-    list[Shd_Base]->setAttributeBuffer("in_color",    GL_FLOAT, 2 * sizeof(float), 4, 6 * sizeof(float));
-    list[Shd_Base]->enableAttributeArray("in_color");
+//     list[Shd_Base]->setAttributeBuffer("in_position", GL_FLOAT, 0 * sizeof(float), 2, 6 * sizeof(float));
+//     list[Shd_Base]->enableAttributeArray("in_position");
+//     list[Shd_Base]->setAttributeBuffer("in_color",    GL_FLOAT, 2 * sizeof(float), 4, 6 * sizeof(float));
+//     list[Shd_Base]->enableAttributeArray("in_color");
 
-    list[Shd_DrawTexture]->addCacheableShaderFromSourceFile(QOpenGLShader::Vertex,   ":/shader/shd_drawtexture.vsh");
-    list[Shd_DrawTexture]->addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, ":/shader/shd_drawtexture.fsh");
-    list[Shd_DrawTexture]->link();
+//     list[Shd_DrawTexture]->addCacheableShaderFromSourceFile(QOpenGLShader::Vertex,   ":/shader/shd_drawtexture.vsh");
+//     list[Shd_DrawTexture]->addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, ":/shader/shd_drawtexture.fsh");
+//     list[Shd_DrawTexture]->link();
 
-    list[Shd_DrawTexture]->setAttributeBuffer("in_position", GL_FLOAT, 0 * sizeof(float), 2, 2 * sizeof(float));
-    list[Shd_DrawTexture]->enableAttributeArray("in_position");
+//     list[Shd_DrawTexture]->setAttributeBuffer("in_position", GL_FLOAT, 0 * sizeof(float), 2, 2 * sizeof(float));
+//     list[Shd_DrawTexture]->enableAttributeArray("in_position");
 
-}
+// }
 
-void Shd::release()
-{
-    if(!isInited) return;
-    for(int i = 0; i < list.size(); i ++) if(list[i]) delete list[i];
-}
+// void Shd::release()
+// {
+//     if(!isInited) return;
+//     for(int i = 0; i < list.size(); i ++) if(list[i]) delete list[i];
+// }
 
 
 

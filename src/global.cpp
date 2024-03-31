@@ -1,6 +1,6 @@
 #include "global.h"
 
-Setting Global::setting = Setting();
+EditorSetting Global::setting = EditorSetting();
 
 int Global::stage_id_top = 100;
 int Global::stage_event_id_top = 100;

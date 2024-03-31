@@ -1,7 +1,6 @@
 #include <QApplication>
 
 #include "global.h"
-#include "setting.h"
 #include "sprite.h"
 #include "draw.h"
 
@@ -61,7 +60,7 @@ str += "2024年1月29日";
     InterduceWindow w;
     w.show();
     int ret = a.exec();
-    Shd::release();
+    // Shd::release();
     Spr::release();
     return ret;
 }

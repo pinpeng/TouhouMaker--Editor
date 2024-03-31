@@ -10,7 +10,7 @@
 #include <QtMath>
 
 #include "dataSet/database/database.h"
-#include "setting.h"
+#include "dataSet/editorSetting.h"
 #include "sprite.h"
 #include "draw.h"
 
@@ -29,7 +29,7 @@ struct sprite_buff {
 struct Global
 {
 
-    static Setting setting;
+    static EditorSetting setting;
 
     static int stage_id_top;
     static int stage_event_id_top;

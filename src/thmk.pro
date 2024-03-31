@@ -29,6 +29,7 @@ SOURCES += \
     dataSet/database/database_main.cpp \
     dataSet/database/database_main_edit.cpp \
     dataSet/database/database_save.cpp \
+    dataSet/editorSetting.cpp \
     draw.cpp \
     global.cpp \
     logModule/logmodule.cpp \
@@ -88,7 +89,7 @@ HEADERS += \
     widget/transparentDialog.h \
     qzipreader_p.h \
     qzipwriter_p.h \
-    setting.h \
+    dataSet/editorSetting.h \
     sprite.h \
     toolkit/fileoperator.h \
     toolkit/timeoperator.h \

@@ -5,7 +5,7 @@
 
 namespace GlobalSource{
     FontManager::FontManager(){
-        _fontFilePath = ToolKit::FileOperator::GetProjectPath().append("/fonts/");
+        _fontFilePath = ToolKit::FileOperator::GetSubModulePath(ToolKit::FileModule::SOURCE_FONT);
         if(-1 == QFontDatabase::addApplicationFont(_fontFilePath.append(FONT_JCYT_500W))){
             qWarning() << "Cannot find font" << FONT_JCYT_500W << "in" << _fontFilePath;
         }

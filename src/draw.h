@@ -4,19 +4,20 @@
 #include <QPainter>
 #include <QWidget>
 
-#include <QOpenGLShaderProgram>
+// #include <QOpenGLShaderProgram>
 #include <QMatrix4x4>
 
 #include "sprite.h"
 #include <QSettings>
+#include "dataSet/editorSetting.h"
 
 struct Col
 {
-    static QList<QColor> list;
+    static QVector<QColor> list;
     static void init();
     static void read();
     static void save();
-
+    static void setThemeColor(ThemeColor color);
 #define Color(_col) Col::get(Col::_col)
 #define ColorAlpha(_col,_alpha) Col::getAlpha(Col::_col,_alpha)
     inline static QColor get(int _col) { return list[_col]; }
@@ -35,44 +36,45 @@ struct Col
         c_symbol,
         c_theme,
         c_itemEdge,
-        c_inactive
+        c_inactive,
+        c_end
     };
 };
 
-struct Shd
-{
-    static QList<QOpenGLShaderProgram*> list;
-    static void init();
-    static void release();
+// struct Shd
+// {
+//     static QList<QOpenGLShaderProgram*> list;
+//     static void init();
+//     static void release();
 
-    static int now;
-    static bool isInited;
+//     static int now;
+//     static bool isInited;
 
-#define mkMat(_sx,_sy,_x,_y,_hw,_hh) Shd::_mkMat(_sx,_sy,_x,_y,_hw,_hh)
-    inline static QMatrix4x4 _mkMat(float _scale_x, float _scale_y, float _x, float _y, float half_width, float half_height) {
-        return QMatrix4x4(
-                    _scale_x / half_width, 0, 0, -1 + _x / half_width,
-                    0, -_scale_y / half_height, 0, 1 - _y / half_height,
-                    0, 0, 1, 0, 0, 0, 0, 1);
-    }
+// #define mkMat(_sx,_sy,_x,_y,_hw,_hh) Shd::_mkMat(_sx,_sy,_x,_y,_hw,_hh)
+//     inline static QMatrix4x4 _mkMat(float _scale_x, float _scale_y, float _x, float _y, float half_width, float half_height) {
+//         return QMatrix4x4(
+//                     _scale_x / half_width, 0, 0, -1 + _x / half_width,
+//                     0, -_scale_y / half_height, 0, 1 - _y / half_height,
+//                     0, 0, 1, 0, 0, 0, 0, 1);
+//     }
 
-#define alphaModeEnable()  glEnable(GL_BLEND);glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA)
-#define alphaModeDisable() glDisable(GL_BLEND)
+// #define alphaModeEnable()  glEnable(GL_BLEND);glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA)
+// #define alphaModeDisable() glDisable(GL_BLEND)
 
-#define Shader(_shd) Shd::get(Shd::_shd)
-    inline static QOpenGLShaderProgram* get(int _shd) { return list[_shd]; }
-#define drawShaderBegin(_shd) Shd::list[Shd::_shd]->bind();Shd::now=Shd::_shd
-#define shaderSetUniform(_name,_value) Shd::list[Shd::now]->setUniformValue(_name,_value)
-#define drawShader(_size) glDrawArrays(GL_TRIANGLES,0,_size)
-#define drawShaderEnd() Shd::list[Shd::now]->release();Shd::now=-1
+// #define Shader(_shd) Shd::get(Shd::_shd)
+//     inline static QOpenGLShaderProgram* get(int _shd) { return list[_shd]; }
+// #define drawShaderBegin(_shd) Shd::list[Shd::_shd]->bind();Shd::now=Shd::_shd
+// #define shaderSetUniform(_name,_value) Shd::list[Shd::now]->setUniformValue(_name,_value)
+// #define drawShader(_size) glDrawArrays(GL_TRIANGLES,0,_size)
+// #define drawShaderEnd() Shd::list[Shd::now]->release();Shd::now=-1
 
-    enum shader {
-        Shd_Base,
-        Shd_DrawTexture,
-        Shd_DrawTextureWithMask
-    };
+//     enum shader {
+//         Shd_DrawTexture,
+//         Shd_Base,
+//         Shd_DrawTextureWithMask
+//     };
 
-};
+// };
 
 struct Draw
 {

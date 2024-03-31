@@ -13,10 +13,10 @@ InterduceWindow::InterduceWindow(QWidget *parent) : SmallWindow(parent)
     setWindowTitle("欢迎使用THMK");
     setWindowIcon(QIcon(":/logo/mscb_icon.ico"));
 
-    QDir dir(Global::setting.global_last_path);
-    if(dir.exists() && !Global::setting.global_last_path.isEmpty()) {
+    QDir dir(Global::setting.lastProjectPath());
+    if(dir.exists() && !Global::setting.lastProjectPath().isEmpty()) {
         show_last = true;
-        show_last_name = Global::setting.global_last_name;
+        show_last_name = Global::setting.lastProjectName();
     }
 
     _newProjectButton   =   new GradientButton("新建项目",QRect(240, 185, 240, 80),this);
@@ -38,10 +38,11 @@ void InterduceWindow::paintEvent(QPaintEvent *event) {
 
     SmallWindow::paintEvent(event);
 
-    QDir dir(Global::setting.global_last_path);
-    if(dir.exists() && !Global::setting.global_last_path.isEmpty()) {
+    // TODO... 下面这一坨好像初始化的时候设置过了
+    QDir dir(Global::setting.lastProjectPath());
+    if(dir.exists() && !Global::setting.lastProjectPath().isEmpty()) {
         show_last = true;
-        show_last_name = Global::setting.global_last_name;
+        show_last_name = Global::setting.lastProjectName();
     }
 
     float w_l = rect().x() + 8;
@@ -96,7 +97,7 @@ void InterduceWindow::mousePressEvent(QMouseEvent *event)
         // TODO... 后续修改成按钮
         if(show_last) {
             if(w_l + 490 < mx && mx < w_l + 690 && w_t + 280 - 50 < my && my < w_t + 280 + 30) {
-                QString str = Global::setting.global_last_path;
+                QString str = Global::setting.lastProjectPath();
                 Database db;
                 if(db.read(str)) {
                     TransparentDialog::play("无法打开文件");
@@ -105,8 +106,10 @@ void InterduceWindow::mousePressEvent(QMouseEvent *event)
                     db.info.projectPosition = str;
                     Global::databaseClean();
                     Global::databaseUpdate(db);
-                    Global::setting.global_last_name = Global::databaseInfo().projectName;
-                    Global::setting.global_last_path = Global::databaseInfo().projectPosition;
+                    Global::setting.setLastProjectPosition(Global::databaseInfo().projectPosition,Global::databaseInfo().projectName);
+                    // Global::setting.global_last_name = Global::databaseInfo().projectName;
+                    // Global::setting.setLastProjectPath(Global::databaseInfo().projectPosition);
+                    // Global::setting.global_last_path = Global::databaseInfo().projectPosition;
                     Global::setting.save();
                     openStartSlot();
                 }
@@ -138,8 +141,10 @@ void InterduceWindow::openProjectSlot()
             db.info.projectPosition = str;
             Global::databaseClean();
             Global::databaseUpdate(db);
-            Global::setting.global_last_name = Global::databaseInfo().projectName;
-            Global::setting.global_last_path = Global::databaseInfo().projectPosition;
+            
+            // Global::setting.global_last_name = Global::databaseInfo().projectName;
+            Global::setting.setLastProjectPosition(Global::databaseInfo().projectPosition,Global::databaseInfo().projectName);
+            // Global::setting.global_last_path = Global::databaseInfo().projectPosition;
             Global::setting.save();
             openStartSlot();
         }

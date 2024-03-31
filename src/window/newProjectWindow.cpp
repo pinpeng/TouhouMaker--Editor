@@ -112,8 +112,9 @@ void NewProjectWindow::createProjectSlot()
         Global::databaseUpdate(db);
         db.save();
     }
-    Global::setting.global_last_name = Global::databaseInfo().projectName;
-    Global::setting.global_last_path = Global::databaseInfo().projectPosition;
+    // Global::setting.global_last_name = Global::databaseInfo().projectName;
+    Global::setting.setLastProjectPosition(Global::databaseInfo().projectPosition,Global::databaseInfo().projectName);
+    // Global::setting.global_last_path = Global::databaseInfo().projectPosition;
     Global::setting.save();
     emit requestClose();
     close();

@@ -31,7 +31,7 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
     chooseButton_color->addText("自定义");
     chooseButton_color->setTimer(_timer);
 
-    chooseButton_color->setIndex(Global::setting.global_color_group);
+    chooseButton_color->setIndex(Global::setting.themeColor());
 
     button_custom = new GradientButton(this);
     button_custom->setGeometry(960 - 32, 64, 240, 80);
@@ -45,13 +45,13 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
     dragStick_scale_editor->setGeometry(640 - 32, 144, 560, 80);
     dragStick_scale_editor->setTimer(_timer);
     dragStick_scale_editor->setRange(50, 150);
-    dragStick_scale_editor->setValue(Global::setting.editor_scale * 100.0);
+    dragStick_scale_editor->setValue(Global::setting.editorScale() * 100.0);
 
     dragStick_scale_timeline = new Widget_DragStick(this);
     dragStick_scale_timeline->setGeometry(640 - 32, 224, 560, 80);
     dragStick_scale_timeline->setTimer(_timer);
     dragStick_scale_timeline->setRange(50, 150);
-    dragStick_scale_timeline->setValue(Global::setting.timeline_scale * 100.0);
+    dragStick_scale_timeline->setValue(Global::setting.timelineScale() * 100.0);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -60,8 +60,12 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
     chooseButton_antialising->addText("开启（较慢）");
     chooseButton_antialising->addText("关闭（较快）");
     chooseButton_antialising->setTimer(_timer);
-    if(Global::setting.stage_antialising == true)  chooseButton_antialising->setIndex(0);
-    if(Global::setting.stage_antialising == false) chooseButton_antialising->setIndex(1);
+    if(Global::setting.stageAntialising() == true){
+        chooseButton_antialising->setIndex(0);
+    }
+    else{
+        chooseButton_antialising->setIndex(1);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -100,48 +104,50 @@ void Window_welcome_setting::color_custom()
 
 void Window_welcome_setting::save()
 {
+    // TODO... 后续Draw当中的主题画笔配置，用json在外部记录
     if(chooseButton_color->getIndex() == 0) {
-        Global::setting.global_color_group = 0;
-        Col::list[Col::c_backgroundMain] = QColor(255, 255, 255);
-        Col::list[Col::c_backgroundSub] =  QColor(236, 236, 236);
-        Col::list[Col::c_textMain] =       QColor(32, 32, 32);
-        Col::list[Col::c_textTitle] =      QColor(64, 64, 64);
-        Col::list[Col::c_symbol] =         QColor(192, 192, 192);
-        Col::list[Col::c_theme] =          QColor(0, 128, 255);
-        Col::list[Col::c_itemEdge] =       QColor(128, 128, 128);
-        Col::list[Col::c_inactive] =       QColor(32, 32, 32);
+        Global::setting.setThemeColor(ThemeColor::DEFAULT);
+        // Col::list[Col::c_backgroundMain] = QColor(255, 255, 255);
+        // Col::list[Col::c_backgroundSub] =  QColor(236, 236, 236);
+        // Col::list[Col::c_textMain] =       QColor(32, 32, 32);
+        // Col::list[Col::c_textTitle] =      QColor(64, 64, 64);
+        // Col::list[Col::c_symbol] =         QColor(192, 192, 192);
+        // Col::list[Col::c_theme] =          QColor(0, 128, 255);
+        // Col::list[Col::c_itemEdge] =       QColor(128, 128, 128);
+        // Col::list[Col::c_inactive] =       QColor(32, 32, 32);
     } else if(chooseButton_color->getIndex() == 1) {
-        Global::setting.global_color_group = 1;
-        Col::list[Col::c_backgroundMain] =    QColor(236, 236, 236);
-        Col::list[Col::c_backgroundSub] =     QColor(212, 212, 212);
-        Col::list[Col::c_textMain] =          QColor(0, 0, 0);
-        Col::list[Col::c_textTitle] =         QColor(32, 32, 32);
-        Col::list[Col::c_symbol] =            QColor(160, 160, 160);
-        //Col::list[Col::c_theme] =             QColor(0, 108, 255);
-        Col::list[Col::c_theme] =             QColor(0, 128, 255);
-        Col::list[Col::c_itemEdge] =          QColor(108, 108, 108);
-        Col::list[Col::c_inactive] =          QColor(16, 16, 16);
+        Global::setting.setThemeColor(ThemeColor::GRAY);
+        // Col::list[Col::c_backgroundMain] =    QColor(236, 236, 236);
+        // Col::list[Col::c_backgroundSub] =     QColor(212, 212, 212);
+        // Col::list[Col::c_textMain] =          QColor(0, 0, 0);
+        // Col::list[Col::c_textTitle] =         QColor(32, 32, 32);
+        // Col::list[Col::c_symbol] =            QColor(160, 160, 160);
+        // //Col::list[Col::c_theme] =             QColor(0, 108, 255);
+        // Col::list[Col::c_theme] =             QColor(0, 128, 255);
+        // Col::list[Col::c_itemEdge] =          QColor(108, 108, 108);
+        // Col::list[Col::c_inactive] =          QColor(16, 16, 16);
     } else if(chooseButton_color->getIndex() == 2) {
-        Global::setting.global_color_group = 2;
-        Col::list[Col::c_backgroundMain] =    QColor(45, 45, 45);
-        Col::list[Col::c_backgroundSub] =     QColor(32, 32, 32);
-        Col::list[Col::c_textMain] =          QColor(224, 224, 224);
-        Col::list[Col::c_textTitle] =         QColor(192, 192, 192);
-        Col::list[Col::c_symbol] =            QColor(128, 128, 128);
-        //Col::list[Col::c_theme] =             QColor(16, 144, 255);
-        Col::list[Col::c_theme] =             QColor(0, 128, 255);
-        Col::list[Col::c_itemEdge] =          QColor(160, 160, 160);
-        Col::list[Col::c_inactive] =          QColor(128, 128, 128);
+        Global::setting.setThemeColor(ThemeColor::DARK);
+        // Col::list[Col::c_backgroundMain] =    QColor(45, 45, 45);
+        // Col::list[Col::c_backgroundSub] =     QColor(32, 32, 32);
+        // Col::list[Col::c_textMain] =          QColor(224, 224, 224);
+        // Col::list[Col::c_textTitle] =         QColor(192, 192, 192);
+        // Col::list[Col::c_symbol] =            QColor(128, 128, 128);
+        // //Col::list[Col::c_theme] =             QColor(16, 144, 255);
+        // Col::list[Col::c_theme] =             QColor(0, 128, 255);
+        // Col::list[Col::c_itemEdge] =          QColor(160, 160, 160);
+        // Col::list[Col::c_inactive] =          QColor(128, 128, 128);
     } else { // custom
-        Global::setting.global_color_group = 3;
-        Col::read();
+        Global::setting.setThemeColor(ThemeColor::CUSTOM);
+        // Col::read();
     }
 
-    Global::setting.editor_scale = dragStick_scale_editor->getValue() / 100.0;
-    Global::setting.timeline_scale = dragStick_scale_timeline->getValue() / 100.0;
+    Global::setting.setEditorScale(dragStick_scale_editor->getValue() / 100.0);
+    // Global::setting.editor_scale = dragStick_scale_editor->getValue() / 100.0;
+    Global::setting.setTimelineScale(dragStick_scale_timeline->getValue() / 100.0);
 
-    Global::setting.stage_antialising = chooseButton_antialising->getIndex() == 0? true: false;
-    Global::setting.tips_action = 0;//chooseButton_tips->getIndex();
+    Global::setting.setStageAntialising(chooseButton_antialising->getIndex() == 0? true: false);
+    Global::setting.setTipsAction(0);//chooseButton_tips->getIndex();
 
     Global::setting.save();
     end();

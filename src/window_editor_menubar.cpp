@@ -19,7 +19,7 @@ Window_editor_menubar::Window_editor_menubar(QWidget *parent) : QWidget(parent)
 
 
     setAttribute(Qt::WA_TranslucentBackground);
-    setFixedHeight(80.0 * Global::setting.editor_scale);
+    setFixedHeight(80.0 * Global::setting.editorScale());
     setMouseTracking(true);
 
     memset(items_alpha, 0, sizeof(items_alpha));
@@ -34,7 +34,7 @@ void Window_editor_menubar::drawItems(float left, float top)
 {
     static QString text_arr[12] = {"保存", "导出", "撤销", "重做", "设置", "角色", "子弹", "图像", "特效", "音频", "文本", "帮助"};
 
-    float ss = Global::setting.editor_scale;
+    float ss = Global::setting.editorScale();
 
     setPenColor_c(c_symbol);
     Draw::line(left + 80 * ss * 4 - 4 * ss, top + 12 * ss, left + 80 * ss * 4 - 4 * ss, top + 64 * ss, 2 * ss);
@@ -64,7 +64,7 @@ void Window_editor_menubar::drawItems(float left, float top)
 
 void Window_editor_menubar::paintEvent(QPaintEvent *)
 {
-    float ss = Global::setting.editor_scale;
+    float ss = Global::setting.editorScale();
 
     if(!underMouse()) {
         mouse_x = 0;
@@ -94,7 +94,7 @@ void Window_editor_menubar::paintEvent(QPaintEvent *)
 
 void Window_editor_menubar::mousePressEvent(QMouseEvent *event)
 {
-    float ss = Global::setting.editor_scale;
+    float ss = Global::setting.editorScale();
     mouse_x = event->pos().x();
     mouse_y = event->pos().y();
     float w_l = rect().left() + 4 + 160 * ss;

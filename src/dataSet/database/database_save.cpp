@@ -337,8 +337,10 @@ bool Database::save() {
     dir.setPath(basePath + "/image");
     if(!dir.exists()) dir.mkdir(dir.path());
 
-    Global::setting.global_last_name = Global::databaseInfo().projectName;
-    Global::setting.global_last_path = Global::databaseInfo().projectPosition;
+    Global::setting.setLastProjectPosition(Global::databaseInfo().projectPosition,Global::databaseInfo().projectName);
+    // Global::setting.global_last_name = Global::databaseInfo().projectName;
+    // Global::setting.setLastProjectPath(Global::databaseInfo().projectPosition);
+    // Global::setting.global_last_path = Global::databaseInfo().projectPosition;
     Global::setting.save();
 
     QFile file;
