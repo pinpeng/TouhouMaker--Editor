@@ -1,5 +1,7 @@
 #include "dataSet/cacheAgent.h"
 
+#define DATABASE_LIST_MAX_LENGTH 20
+
 CacheAgent::CacheAgent(){
     stage_id_top = 100;
     stage_event_id_top = 100;
@@ -13,8 +15,6 @@ CacheAgent::CacheAgent(){
     effect_id_top = 100;
     audio_id_top = 100;
     image_id_top = 100;
-
-    database_list_max_size = 20;
 }
 
 CacheAgent& CacheAgent::getInstance(){
@@ -22,16 +22,15 @@ CacheAgent& CacheAgent::getInstance(){
     return agent;
 }
 
-Database CacheAgent::database() {
-    return database_list.top();
+Database CacheAgent::database(){
+    return (*_curDatabase);
 }
 
-Database_info CacheAgent::databaseInfo()
-{
-    return database_list.top().info;
+Database_info CacheAgent::databaseInfo(){
+    return _curDatabase->info;
 }
 
-void CacheAgent::databaseInit(QString _name, QString _position) {
+void CacheAgent::databaseInit(const QString& projectName,const QString& projectDir){
     // TODO... stage_id_top,stage_event_id_top,text_id_top没清，不确定要不要清
     stage_id_top = 100;
 
@@ -44,43 +43,46 @@ void CacheAgent::databaseInit(QString _name, QString _position) {
     audio_id_top = 100;
     image_id_top = 100;
 
-    database_list.clear();
-    database_list.push(Database(_name, _position));
+    _databaseList.clear();
+    _databaseList.append(Database(projectName, projectDir));
+    _curDatabase = (--_databaseList.end());
 }
 
-void CacheAgent::databaseUpdate(Database db) {
-    if(database_list_last.size()) database_list_last.clear();
-    database_list.push(db);
-    while(database_list.size() >= database_list_max_size) {
-        database_list.pop_front();
+// 更新数据库操作步骤
+void CacheAgent::databaseUpdate(Database db){
+    _databaseList.erase((_curDatabase + 1),_databaseList.end());
+    _databaseList.append(db);
+    ++_curDatabase;
+    if(_databaseList.size() >= DATABASE_LIST_MAX_LENGTH){
+        _databaseList.erase(_databaseList.begin(),(_databaseList.begin() + (_databaseList.size() - DATABASE_LIST_MAX_LENGTH)));
     }
 }
 
-void CacheAgent::databaseClean()
-{
-    database_list.clear();
-    database_list_last.clear();
+void CacheAgent::databaseClean(){
+    _databaseList.clear();
+    _curDatabase = nullptr;
 }
 
-bool CacheAgent::databaseUndo() {
-    if(database_list.size() > 1) {
-        database_list_last.push(database_list.top());
-        database_list.pop();
-        return true;
-    } else return false;
+bool CacheAgent::databaseUndo(){
+    if(_databaseList.begin() == _curDatabase){
+        return false;
+    }
+
+    --_curDatabase;
+    return true;
 }
 
-bool CacheAgent::databaseRedo() {
-    if(database_list_last.size()) {
-        database_list.push(database_list_last.top());
-        database_list_last.pop();
-        return true;
-    } else return false;
+bool CacheAgent::databaseRedo(){
+    if((_databaseList.end()-1 == _curDatabase)){
+        return false;
+    }
+
+    ++_curDatabase;
+    return true;
 }
 
-int CacheAgent::databaseLanSize()
-{
-    return database_list.top().info.language.length();
+int CacheAgent::databaseLanSize(){
+    return _curDatabase->info.language.length();
 }
 
 

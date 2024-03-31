@@ -2,7 +2,7 @@
 #define CACHE_AGENT_H
 
 #include <QList>
-#include <QStack>
+#include <QLinkedList>
 #include <QMap>
 
 #include <QFile>
@@ -30,7 +30,7 @@ class CacheAgent
     CacheAgent();
     static CacheAgent& getInstance();
 
-    void databaseInit(QString _name, QString _position);
+    void databaseInit(const QString& projectName,const QString& projectDir);
     void databaseUpdate(Database db);
     void databaseClean();
 
@@ -57,9 +57,10 @@ class CacheAgent
     int audio_id_top;
     int image_id_top;
 
-    int               database_list_max_size;
-    QStack<Database>  database_list;
-    QStack<Database>  database_list_last;
+    QLinkedList<Database> _databaseList;            // 数据库链表，用于进行撤销/还原操作
+    QLinkedList<Database>::iterator _curDatabase;   // 当前数据库指针
+    // QStack<Database>  database_list;
+    // QStack<Database>  database_list_last;
 
     Database         database();
     Database_info    databaseInfo();

@@ -41,25 +41,18 @@ class EditorSetting
     int tipsAction();
     bool setTipsAction(int action);
 
-    // int global_color_group; 
     ThemeColor _themeColor = ThemeColor::INVALID;     // 0 = default, 1 = gray, 2 = dark, 3 = custom
 
-    // QString global_last_path;
     QString _lastProjectPath = "";
 
-    // QString global_last_name;
     QString _lastProjectName;
 
-    // float editor_scale; 
     float _editorScale;         // 0.75 -- 1.5
 
-    // float timeline_scale; 
     float _timeLineScale;       // 50 -- 200
 
-    // bool stage_antialising;
     bool _stageAntialising;
 
-    // int tips_action; 
     int _tipsAction;            // 0 = all, 1 = half, 2 = close
 
     QSharedPointer<QSettings> _iniFile;

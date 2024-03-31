@@ -12,7 +12,6 @@ Window_editor_main::Window_editor_main(QWidget *parent) : QWidget(parent)
     setWindowIcon(QIcon(":/logo/mscb_icon.ico"));
     setWindowState(Qt::WindowMaximized);
     setMinimumSize(1600, 960);
-    //Database_info *info = &CacheAgent::getInstance().database_list.top().info;
 
     setWindowTitle("Tou Hou Maker ~ 车万没课儿");
     setStyleSheet("background-color:rgb(" +
