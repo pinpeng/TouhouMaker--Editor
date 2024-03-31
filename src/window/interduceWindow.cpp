@@ -169,7 +169,7 @@ void InterduceWindow::helpSlot()
 
 void InterduceWindow::newStartSlot()
 {
-    win_editor = new Window_editor_main();
+    win_editor = new MainEditorWindow();
     win_editor->homepage = this;
     win_editor->setWindowModality(Qt::ApplicationModal);
     win_editor->setAttribute(Qt::WA_DeleteOnClose);
@@ -179,7 +179,7 @@ void InterduceWindow::newStartSlot()
 
 void InterduceWindow::openStartSlot()
 {
-    win_editor = new Window_editor_main();
+    win_editor = new MainEditorWindow();
     win_editor->homepage = this;
     win_editor->setWindowModality(Qt::ApplicationModal);
     win_editor->setAttribute(Qt::WA_DeleteOnClose);

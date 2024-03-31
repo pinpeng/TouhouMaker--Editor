@@ -18,23 +18,12 @@
 
 #include "window_ask.h"
 
-class Window_editor_main : public QWidget
+class MainEditorWindow : public QWidget
 {
     Q_OBJECT
 
-private:
-
-    QVBoxLayout *mainLayout;
-
-    Window_editor_menubar  *window_menubar;
-    Window_editor_stage    *window_stage;
-    Window_editor_treelist *window_treelist;
-    Window_editor_timeline *window_timeline;
-
-    Window_ask *window_ask;
-
 public:
-    explicit Window_editor_main(QWidget *parent = nullptr);
+    explicit MainEditorWindow(QWidget *parent = nullptr);
     QWidget *homepage;
 
     void keyPressEvent(QKeyEvent *event);
@@ -66,6 +55,18 @@ signals:
 
     void stageUpdateList(int);
 
+private:
+    QVBoxLayout *_mainLayout;
+
+    // 最顶上的菜单栏
+    Window_editor_menubar  *window_menubar;
+    // 中间那坨，包括游戏界面、游戏界面左边的和游戏界面右边的
+    Window_editor_stage    *window_stage;
+    Window_editor_treelist *window_treelist;
+    // 下面的时间线
+    Window_editor_timeline *window_timeline;
+
+    Window_ask *window_ask;
 };
 
 #endif // WINDOW_EDITOR_MAIN_H

@@ -1,19 +1,19 @@
-#include "window_editor_main.h"
+#include "window/editor/mainEditorWindow.h"
 
 #include <QApplication>
 #include <QDesktopServices>
 
-int Window_editor_main::id1 = -1;
-int Window_editor_main::id2 = -1;
-int Window_editor_main::id3 = -1;
+int MainEditorWindow::id1 = -1;
+int MainEditorWindow::id2 = -1;
+int MainEditorWindow::id3 = -1;
 
-Window_editor_main::Window_editor_main(QWidget *parent) : QWidget(parent)
+MainEditorWindow::MainEditorWindow(QWidget *parent) : QWidget(parent)
 {
     setWindowIcon(QIcon(":/logo/mscb_icon.ico"));
     setWindowState(Qt::WindowMaximized);
     setMinimumSize(1600, 960);
 
-    setWindowTitle("Tou Hou Maker ~ 车万没课儿");
+    setWindowTitle("Touhou Maker ~ 车万没课儿");
     setStyleSheet("background-color:rgb(" +
                   QString::number(Color(c_backgroundSub).red()) + "," +
                   QString::number(Color(c_backgroundSub).green()) + "," +
@@ -23,17 +23,17 @@ Window_editor_main::Window_editor_main(QWidget *parent) : QWidget(parent)
     id2 = -1;
     id3 = -1;
 
-    mainLayout = new QVBoxLayout(this);
+    _mainLayout = new QVBoxLayout(this);
 
     window_menubar = new Window_editor_menubar(this);
     window_stage = new Window_editor_stage(this);
     window_timeline = new Window_editor_timeline(this);
 
-    mainLayout->addWidget(window_menubar);
-    mainLayout->addWidget(window_stage);
-    mainLayout->addWidget(window_timeline);
+    _mainLayout->addWidget(window_menubar);
+    _mainLayout->addWidget(window_stage);
+    _mainLayout->addWidget(window_timeline);
 
-    setLayout(mainLayout);
+    setLayout(_mainLayout);
 
     connect(window_menubar, SIGNAL(requestBackToHome()), this, SLOT(backToHome()));
     connect(window_menubar, SIGNAL(requestUndo()), this, SLOT(undo()));
@@ -65,7 +65,7 @@ Window_editor_main::Window_editor_main(QWidget *parent) : QWidget(parent)
     //tips->show();
 }
 
-void Window_editor_main::keyPressEvent(QKeyEvent *event)
+void MainEditorWindow::keyPressEvent(QKeyEvent *event)
 {
     if(event->modifiers() == Qt::ControlModifier) {
         switch(event->key()) {
@@ -92,7 +92,7 @@ void Window_editor_main::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void Window_editor_main::closeEvent(QCloseEvent *event)
+void MainEditorWindow::closeEvent(QCloseEvent *event)
 {
     if(!isEnding) {
         event->ignore();
@@ -104,14 +104,14 @@ void Window_editor_main::closeEvent(QCloseEvent *event)
     }
 }
 
-void Window_editor_main::backToHome()
+void MainEditorWindow::backToHome()
 {
     isEnding = true;
     homepage->show();
     close();
 }
 
-void Window_editor_main::undo()
+void MainEditorWindow::undo()
 {
     if(CacheAgent::getInstance().databaseUndo()) {
         TransparentDialog::play(this, "撤销");
@@ -119,7 +119,7 @@ void Window_editor_main::undo()
     } else TransparentDialog::play(this, "撤销失败");
 }
 
-void Window_editor_main::redo()
+void MainEditorWindow::redo()
 {
 
     if(CacheAgent::getInstance().databaseRedo()) {
@@ -128,7 +128,7 @@ void Window_editor_main::redo()
     } else TransparentDialog::play(this, "重做失败");
 }
 
-void Window_editor_main::save()
+void MainEditorWindow::save()
 {
     if(CacheAgent::getInstance().database().save()) {
         TransparentDialog::play("保存失败");
@@ -139,7 +139,7 @@ void Window_editor_main::save()
     }
 }
 
-void Window_editor_main::pack()
+void MainEditorWindow::pack()
 {
     if(CacheAgent::getInstance().database().save()) {
         TransparentDialog::play("保存失败");
@@ -157,13 +157,13 @@ void Window_editor_main::pack()
     }
 }
 
-void Window_editor_main::ending()
+void MainEditorWindow::ending()
 {
     isEnding = true;
     backToHome();
 }
 
-void Window_editor_main::stageUpdateListCall(int i)
+void MainEditorWindow::stageUpdateListCall(int i)
 {
     emit stageUpdateList(i);
 }

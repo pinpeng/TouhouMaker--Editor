@@ -69,14 +69,14 @@ QString EditorSetting::lastProjectName(){
 }
 
 bool EditorSetting::setLastProjectPosition(const QString& path,const QString& name){
-    bool isChange = false;
+//    bool isChange = false;
     if(_lastProjectPath != path){
         _lastProjectPath = path;
-        isChange = true;
+//        isChange = true;
     }
     if(_lastProjectName != name){
         _lastProjectName = name;
-        isChange = true;
+//        isChange = true;
     }
     // if(isChange){
         // save();

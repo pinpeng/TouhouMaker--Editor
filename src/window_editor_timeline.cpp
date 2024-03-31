@@ -6,7 +6,7 @@
 #include <complex>
 #include <QApplication>
 
-#include "window_editor_main.h"
+#include "window/editor/mainEditorWindow.h"
 
 #include "dataSet/cacheAgent.h"
 
@@ -222,12 +222,12 @@ void Window_editor_timeline::updateFromOutside(int _request_id)
 {
     if(_request_id == 3) return;
     db = CacheAgent::getInstance().database();
-    if(Window_editor_main::id1 >= 1 && Window_editor_main::id2 != -1 &&
-            Window_editor_main::id2 < db.stage[Window_editor_main::id1 - 1].size()) {
-        view_max = db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].length;
-        DB_STAGE *_stage = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2];
+    if(MainEditorWindow::id1 >= 1 && MainEditorWindow::id2 != -1 &&
+            MainEditorWindow::id2 < db.stage[MainEditorWindow::id1 - 1].size()) {
+        view_max = db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].length;
+        DB_STAGE *_stage = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2];
         for(int i = 0; i < _stage->events.size(); i ++) {
-            if(_stage->events[i].id == Window_editor_main::id3) {
+            if(_stage->events[i].id == MainEditorWindow::id3) {
                 float tmp = view_right - view_left;
                 view_left = _stage->events[i].time / view_max * 100.0 - tmp / 2.0;
                 view_right = _stage->events[i].time / view_max * 100.0 + tmp / 2.0;
@@ -266,7 +266,7 @@ void Window_editor_timeline::timeoutRepaint()
     }*/
 
 
-    if(!underMouse() || Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1) {
+    if(!underMouse() || MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1) {
         for(int i = 0; i < 4; i ++) {
             alpha_toolBox[i] = qMax(0.0f, alpha_toolBox[i] - 0.1f);
             if(toolBox_selected == i) {
@@ -313,7 +313,7 @@ void Window_editor_timeline::mousePressEvent(QMouseEvent *event)
     mx = event->x();
     my = event->y();
 
-    if(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1) return;
+    if(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1) return;
     float ss = CacheAgent::getInstance().setting.editorScale();
 
     mx = event->x();
@@ -353,13 +353,13 @@ void Window_editor_timeline::lb_main(float mx, float my)
         if(_scale < 4) _mag = 4 / _scale;
 
         if(0 <= rbt && rbt < view_max) {
-            QList<DB_STAGE_EVENT> *_events = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
+            QList<DB_STAGE_EVENT> *_events = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events;
             rbi = -1;
             for(int i = 0; i < _events->size(); i ++) {
                 if(abs(_events->at(i).time - rbt) <= _mag) {
                     if(abs(_events->at(i).time - rbt) < _abs) {
                         _abs = abs(_events->at(i).time - rbt);
-                        Window_editor_main::id3 = _events->at(i).id;
+                        MainEditorWindow::id3 = _events->at(i).id;
                     }
                 }
             }
@@ -402,7 +402,7 @@ void Window_editor_timeline::rb_main(float mx, float my)
 
             if(0 <= rbt && rbt < view_max) {
                 mouse_down = 4;
-                QList<DB_STAGE_EVENT> *_events = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
+                QList<DB_STAGE_EVENT> *_events = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events;
                 rbi = -1;
                 for(int i = 0; i < _events->size(); i ++) {
                     if(abs(_events->at(i).time - rbt) <= _mag) {
@@ -453,7 +453,7 @@ void Window_editor_timeline::lb_scale(float mx, float my)
 
 void Window_editor_timeline::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    if(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1) return;
+    if(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1) return;
     repaintTimer = qMin(repaintTimer + 2, 4);
 
 }
@@ -463,7 +463,7 @@ void Window_editor_timeline::mouseMoveEvent(QMouseEvent *event)
     mx = event->x();
     my = event->y();
 
-    if(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1) return;
+    if(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1) return;
     float ss = CacheAgent::getInstance().setting.editorScale();
 
 
@@ -531,7 +531,7 @@ void Window_editor_timeline::mouseMoveEvent(QMouseEvent *event)
 
 void Window_editor_timeline::mouseReleaseEvent(QMouseEvent *)
 {
-    if(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1) return;
+    if(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1) return;
     if(mouse_down != 4) mouse_down = 0;
     repaintTimer = qMin(repaintTimer + 2, 4);
 }
@@ -724,7 +724,7 @@ void Window_editor_timeline::drawMain(QRectF _rect)
         Draw::begin(&pixmap_timeline);
         Draw::setAntialising(CacheAgent::getInstance().setting.stageAntialising());
 
-        if(Window_editor_main::id1 >= 1 && Window_editor_main::id2 != -1) {
+        if(MainEditorWindow::id1 >= 1 && MainEditorWindow::id2 != -1) {
 
             Draw::setTextDefault();
             Draw::setTextSize(8 * ss);
@@ -750,8 +750,8 @@ void Window_editor_timeline::drawMain(QRectF _rect)
             }
 
 
-            if(Window_editor_main::id2 < db.stage[Window_editor_main::id1 - 1].size()) {
-                QList<DB_STAGE_EVENT> *_list = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
+            if(MainEditorWindow::id2 < db.stage[MainEditorWindow::id1 - 1].size()) {
+                QList<DB_STAGE_EVENT> *_list = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events;
 
                 QList<_pair> _tmp_list;
 
@@ -784,7 +784,7 @@ void Window_editor_timeline::drawMain(QRectF _rect)
 
                 for(auto i = _list->begin(); i != _list->end(); i ++)
                     drawEvent(i, _scale, buff_x, _w,
-                              _l, _r, _t + 12 * ss, _b - 12 * ss, ss, i->id == Window_editor_main::id3);
+                              _l, _r, _t + 12 * ss, _b - 12 * ss, ss, i->id == MainEditorWindow::id3);
 
             }
         }
@@ -797,7 +797,7 @@ void Window_editor_timeline::drawMain(QRectF _rect)
     Draw::setAntialising(CacheAgent::getInstance().setting.stageAntialising());
 
 
-    if(Window_editor_main::id1 < 1) {
+    if(MainEditorWindow::id1 < 1) {
         setPenColor_c(c_theme);
         Draw::setTextSize(20 * ss);
         Draw::text(_l + 16 * ss, _t + 16 * ss, "选择关卡进行编辑...", Qt::AlignLeft | Qt::AlignTop);
@@ -1025,14 +1025,14 @@ void Window_editor_timeline::drawMenu()
 void Window_editor_timeline::insertEvent(int _time)
 {
     mouse_down = 0;
-    QList<DB_STAGE_EVENT> *_events = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
+    QList<DB_STAGE_EVENT> *_events = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events;
     for(int i = 0; i < _events->size(); i ++) {
         if(_events->at(i).time == _time) {
             TransparentDialog::play("此处已有事件");
             return;
         }
     }
-    window_insertEvent = new Window_editor_timeline_insert(&db, _time, Window_editor_main::id1 - 1, Window_editor_main::id2);
+    window_insertEvent = new Window_editor_timeline_insert(&db, _time, MainEditorWindow::id1 - 1, MainEditorWindow::id2);
     window_insertEvent->setWindowModality(Qt::ApplicationModal);
     window_insertEvent->setAttribute(Qt::WA_DeleteOnClose);
     connect(window_insertEvent, SIGNAL(closed()), this, SLOT(insertEventFinished()));
@@ -1048,7 +1048,7 @@ void Window_editor_timeline::insertEventFinished()
 
 void Window_editor_timeline::deleteEvent(int _index)
 {
-    db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events.removeAt(_index);
+    db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events.removeAt(_index);
 
     CacheAgent::getInstance().databaseUpdate(db);
     emit requestUpdate(3);

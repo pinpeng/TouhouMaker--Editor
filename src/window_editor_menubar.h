@@ -15,8 +15,6 @@
 #include "window_editor_menubar_effect.h"
 #include "window_editor_menubar_text.h"
 
-
-
 class Window_editor_menubar : public QWidget
 {
     Q_OBJECT
@@ -30,8 +28,6 @@ public:
 
 private:
     float items_alpha[12];
-
-    BaseThread *timer;
 
     Window_ask *window_ask;
 

@@ -6,7 +6,7 @@
 #include <complex>
 #include <QApplication>
 
-#include "window_editor_main.h"
+#include "window/editor/mainEditorWindow.h"
 
 #include "dataSet/cacheAgent.h"
 #include <qmath.h>
@@ -54,8 +54,8 @@ void Window_editor_stage::updateFromOutside(int _request_id)
     db = CacheAgent::getInstance().database();
 
     event_list.clear();
-    if(!(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1 || Window_editor_main::id2 >= db.stage[Window_editor_main::id1 - 1].size())) {
-        DB_STAGE *_stage = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2];
+    if(!(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1 || MainEditorWindow::id2 >= db.stage[MainEditorWindow::id1 - 1].size())) {
+        DB_STAGE *_stage = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2];
         for(int i = 0; i < _stage->events.size(); i ++) {
             int pos = 0;
             int _time = _stage->events[i].time;
@@ -80,9 +80,9 @@ void Window_editor_stage::codeEditFinished()
 void Window_editor_stage::codeEditBossAddEventFinished()
 {
 
-    if(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1 || Window_editor_main::id2 >= db.stage[Window_editor_main::id1 - 1].size()) {
+    if(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1 || MainEditorWindow::id2 >= db.stage[MainEditorWindow::id1 - 1].size()) {
     } else {
-        auto *_events = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
+        auto *_events = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events;
 
         for(auto i = _events->begin(); i != _events->end(); i ++) {
             if(i->id == buff_id3) {
@@ -158,9 +158,9 @@ void Window_editor_stage::codeEditBossAddEventFinished()
 
 void Window_editor_stage::codeEditBossAddThreadFinished()
 {
-    if(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1 || Window_editor_main::id2 >= db.stage[Window_editor_main::id1 - 1].size()) {
+    if(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1 || MainEditorWindow::id2 >= db.stage[MainEditorWindow::id1 - 1].size()) {
     } else {
-        auto *_events = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
+        auto *_events = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events;
 
         for(auto i = _events->begin(); i != _events->end(); i ++) {
             if(i->id == buff_id3) {
@@ -200,7 +200,7 @@ void Window_editor_stage::codeEditBossAddThreadFinished()
 
 void Window_editor_stage::stageEditFinished()
 {
-    DB_STAGE *_stage = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2];
+    DB_STAGE *_stage = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2];
     for(int i = 0; i < _stage->events.size(); i ++) {
         if(_stage->events[i].time > _stage->length) {
             _stage->events.removeAt(i);
@@ -217,25 +217,25 @@ void Window_editor_stage::timeoutRepaint()
     event_list.clear();
 
     bool _changed = false;
-    if(buff_id3 != Window_editor_main::id3) {
-        if(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1 || Window_editor_main::id2 >= db.stage[Window_editor_main::id1 - 1].size()) {
+    if(buff_id3 != MainEditorWindow::id3) {
+        if(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1 || MainEditorWindow::id2 >= db.stage[MainEditorWindow::id1 - 1].size()) {
             buff_id3 = -1;
             event_scroll_top = 0;
             repaintTimer = qMin(repaintTimer + 2, 4);
         } else {
-            QList<DB_STAGE_EVENT> *_events = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
+            QList<DB_STAGE_EVENT> *_events = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events;
 
             bool flag = true;
             for(auto i = _events->begin(); i != _events->end(); i ++) {
-                if(i->id == Window_editor_main::id3) {
-                    if(buff_id3 != Window_editor_main::id3) _changed = true;
-                    buff_id3 = Window_editor_main::id3;
+                if(i->id == MainEditorWindow::id3) {
+                    if(buff_id3 != MainEditorWindow::id3) _changed = true;
+                    buff_id3 = MainEditorWindow::id3;
                     flag = false;
                     break;
                 }
             }
             if(flag) {
-                Window_editor_main::id3 = -1;
+                MainEditorWindow::id3 = -1;
                 buff_id3 = -1;
                 event_scroll_top = 0;
             }
@@ -243,8 +243,8 @@ void Window_editor_stage::timeoutRepaint()
         }
     }
 
-    if(!(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1 || Window_editor_main::id2 >= db.stage[Window_editor_main::id1 - 1].size())) {
-        DB_STAGE *_stage = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2];
+    if(!(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1 || MainEditorWindow::id2 >= db.stage[MainEditorWindow::id1 - 1].size())) {
+        DB_STAGE *_stage = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2];
         for(int i = 0; i < _stage->events.size(); i ++) {
             int pos = 0;
             int _time = _stage->events[i].time;
@@ -296,10 +296,10 @@ void Window_editor_stage::mousePressEvent(QMouseEvent *event)
     if(event->button() == Qt::LeftButton) {
         lb_game(QRectF(rect().left() + (_w - _gwindow_w) / 2, rect().top(), _gwindow_w, _h), mx, my, ss);
     }
-    if(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1) return;
+    if(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1) return;
 
     if(event->button() == Qt::LeftButton) {
-        if(!(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1 || Window_editor_main::id2 >= db.stage[Window_editor_main::id1 - 1].size())) {
+        if(!(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1 || MainEditorWindow::id2 >= db.stage[MainEditorWindow::id1 - 1].size())) {
             lb_event(QRectF(rect().left(), rect().top(), (_w - _gwindow_w) / 2, _h), mx, my, ss);
             lb_code(QRectF(rect().left() + (_w - _gwindow_w) / 2 + _gwindow_w, rect().top(), (_w - _gwindow_w) / 2, _h), mx, my, ss);
         }
@@ -315,12 +315,12 @@ void Window_editor_stage::lb_event(QRectF _rect, float mx, float my, float ss)
     if(my < _rect.top() + 96 * ss) { // edit stage
         ask_create("设置关卡");
         connect(window_ask_ex, SIGNAL(OK()), this, SLOT(stageEditFinished()));
-        DB_STAGE *_stage = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2];
+        DB_STAGE *_stage = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2];
 
         ask_add_lineEdit_str("关卡名称", &_stage->name);
         ask_add_dragStick("持续时间", &_stage->length, 6000, 36000, "秒", 1.0 / 60.0);
     } else {
-        DB_STAGE *_stage = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2];
+        DB_STAGE *_stage = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2];
         int scroll_max = qMin(event_list.size(), int(event_scroll_top) + int((_rect.bottom() - 4 - _rect.top() - 116 * ss) / 40 / ss));
         for(int i = int(event_scroll_top); i < scroll_max; i ++) {
             DB_STAGE_EVENT *_event = &_stage->events[event_list[i]];
@@ -338,7 +338,7 @@ void Window_editor_stage::lb_event(QRectF _rect, float mx, float my, float ss)
                 if(_rect.top() + 116 * ss + 40 * tmp * ss < my && my < _rect.top() + 116 * ss + 40 * (tmp + 1) * ss) {
                     buff_id3 = _event->id;
                     code_scroll_top = 0;
-                    Window_editor_main::id3 = buff_id3;
+                    MainEditorWindow::id3 = buff_id3;
                     emit requestUpdate(2);
                     return;
                 }
@@ -411,20 +411,20 @@ void Window_editor_stage::lb_game(QRectF _rect, float mx, float my, float ss)
 
             buffer += basePath + "/output\n";
             if(_flag == 0) { // go!!!
-                if(Window_editor_main::id1 >= 1 && Window_editor_main::id2 != -1
-                        && Window_editor_main::id2 < db.stage[Window_editor_main::id1 - 1].size()) {
-                    buffer += QString::number(Window_editor_main::id1) + "\n";
-                    buffer += QString::number(Window_editor_main::id2) + "\n";
+                if(MainEditorWindow::id1 >= 1 && MainEditorWindow::id2 != -1
+                        && MainEditorWindow::id2 < db.stage[MainEditorWindow::id1 - 1].size()) {
+                    buffer += QString::number(MainEditorWindow::id1) + "\n";
+                    buffer += QString::number(MainEditorWindow::id2) + "\n";
                     buffer += "0\n0\n";
                 } else {
                     buffer += "-123\n0\n0\n0\n";
                 }
             } else if(_flag == 1) { // point
-                if(Window_editor_main::id1 >= 1 && Window_editor_main::id2 != -1
-                        && Window_editor_main::id2 < db.stage[Window_editor_main::id1 - 1].size()) {
-                    buffer += QString::number(Window_editor_main::id1) + "\n";
-                    buffer += QString::number(Window_editor_main::id2) + "\n";
-                    auto *_events = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
+                if(MainEditorWindow::id1 >= 1 && MainEditorWindow::id2 != -1
+                        && MainEditorWindow::id2 < db.stage[MainEditorWindow::id1 - 1].size()) {
+                    buffer += QString::number(MainEditorWindow::id1) + "\n";
+                    buffer += QString::number(MainEditorWindow::id2) + "\n";
+                    auto *_events = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events;
                     bool flag = false;
                     int min_time = 6000;
                     for(auto i = _events->begin(); i != _events->end(); i ++) {
@@ -439,11 +439,11 @@ void Window_editor_stage::lb_game(QRectF _rect, float mx, float my, float ss)
                     buffer += "-123\n0\n0\n0\n";
                 }
             } else if(_flag == 2) { // now
-                if(Window_editor_main::id1 >= 1 && Window_editor_main::id2 != -1
-                        && Window_editor_main::id2 < db.stage[Window_editor_main::id1 - 1].size()) {
-                    buffer += QString::number(Window_editor_main::id1) + "\n";
-                    buffer += QString::number(Window_editor_main::id2) + "\n";
-                    auto *_events = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
+                if(MainEditorWindow::id1 >= 1 && MainEditorWindow::id2 != -1
+                        && MainEditorWindow::id2 < db.stage[MainEditorWindow::id1 - 1].size()) {
+                    buffer += QString::number(MainEditorWindow::id1) + "\n";
+                    buffer += QString::number(MainEditorWindow::id2) + "\n";
+                    auto *_events = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events;
                     bool flag = false;
                     if(buff_id3 != -1) {
                         for(auto i = _events->begin(); i != _events->end(); i ++) {
@@ -547,9 +547,9 @@ void Window_editor_stage::lb_code(QRectF _rect, float mx, float my, float ss)
 {
     if(mx < _rect.left() || my < _rect.top() + 16 * ss) return;
 
-    if(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1 || Window_editor_main::id2 >= db.stage[Window_editor_main::id1 - 1].size()) {
+    if(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1 || MainEditorWindow::id2 >= db.stage[MainEditorWindow::id1 - 1].size()) {
     } else {
-        auto *_events = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
+        auto *_events = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events;
 
         for(auto i = _events->begin(); i != _events->end(); i ++) {
             if(i->id == buff_id3) {
@@ -593,9 +593,9 @@ void Window_editor_stage::mouseReleaseEvent(QMouseEvent *event)
 void Window_editor_stage::wheelEvent(QWheelEvent *event)
 {
 
-    if(!(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1 || Window_editor_main::id2 >= db.stage[Window_editor_main::id1 - 1].size())) {
+    if(!(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1 || MainEditorWindow::id2 >= db.stage[MainEditorWindow::id1 - 1].size())) {
 
-        auto *_events = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
+        auto *_events = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events;
 
         float _w = rect().width();
         float _h = rect().height();
@@ -617,7 +617,7 @@ void Window_editor_stage::wheelEvent(QWheelEvent *event)
         } else if(mouse_x > rect().right() - (_w - _gwindow_w) / 2) {
             int _pre = code_scroll_top;
 
-            auto *_events = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
+            auto *_events = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events;
             code_scroll_top -= float(event->angleDelta().y()) / 120.0;
             code_scroll_top = qMax(0.0f, code_scroll_top);
             for(auto i = _events->begin(); i != _events->end(); i ++) {
@@ -688,12 +688,12 @@ void Window_editor_stage::draw_event(QRectF _rect)
     Draw::roundRect(_rect.left() + 4, _rect.top(), _rect.right() - 4, _rect.bottom(), 6);
     Draw::setTextDefault();
 
-    if(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1 || Window_editor_main::id2 >= db.stage[Window_editor_main::id1 - 1].size()) {
+    if(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1 || MainEditorWindow::id2 >= db.stage[MainEditorWindow::id1 - 1].size()) {
         setPenColor_c(c_theme);
         Draw::setTextSize(20 * ss);
         Draw::text(_rect.left() + 24 * ss, _rect.top() + 16 * ss, "未选择关卡", Qt::AlignLeft | Qt::AlignTop);
     } else {
-        DB_STAGE *_stage = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2];
+        DB_STAGE *_stage = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2];
 
         setPenColor_c(c_theme);
         Draw::setTextSize(20 * ss);
@@ -825,9 +825,9 @@ void Window_editor_stage::draw_code(QRectF _rect)
     setBrushColor_c(c_backgroundMain);
     Draw::roundRect(_rect.left() + 4, _rect.top(), _rect.right() - 4, _rect.bottom(), 6);
 
-    if(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1 || Window_editor_main::id2 >= db.stage[Window_editor_main::id1 - 1].size()) {
+    if(MainEditorWindow::id1 < 1 || MainEditorWindow::id2 == -1 || MainEditorWindow::id2 >= db.stage[MainEditorWindow::id1 - 1].size()) {
     } else {
-        auto *_events = &db.stage[Window_editor_main::id1 - 1][Window_editor_main::id2].events;
+        auto *_events = &db.stage[MainEditorWindow::id1 - 1][MainEditorWindow::id2].events;
 
         for(auto i = _events->begin(); i != _events->end(); i ++) {
             if(i->id == buff_id3) {

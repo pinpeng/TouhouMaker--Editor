@@ -31,7 +31,6 @@ Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Smal
         roundButton[i] = new Widget_RoundButton(this);
         roundButton[i]->setText(_text[i]);
         roundButton[i]->setGeometry(48 + 120 * i, 84, 120, 60);
-        roundButton[i]->setTimer(_timer);
         select_group->addButton(roundButton[i]);
         connect(roundButton[i], SIGNAL(stateChanged()), this, SLOT(updateList()));
     }

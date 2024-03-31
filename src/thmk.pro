@@ -49,7 +49,7 @@ SOURCES += \
     window/interduceWindow.cpp \
     window/newProjectWindow.cpp \
     window_ask.cpp \
-    window_editor_main.cpp \
+    window/editor/mainEditorWindow.cpp \
     window_editor_menubar.cpp \
     window_editor_menubar_audio.cpp \
     window_editor_menubar_audio_edit.cpp \
@@ -103,7 +103,7 @@ HEADERS += \
     widget/widget_textEdit.h \
     window/interduceWindow.h \
     window_ask.h \
-    window_editor_main.h \
+    window/editor/mainEditorWindow.h \
     window_editor_menubar.h \
     window_editor_menubar_audio.h \
     window_editor_menubar_audio_edit.h \

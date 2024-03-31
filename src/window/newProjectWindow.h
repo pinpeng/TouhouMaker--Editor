@@ -1,4 +1,4 @@
-    #ifndef WINDOW_WELCOME_NEWPROJECT_H
+#ifndef WINDOW_WELCOME_NEWPROJECT_H
 #define WINDOW_WELCOME_NEWPROJECT_H
 
 #include "window/smallWindow.h"
@@ -42,6 +42,7 @@ signals:
 public slots:
     void findOldProjectSlot();
     void createProjectSlot();
+    void buttonPressSlot(int id);
 };
 
 #endif // WINDOW_WELCOME_NEWPROJECT_H

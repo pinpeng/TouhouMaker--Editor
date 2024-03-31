@@ -22,7 +22,7 @@ float getWindowsScale() {
 
 int main(int argc, char *argv[])
 {
-    qInstallMessageHandler(LogModule::StaticLogHandler);
+//    qInstallMessageHandler(LogModule::StaticLogHandler);
     QApplication a(argc, argv);
 
     QRect rect = QApplication::desktop()->screenGeometry();

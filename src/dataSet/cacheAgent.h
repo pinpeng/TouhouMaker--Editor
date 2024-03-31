@@ -2,7 +2,6 @@
 #define CACHE_AGENT_H
 
 #include <QList>
-#include <QLinkedList>
 #include <QMap>
 
 #include <QFile>
@@ -57,8 +56,8 @@ class CacheAgent
     int audio_id_top;
     int image_id_top;
 
-    QLinkedList<Database> _databaseList;            // 数据库链表，用于进行撤销/还原操作
-    QLinkedList<Database>::iterator _curDatabase;   // 当前数据库指针
+    QList<Database> _databaseList;              // 数据库链表，用于进行撤销/还原操作
+    int _curDbIndex;                            // 当前数据库指针
     // QStack<Database>  database_list;
     // QStack<Database>  database_list_last;
 

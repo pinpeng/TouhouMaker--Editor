@@ -6,7 +6,7 @@
 #include "dataSet/memoryCache/database.h"
 
 #include "window_editor_stage.h"
-#include "window_editor_main.h"
+#include "window/editor/mainEditorWindow.h"
 #include "window_find.h"
 
 #include "window_editor_menubar_text.h"

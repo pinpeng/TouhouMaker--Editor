@@ -1,7 +1,7 @@
 ﻿#include "window_editor_treelist.h"
 
 #include "draw.h"
-#include "window_editor_main.h"
+#include "window/editor/mainEditorWindow.h"
 
 #include "dataSet/cacheAgent.h"
 
@@ -36,11 +36,11 @@ void Window_editor_treelist::updateFromOutside(int _request_id)
     if(_request_id == 0) return;
     db = CacheAgent::getInstance().database();
     bool flag = true;
-    if(Window_editor_main::id1 >= 1) {
+    if(MainEditorWindow::id1 >= 1) {
         if(id_now != -1) {
-            for(int i = 0; i < db.stage[Window_editor_main::id1 - 1].size(); i ++) {
-                if(db.stage[Window_editor_main::id1 - 1][i].id == id_now) {
-                    Window_editor_main::id2 = i;
+            for(int i = 0; i < db.stage[MainEditorWindow::id1 - 1].size(); i ++) {
+                if(db.stage[MainEditorWindow::id1 - 1][i].id == id_now) {
+                    MainEditorWindow::id2 = i;
                     flag = false;
                     break;
                 }
@@ -50,8 +50,8 @@ void Window_editor_treelist::updateFromOutside(int _request_id)
         flag = false;
     }
     if(flag) {
-        Window_editor_main::id1 = -1;
-        Window_editor_main::id2 = -1;
+        MainEditorWindow::id1 = -1;
+        MainEditorWindow::id2 = -1;
     }
 }
 
@@ -180,8 +180,8 @@ void Window_editor_treelist::mouseClickSelect0(float mx, float my, float _top)
     if(my > _top + 60 * ss) return;
     if(rect().left() + 32 * ss < mx && mx < rect().right() - 72 * ss) {
         if(_top < my && my < _top + 60 * ss) {
-            Window_editor_main::id1 = 0;
-            Window_editor_main::id2 = 0;
+            MainEditorWindow::id1 = 0;
+            MainEditorWindow::id2 = 0;
             id_now = -1;
             emit requestUpdate(0);
         }
@@ -203,7 +203,7 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
             if(top_y < _htop + 30 * ss) continue;
             if(top_y > rect().bottom() - 64 * ss) return;
             if(top_y < my && my < top_y + 60 * ss) {
-                if(Window_editor_main::id1 == 1 && Window_editor_main::id2 == i - 1) {
+                if(MainEditorWindow::id1 == 1 && MainEditorWindow::id2 == i - 1) {
                     float mid_x, mid_y;
                     mid_x = rect().right() - 72 * ss - 96 * ss;
                     mid_y = _top + 60 * ss + (i - 1) * 60 * ss + 30 * ss;
@@ -214,8 +214,8 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
                             db.stage[0].swap(i - 1, i - 2);
                             CacheAgent::getInstance().databaseUpdate(db);
                             db = CacheAgent::getInstance().database();
-                            Window_editor_main::id1 = -1;
-                            Window_editor_main::id2 = -1;
+                            MainEditorWindow::id1 = -1;
+                            MainEditorWindow::id2 = -1;
                             id_now = -1;
                             emit requestUpdate(0);
                         }
@@ -229,8 +229,8 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
                             db.stage[0].swap(i - 1, i);
                             CacheAgent::getInstance().databaseUpdate(db);
                             db = CacheAgent::getInstance().database();
-                            Window_editor_main::id1 = -1;
-                            Window_editor_main::id2 = -1;
+                            MainEditorWindow::id1 = -1;
+                            MainEditorWindow::id2 = -1;
                             id_now = -1;
                             emit requestUpdate(0);
                         }
@@ -244,17 +244,17 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
                             db.stage[0].removeAt(i - 1);
                             CacheAgent::getInstance().databaseUpdate(db);
                             db = CacheAgent::getInstance().database();
-                            Window_editor_main::id1 = -1;
-                            Window_editor_main::id2 = -1;
+                            MainEditorWindow::id1 = -1;
+                            MainEditorWindow::id2 = -1;
                             id_now = -1;
                             emit requestUpdate(0);
                         }
                         return;
                     }
                 } else {
-                    Window_editor_main::id1 = 1;
-                    Window_editor_main::id2 = i - 1;
-                    id_now = db.stage[0][Window_editor_main::id2].id;
+                    MainEditorWindow::id1 = 1;
+                    MainEditorWindow::id2 = i - 1;
+                    id_now = db.stage[0][MainEditorWindow::id2].id;
                     emit requestUpdate(0);
                     return;
                 }
@@ -267,8 +267,8 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
                 db.stage_append(0, "Stage " + QString::number(i));
                 CacheAgent::getInstance().databaseUpdate(db);
                 db = CacheAgent::getInstance().database();
-                Window_editor_main::id1 = -1;
-                Window_editor_main::id2 = -1;
+                MainEditorWindow::id1 = -1;
+                MainEditorWindow::id2 = -1;
                 id_now = -1;
                 emit requestUpdate(0);
             }
@@ -292,7 +292,7 @@ void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
             if(top_y > rect().bottom() - 64 * ss) return;
 
             if(top_y < my && my < top_y + 60 * ss) {
-                if(Window_editor_main::id1 == 2 && Window_editor_main::id2 == i - 1) {
+                if(MainEditorWindow::id1 == 2 && MainEditorWindow::id2 == i - 1) {
                     float mid_x, mid_y;
                     mid_x = rect().right() - 72 * ss - 96 * ss;
                     mid_y = _top + 80 * ss + (i - 1) * 60 * ss;
@@ -303,8 +303,8 @@ void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
                             db.stage[1].swap(i - 1, i - 2);
                             CacheAgent::getInstance().databaseUpdate(db);
                             db = CacheAgent::getInstance().database();
-                            Window_editor_main::id1 = -1;
-                            Window_editor_main::id2 = -1;
+                            MainEditorWindow::id1 = -1;
+                            MainEditorWindow::id2 = -1;
                             id_now = -1;
                             emit requestUpdate(0);
                         }
@@ -318,8 +318,8 @@ void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
                             db.stage[1].swap(i - 1, i);
                             CacheAgent::getInstance().databaseUpdate(db);
                             db = CacheAgent::getInstance().database();
-                            Window_editor_main::id1 = -1;
-                            Window_editor_main::id2 = -1;
+                            MainEditorWindow::id1 = -1;
+                            MainEditorWindow::id2 = -1;
                             id_now = -1;
                             emit requestUpdate(0);
                         }
@@ -333,17 +333,17 @@ void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
                             db.stage[1].removeAt(i - 1);
                             CacheAgent::getInstance().databaseUpdate(db);
                             db = CacheAgent::getInstance().database();
-                            Window_editor_main::id1 = -1;
-                            Window_editor_main::id2 = -1;
+                            MainEditorWindow::id1 = -1;
+                            MainEditorWindow::id2 = -1;
                             id_now = -1;
                             emit requestUpdate(0);
                         }
                         return;
                     }
                 } else {
-                    Window_editor_main::id1 = 2;
-                    Window_editor_main::id2 = i - 1;
-                    id_now = db.stage[1][Window_editor_main::id2].id;
+                    MainEditorWindow::id1 = 2;
+                    MainEditorWindow::id2 = i - 1;
+                    id_now = db.stage[1][MainEditorWindow::id2].id;
                     emit requestUpdate(0);
                     return;
                 }
@@ -356,8 +356,8 @@ void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
                 db.stage_append(1, "EX Stage " + QString::number(i));
                 CacheAgent::getInstance().databaseUpdate(db);
                 db = CacheAgent::getInstance().database();
-                Window_editor_main::id1 = -1;
-                Window_editor_main::id2 = -1;
+                MainEditorWindow::id1 = -1;
+                MainEditorWindow::id2 = -1;
                 id_now = -1;
                 emit requestUpdate(0);
             }
@@ -409,7 +409,7 @@ void Window_editor_treelist::drawItems_0(float _top)
                "主界面", rect().width() - 120 * ss,
                Qt::AlignLeft | Qt::AlignVCenter);
 
-    if(Window_editor_main::id1 == 0) {
+    if(MainEditorWindow::id1 == 0) {
         setPenColor_c(c_theme);
         setBrushColor_false();
         Draw::roundRect(rect().left() + 32 * ss, _top + 8 * ss, rect().right() - 72 * ss, _top + 56 * ss, 3, 2 * ss);
@@ -448,7 +448,7 @@ bool Window_editor_treelist::drawItems_1(float _top)
         mid_y = _top + 60 * ss + num * 60 * ss + 30 * ss;
         if(mid_y < _htop + 60 * ss) continue;
         if(mid_y > rect().bottom() - 64 * ss) return true;
-        if(Window_editor_main::id1 == 1 && Window_editor_main::id2 == num) {
+        if(MainEditorWindow::id1 == 1 && MainEditorWindow::id2 == num) {
             setPenColor_c(c_textMain);
             Draw::text_line_with_length(rect().left() + 40 * ss, mid_y,
                                         "> " + db.stage[0][num].name, rect().width() - 256 * ss,
@@ -516,7 +516,7 @@ bool Window_editor_treelist::drawItems_2(float _top)
         mid_y = _top + 60 * ss + num * 60 * ss + 30 * ss;
         if(mid_y < _htop + 60 * ss) continue;
         if(mid_y > rect().bottom() - 64 * ss) return true;
-        if(Window_editor_main::id1 == 2 && Window_editor_main::id2 == num) {
+        if(MainEditorWindow::id1 == 2 && MainEditorWindow::id2 == num) {
             setPenColor_c(c_textMain);
             Draw::text_line_with_length(rect().left() + 40 * ss, mid_y,
                                         "> " + db.stage[1][num].name, rect().width() - 256 * ss,

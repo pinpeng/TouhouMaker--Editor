@@ -23,11 +23,11 @@ CacheAgent& CacheAgent::getInstance(){
 }
 
 Database CacheAgent::database(){
-    return (*_curDatabase);
+    return _databaseList[_curDbIndex];
 }
 
 Database_info CacheAgent::databaseInfo(){
-    return _curDatabase->info;
+    return _databaseList[_curDbIndex].info;
 }
 
 void CacheAgent::databaseInit(const QString& projectName,const QString& projectDir){
@@ -44,15 +44,18 @@ void CacheAgent::databaseInit(const QString& projectName,const QString& projectD
     image_id_top = 100;
 
     _databaseList.clear();
-    _databaseList.append(Database(projectName, projectDir));
-    _curDatabase = (--_databaseList.end());
+    _databaseList.push_back(Database(projectName, projectDir));
+    _curDbIndex = 0;
 }
 
-// 更新数据库操作步骤
+// 更新缓存操作步骤
 void CacheAgent::databaseUpdate(Database db){
-    _databaseList.erase((_curDatabase + 1),_databaseList.end());
-    _databaseList.append(db);
-    ++_curDatabase;
+    if(_curDbIndex < _databaseList.size() - 1){
+        _databaseList.erase(_databaseList.begin()+_curDbIndex + 1,_databaseList.end());
+    }
+
+    _databaseList.push_back(db);
+    ++_curDbIndex;
     if(_databaseList.size() >= DATABASE_LIST_MAX_LENGTH){
         _databaseList.erase(_databaseList.begin(),(_databaseList.begin() + (_databaseList.size() - DATABASE_LIST_MAX_LENGTH)));
     }
@@ -60,29 +63,29 @@ void CacheAgent::databaseUpdate(Database db){
 
 void CacheAgent::databaseClean(){
     _databaseList.clear();
-    _curDatabase = nullptr;
+    _curDbIndex = -1;
 }
 
 bool CacheAgent::databaseUndo(){
-    if(_databaseList.begin() == _curDatabase){
+    if(_curDbIndex == 0){
         return false;
     }
 
-    --_curDatabase;
+    --_curDbIndex;
     return true;
 }
 
 bool CacheAgent::databaseRedo(){
-    if((_databaseList.end()-1 == _curDatabase)){
+    if(_curDbIndex == _databaseList.size() - 1){
         return false;
     }
 
-    ++_curDatabase;
+    ++_curDbIndex;
     return true;
 }
 
 int CacheAgent::databaseLanSize(){
-    return _curDatabase->info.language.length();
+    return _databaseList[_curDbIndex].info.language.length();
 }
 
 

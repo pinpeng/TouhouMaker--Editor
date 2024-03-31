@@ -25,13 +25,9 @@ private:
 public:
     explicit Widget_RoundButton(QWidget *parent = nullptr);
 
-    void paintEvent(QPaintEvent *) override;
+     void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *event) override;
-    void keyPressEvent(QKeyEvent *event) override;
-
     void slow();
-    void setTimer(BaseThread *thread);
-    inline void setTimer(QTimer& timer){}
 
 private slots:
     void timeoutRepaint();

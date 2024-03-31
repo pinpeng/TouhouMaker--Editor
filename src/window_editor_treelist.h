@@ -11,7 +11,7 @@
 #include "dataSet/memoryCache/database.h"
 #include "basethread.h"
 
-class Window_editor_main;
+class MainEditorWindow;
 
 
 class Window_editor_treelist : public QWidget
@@ -64,7 +64,7 @@ public:
     float state_timer = 0;
     float state_change = 0;
 
-    Window_editor_main *fatherWindow;
+    MainEditorWindow *fatherWindow;
 
 };
 

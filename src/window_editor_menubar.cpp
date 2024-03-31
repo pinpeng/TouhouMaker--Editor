@@ -3,6 +3,7 @@
 #include "draw.h"
 #include "dataSet/cacheAgent.h"
 #include "widget/transparentDialog.h"
+#include "globalSource/sourceAgent.h"
 
 #include <QDesktopServices>
 #include <QApplication>
@@ -16,17 +17,15 @@
 
 Window_editor_menubar::Window_editor_menubar(QWidget *parent) : QWidget(parent)
 {
-
-
     setAttribute(Qt::WA_TranslucentBackground);
     setFixedHeight(80.0 * CacheAgent::getInstance().setting.editorScale());
     setMouseTracking(true);
 
     memset(items_alpha, 0, sizeof(items_alpha));
 
-    timer = new BaseThread();
-    connect(timer, SIGNAL(timeout()), this, SLOT(timeoutRepaint()));
-    timer->start();
+
+    const auto& timer = SourceAgent::GetInstance().GetTimer(GlobalSource::TIMER_REPAINT);
+    connect(timer.data(), SIGNAL(timeout()), this, SLOT(timeoutRepaint()));
 
 }
 
@@ -92,6 +91,7 @@ void Window_editor_menubar::paintEvent(QPaintEvent *)
     Draw::end();
 }
 
+// TODO... 现在是通过像素来判断鼠标按键位置的，后续考虑通过button修改
 void Window_editor_menubar::mousePressEvent(QMouseEvent *event)
 {
     float ss = CacheAgent::getInstance().setting.editorScale();

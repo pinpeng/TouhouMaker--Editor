@@ -25,23 +25,20 @@ NewProjectWindow::NewProjectWindow(QWidget *parent) : SmallWindow(parent)
         round_base = new Widget_RoundButton(this);
         round_base->setText("基本项目");
         round_base->setGeometry(250, 336, 240, 40);
-        round_base->setTimer(_timer);
         round_base->setChecked(true);
 
         round_empty = new Widget_RoundButton(this);
         round_empty->setText("空白项目");
         round_empty->setGeometry(450, 336, 240, 40);
-        round_empty->setTimer(_timer);
 
         round_example = new Widget_RoundButton(this);
         round_example->setText("示例项目");
         round_example->setGeometry(650, 336, 240, 40);
-        round_example->setTimer(_timer);
 
         buttonBox_type = new QButtonGroup(this);
-        buttonBox_type->addButton(round_base);
-        buttonBox_type->addButton(round_empty);
-        buttonBox_type->addButton(round_example);
+        buttonBox_type->addButton(round_base, 0);
+        buttonBox_type->addButton(round_empty, 1);
+        buttonBox_type->addButton(round_example, 2);
     }
 
     _acceptButton = new GradientButton("创建",QRect(320, 386, 240, 80),this);
@@ -50,6 +47,7 @@ NewProjectWindow::NewProjectWindow(QWidget *parent) : SmallWindow(parent)
     connect(_findProjectButton, SIGNAL(pressed()), this, SLOT(findOldProjectSlot()));
     connect(_acceptButton, SIGNAL(pressed()), this, SLOT(createProjectSlot()));
     connect(_cancelButton, SIGNAL(pressed()), this, SLOT(end()));
+    connect(buttonBox_type,SIGNAL(buttonClicked(int)),this,SLOT(buttonPressSlot(int)));
 }
 
 NewProjectWindow::~NewProjectWindow() {
@@ -125,6 +123,6 @@ void NewProjectWindow::createProjectSlot()
     close();
 }
 
-
-
-
+void NewProjectWindow::buttonPressSlot(int id){
+    qDebug() <<" button " << id <<" pressed";
+}

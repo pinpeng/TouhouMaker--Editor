@@ -7,7 +7,7 @@
 #include "window/newProjectWindow.h"
 #include "window/editorSettingWindow.h"
 
-#include "window_editor_main.h"
+#include "window/editor/mainEditorWindow.h"
 
 #include "draw.h"
 
@@ -47,7 +47,7 @@ private:
     NewProjectWindow *_newProjectWindow;
     EditorSettingWindow * _editorSettingWindow;
 
-    Window_editor_main *win_editor;
+    MainEditorWindow *win_editor;
 
 };
 
