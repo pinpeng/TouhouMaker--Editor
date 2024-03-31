@@ -31,7 +31,7 @@ Window_editor_menubar_audio_edit::Window_editor_menubar_audio_edit(Database *_db
     connect(button_preview, SIGNAL(pressed()), this, SLOT(preview()));
 
     if(file->state != 0) {
-        QString basePath = Global::database().info.projectPosition;
+        QString basePath = CacheAgent::getInstance().database().info.projectPosition;
         basePath = basePath + "/audio/" + QString::number(file->__id) + ".ogg";
         if(!QFile::exists(basePath)) {
             TransparentDialog::play(this, "音频已丢失");
@@ -57,7 +57,7 @@ void Window_editor_menubar_audio_edit::paintEvent(QPaintEvent *)
 
 void Window_editor_menubar_audio_edit::open()
 {
-    QString basePath = Global::database().info.projectPosition;
+    QString basePath = CacheAgent::getInstance().database().info.projectPosition;
     QString str = QFileDialog::getOpenFileName(this, "打开音频", basePath, "(*.ogg)");
     if(!str.isEmpty()) {
         QFile fin(str);
@@ -84,7 +84,7 @@ void Window_editor_menubar_audio_edit::preview()
         return;
     }
 
-    QString basePath = Global::database().info.projectPosition;
+    QString basePath = CacheAgent::getInstance().database().info.projectPosition;
     basePath = basePath + "/audio/" + QString::number(file->__id) + ".ogg";
     if(!QFile::exists(basePath)) {
         TransparentDialog::play(this, "音频已丢失");

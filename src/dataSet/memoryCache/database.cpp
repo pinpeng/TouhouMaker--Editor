@@ -1,9 +1,9 @@
-#include "dataSet/database/database.h"
+#include "dataSet/memoryCache/database.h"
 
 #include <QDir>
 #include <QTextStream>
 
-#include "global.h"
+#include "dataSet/cacheAgent.h"
 
 Database::Database() {
 }
@@ -65,7 +65,7 @@ void Database::init() {
 
 int Database::text_append(QString _text)
 {
-    int tmp = ++Global::text_id_top;
+    int tmp = ++CacheAgent::getInstance().text_id_top;
     text.insert(tmp, DB_text(tmp, _text));
     return tmp;
 }
@@ -93,7 +93,7 @@ QString Database::getText(int _index, int _lan)
 
 void Database::stage_append(int _type, QString _name)
 {
-    stage[_type].append(DB_STAGE(++Global::stage_id_top, _name));
+    stage[_type].append(DB_STAGE(++CacheAgent::getInstance().stage_id_top, _name));
 }
 
 void Database::stage_delete_id(int _type, int _id)
@@ -113,7 +113,7 @@ void Database::stage_delete_pos(int _type, int _pos)
 
 void Database::hero_append(QString _name)
 {
-    int tmp = ++Global::hero_id_top;
+    int tmp = ++CacheAgent::getInstance().hero_id_top;
     hero.insert(tmp, DB_hero(this, tmp, _name));
 }
 
@@ -125,7 +125,7 @@ void Database::hero_delete(int _id)
 
 void Database::enemy_append(QString _name)
 {
-    int tmp = ++Global::enemy_id_top;
+    int tmp = ++CacheAgent::getInstance().enemy_id_top;
     enemy.insert(tmp, DB_enemy(tmp, _name));
 }
 
@@ -140,7 +140,7 @@ void Database::enemy_delete(int _id)
 
 void Database::boss_append(QString _name)
 {
-    int tmp = ++Global::boss_id_top;
+    int tmp = ++CacheAgent::getInstance().boss_id_top;
     boss.insert(tmp, DB_boss(this, tmp, _name));
 }
 
@@ -152,7 +152,7 @@ void Database::boss_delete(int _id)
 
 void Database::bullet_append(int _type, QString _name)
 {
-    int tmp = ++Global::bullet_id_top;
+    int tmp = ++CacheAgent::getInstance().bullet_id_top;
     bullet[_type].insert(tmp, DB_bullet(tmp, _name));
 }
 
@@ -164,7 +164,7 @@ void Database::bullet_delete(int _type, int _id)
 
 void Database::effect_append(int _type, QString _name)
 {
-    int tmp = ++Global::effect_id_top;
+    int tmp = ++CacheAgent::getInstance().effect_id_top;
     effect[_type].insert(tmp, DB_effect(tmp, _name));
 }
 
@@ -176,7 +176,7 @@ void Database::effect_delete(int _type, int _id)
 
 void Database::audio_append(int _type, QString _name)
 {
-    int tmp = ++Global::audio_id_top;
+    int tmp = ++CacheAgent::getInstance().audio_id_top;
     audio[_type].insert(tmp, DB_audio(tmp, _name));
 }
 
@@ -188,7 +188,7 @@ void Database::audio_delete(int _type, int _id)
 
 void Database::image_append(int _type, QString _name)
 {
-    int tmp = ++Global::image_id_top;
+    int tmp = ++CacheAgent::getInstance().image_id_top;
     image[_type].insert(tmp, DB_image(tmp, _name));
 }
 

@@ -7,7 +7,7 @@
 #include "widget/gradientButton.h"
 #include "widget/widget_roundbutton.h"
 
-#include "global.h"
+#include "dataSet/cacheAgent.h"
 
 class Window_editor_menubar_setting_language : public SmallWindow
 {

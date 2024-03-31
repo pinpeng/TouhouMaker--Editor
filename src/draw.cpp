@@ -1,5 +1,5 @@
 #include "draw.h"
-#include "global.h"
+#include "dataSet/cacheAgent.h"
 
 #include <QFontDatabase>
 #include "dataSet/editorSetting.h"
@@ -12,7 +12,7 @@ QVector<QColor> Col::list = QVector<QColor>(static_cast<int>(Col::c_end));
 void Col::init()
 {    
     Col::list.resize(static_cast<int>(Col::c_end));
-    Col::setThemeColor(Global::setting.themeColor());
+    Col::setThemeColor(CacheAgent::getInstance().setting.themeColor());
 }
 
 void Col::setThemeColor(ThemeColor color){

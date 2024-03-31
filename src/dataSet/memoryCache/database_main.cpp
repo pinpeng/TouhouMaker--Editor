@@ -2,8 +2,8 @@
 
 #include <QDir>
 
-#include "global.h"
-#include "dataSet/database/database.h"
+#include "dataSet/cacheAgent.h"
+#include "dataSet/memoryCache/database.h"
 
 DB_UI_TITLE::DB_UI_TITLE()
 {
@@ -36,6 +36,6 @@ DB_STAGE::DB_STAGE(int _id, QString _name)
     name = _name;
     length = 18000;
 
-    events.append(DB_STAGE_EVENT(++Global::stage_event_id_top, 0, 0));
-    events.append(DB_STAGE_EVENT(++Global::stage_event_id_top, 30, 1));
+    events.append(DB_STAGE_EVENT(++CacheAgent::getInstance().stage_event_id_top, 0, 0));
+    events.append(DB_STAGE_EVENT(++CacheAgent::getInstance().stage_event_id_top, 30, 1));
 }

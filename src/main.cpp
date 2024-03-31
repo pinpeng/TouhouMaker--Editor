@@ -1,6 +1,6 @@
 #include <QApplication>
 
-#include "global.h"
+#include "dataSet/cacheAgent.h"
 #include "sprite.h"
 #include "draw.h"
 

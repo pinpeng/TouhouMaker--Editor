@@ -7,7 +7,7 @@
 #include "widget/ellipticalLineEdit.h"
 #include "widget/widget_itemlist.h"
 
-#include "global.h"
+#include "dataSet/cacheAgent.h"
 
 #include "window_editor_menubar_image_edit.h"
 

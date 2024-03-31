@@ -3,7 +3,7 @@
 #include "draw.h"
 #include "window_editor_main.h"
 
-#include "global.h"
+#include "dataSet/cacheAgent.h"
 
 #include <QLineF>
 #include <complex>
@@ -25,16 +25,16 @@ Window_editor_treelist::Window_editor_treelist(QWidget *parent) : QWidget(parent
     connect(timer, SIGNAL(timeout()), this, SLOT(timeoutRepaint()));
     timer->start();
 
-    setFixedWidth(480 * Global::setting.editorScale());
+    setFixedWidth(480 * CacheAgent::getInstance().setting.editorScale());
 
-    db = Global::database();
+    db = CacheAgent::getInstance().database();
     id_now = -1;
 }
 
 void Window_editor_treelist::updateFromOutside(int _request_id)
 {
     if(_request_id == 0) return;
-    db = Global::database();
+    db = CacheAgent::getInstance().database();
     bool flag = true;
     if(Window_editor_main::id1 >= 1) {
         if(id_now != -1) {
@@ -58,8 +58,8 @@ void Window_editor_treelist::updateFromOutside(int _request_id)
 
 void Window_editor_treelist::paintEvent(QPaintEvent *)
 {
-    db = Global::database();
-    float ss = Global::setting.editorScale();
+    db = CacheAgent::getInstance().database();
+    float ss = CacheAgent::getInstance().setting.editorScale();
     float _offset = 0.5 - state_timer;
 
     if(state_timer <= 0) {
@@ -150,8 +150,8 @@ void Window_editor_treelist::paintEvent(QPaintEvent *)
 
 void Window_editor_treelist::mousePressEvent(QMouseEvent *event)
 {
-    db = Global::database();
-    float ss = Global::setting.editorScale();
+    db = CacheAgent::getInstance().database();
+    float ss = CacheAgent::getInstance().setting.editorScale();
     if(event->button() == Qt::LeftButton) {
 
         float mx = event->pos().x();
@@ -176,7 +176,7 @@ void Window_editor_treelist::mousePressEvent(QMouseEvent *event)
 
 void Window_editor_treelist::mouseClickSelect0(float mx, float my, float _top)
 {
-    float ss = Global::setting.editorScale();
+    float ss = CacheAgent::getInstance().setting.editorScale();
     if(my > _top + 60 * ss) return;
     if(rect().left() + 32 * ss < mx && mx < rect().right() - 72 * ss) {
         if(_top < my && my < _top + 60 * ss) {
@@ -190,7 +190,7 @@ void Window_editor_treelist::mouseClickSelect0(float mx, float my, float _top)
 
 void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
 {
-    float ss = Global::setting.editorScale();
+    float ss = CacheAgent::getInstance().setting.editorScale();
     if(my > _top + db.stage[0].size() * 60 * ss + 120 * ss) return;
     if(rect().left() + 32 * ss < mx && mx < rect().right() - 72 * ss) {
 
@@ -212,8 +212,8 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
                             TransparentDialog::play(fatherWindow, "无法上移");
                         } else {
                             db.stage[0].swap(i - 1, i - 2);
-                            Global::databaseUpdate(db);
-                            db = Global::database();
+                            CacheAgent::getInstance().databaseUpdate(db);
+                            db = CacheAgent::getInstance().database();
                             Window_editor_main::id1 = -1;
                             Window_editor_main::id2 = -1;
                             id_now = -1;
@@ -227,8 +227,8 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
                             TransparentDialog::play(fatherWindow, "无法下移");
                         } else {
                             db.stage[0].swap(i - 1, i);
-                            Global::databaseUpdate(db);
-                            db = Global::database();
+                            CacheAgent::getInstance().databaseUpdate(db);
+                            db = CacheAgent::getInstance().database();
                             Window_editor_main::id1 = -1;
                             Window_editor_main::id2 = -1;
                             id_now = -1;
@@ -242,8 +242,8 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
                             TransparentDialog::play(fatherWindow, "至少保留一个");
                         } else {
                             db.stage[0].removeAt(i - 1);
-                            Global::databaseUpdate(db);
-                            db = Global::database();
+                            CacheAgent::getInstance().databaseUpdate(db);
+                            db = CacheAgent::getInstance().database();
                             Window_editor_main::id1 = -1;
                             Window_editor_main::id2 = -1;
                             id_now = -1;
@@ -265,8 +265,8 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
         if(_b > _htop && _b < rect().bottom() - 64 * ss) {
             if(_b < my && my < _b + 60 * ss) {
                 db.stage_append(0, "Stage " + QString::number(i));
-                Global::databaseUpdate(db);
-                db = Global::database();
+                CacheAgent::getInstance().databaseUpdate(db);
+                db = CacheAgent::getInstance().database();
                 Window_editor_main::id1 = -1;
                 Window_editor_main::id2 = -1;
                 id_now = -1;
@@ -278,7 +278,7 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
 
 void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
 {
-    float ss = Global::setting.editorScale();
+    float ss = CacheAgent::getInstance().setting.editorScale();
     if(my > _top + db.stage[1].size() * 60 * ss + 120 * ss) return;
     if(rect().left() + 32 * ss < mx && mx < rect().right() - 72 * ss) {
 
@@ -301,8 +301,8 @@ void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
                             TransparentDialog::play(fatherWindow, "无法上移");
                         } else {
                             db.stage[1].swap(i - 1, i - 2);
-                            Global::databaseUpdate(db);
-                            db = Global::database();
+                            CacheAgent::getInstance().databaseUpdate(db);
+                            db = CacheAgent::getInstance().database();
                             Window_editor_main::id1 = -1;
                             Window_editor_main::id2 = -1;
                             id_now = -1;
@@ -316,8 +316,8 @@ void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
                             TransparentDialog::play(fatherWindow, "无法下移");
                         } else {
                             db.stage[1].swap(i - 1, i);
-                            Global::databaseUpdate(db);
-                            db = Global::database();
+                            CacheAgent::getInstance().databaseUpdate(db);
+                            db = CacheAgent::getInstance().database();
                             Window_editor_main::id1 = -1;
                             Window_editor_main::id2 = -1;
                             id_now = -1;
@@ -331,8 +331,8 @@ void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
                             TransparentDialog::play(fatherWindow, "至少保留一个");
                         } else {
                             db.stage[1].removeAt(i - 1);
-                            Global::databaseUpdate(db);
-                            db = Global::database();
+                            CacheAgent::getInstance().databaseUpdate(db);
+                            db = CacheAgent::getInstance().database();
                             Window_editor_main::id1 = -1;
                             Window_editor_main::id2 = -1;
                             id_now = -1;
@@ -354,8 +354,8 @@ void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
         if(_b > _htop && _b < rect().bottom() - 64 * ss) {
             if(_b < my && my < _b + 60 * ss) {
                 db.stage_append(1, "EX Stage " + QString::number(i));
-                Global::databaseUpdate(db);
-                db = Global::database();
+                CacheAgent::getInstance().databaseUpdate(db);
+                db = CacheAgent::getInstance().database();
                 Window_editor_main::id1 = -1;
                 Window_editor_main::id2 = -1;
                 id_now = -1;
@@ -371,7 +371,7 @@ void Window_editor_treelist::mouseDoubleClickEvent(QMouseEvent *event)
 
 void Window_editor_treelist::wheelEvent(QWheelEvent *event)
 {
-    float ss = Global::setting.editorScale();
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     int _pre = item_top;
 
@@ -387,7 +387,7 @@ void Window_editor_treelist::wheelEvent(QWheelEvent *event)
 
 void Window_editor_treelist::drawTop()
 {
-    float ss = Global::setting.editorScale();
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     Draw::setTextSize(24 * ss);
     setPenColor_c(c_theme);
@@ -398,7 +398,7 @@ void Window_editor_treelist::drawTop()
 
 void Window_editor_treelist::drawItems_0(float _top)
 {
-    float ss = Global::setting.editorScale();
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     setPenColor_c(c_symbol);
     Draw::line(rect().left() + 24 * ss, _top, rect().right() - 72 * ss, _top, 2);
@@ -420,7 +420,7 @@ void Window_editor_treelist::drawItems_0(float _top)
 bool Window_editor_treelist::drawItems_1(float _top)
 {
 
-    float ss = Global::setting.editorScale();
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     float _htop = qMax(_top, rect().top() + 80 * ss + 60 * ss);
     setPenColor_c(c_symbol);
@@ -485,7 +485,7 @@ bool Window_editor_treelist::drawItems_1(float _top)
 bool Window_editor_treelist::drawItems_2(float _top)
 {
 
-    float ss = Global::setting.editorScale();
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     float _htop = qMax(_top, rect().top() + 80 * ss + 120 * ss);
 
@@ -573,8 +573,8 @@ void Window_editor_treelist::timeoutRepaint()
     }
     if(fatherWindow != nullptr) {
         float tmp = -cos(state_timer * 3.1415926) * 0.5 + 0.5;
-        setGeometry((tmp - 1) * 432 * Global::setting.editorScale(), 0,
-                    480 * Global::setting.editorScale(), fatherWindow->height());
+        setGeometry((tmp - 1) * 432 * CacheAgent::getInstance().setting.editorScale(), 0,
+                    480 * CacheAgent::getInstance().setting.editorScale(), fatherWindow->height());
     }
     if(!isActiveWindow()) return;
     if(0 < state_timer && state_timer < 1) repaint();

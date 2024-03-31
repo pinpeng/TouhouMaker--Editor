@@ -7,7 +7,7 @@ Window_editor_menubar_audio::Window_editor_menubar_audio(QWidget *parent) : Smal
     setFixedSize(1200, 900);
     setWindowTitle("编辑音频");
 
-    db = Global::database();
+    db = CacheAgent::getInstance().database();
 
     button_accept = new GradientButton(this);
     button_accept->setGeometry(720 - 28, 900 - 96, 240, 80);
@@ -93,7 +93,7 @@ void Window_editor_menubar_audio::updateList()
 
 void Window_editor_menubar_audio::accept()
 {
-    Global::databaseUpdate(db);
+    CacheAgent::getInstance().databaseUpdate(db);
     end();
 }
 
@@ -107,7 +107,7 @@ void Window_editor_menubar_audio::editAudio(int _index)
 
 void Window_editor_menubar_audio::openFolder()
 {
-    if(!QDesktopServices::openUrl(QUrl::fromLocalFile(Global::databaseInfo().projectPosition + "/audio"))) {
+    if(!QDesktopServices::openUrl(QUrl::fromLocalFile(CacheAgent::getInstance().databaseInfo().projectPosition + "/audio"))) {
         TransparentDialog::play("无法打开文件夹");
     }
 }

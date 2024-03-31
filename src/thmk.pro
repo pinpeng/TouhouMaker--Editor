@@ -22,16 +22,16 @@ SOURCES += \
     globalSource/timerManager.cpp \
     # database
     dataSet/database/sqliteUtil.cpp \
-    dataSet/database/database.cpp \
-    dataSet/database/entity/database_define.cpp \
-    dataSet/database/database_define_edit.cpp \
-    dataSet/database/database_info.cpp \
-    dataSet/database/database_main.cpp \
-    dataSet/database/database_main_edit.cpp \
-    dataSet/database/database_save.cpp \
+    dataSet/memoryCache/database.cpp \
+    dataSet/memoryCache/database_define.cpp \
+    dataSet/memoryCache/database_define_edit.cpp \
+    dataSet/memoryCache/database_info.cpp \
+    dataSet/memoryCache/database_main.cpp \
+    dataSet/memoryCache/database_main_edit.cpp \
+    dataSet/memoryCache/database_save.cpp \
     dataSet/editorSetting.cpp \
     draw.cpp \
-    global.cpp \
+    dataSet/cacheAgent.cpp \
     logModule/logmodule.cpp \
     main.cpp \
     widget/transparentDialog.cpp \
@@ -70,21 +70,21 @@ SOURCES += \
     window_editor_treelist.cpp \
     window_find.cpp \
     window/smallWindow.cpp \
-    window_welcome_setting.cpp \
+    window/editorSettingWindow.cpp \
 
 HEADERS += \
     basethread.h \
     globalSource/SourceAgent.h \
     globalSource/fontManager.h \
     globalSource/timerManager.h \
-    # database
+    # dataSet
     dataSet/database/sqliteUtil.h \
-    dataSet/database/database.h \
-    dataSet/database/entity/database_define.h \
-    dataSet/database/database_info.h \
-    dataSet/database/database_main.h \
+    dataSet/memoryCache/database.h \
+    dataSet/memoryCache/database_define.h \
+    dataSet/memoryCache/database_info.h \
+    dataSet/memoryCache/database_main.h \
     draw.h \
-    global.h \
+    dataSet/cacheAgent.h \
     logModule/logmodule.h \
     widget/transparentDialog.h \
     qzipreader_p.h \
@@ -125,7 +125,7 @@ HEADERS += \
     window_find.h \
     window/smallWindow.h \
     window/newProjectWindow.h \
-    window_welcome_setting.h
+    window/editorSettingWindow.h
 
 FORMS +=
 

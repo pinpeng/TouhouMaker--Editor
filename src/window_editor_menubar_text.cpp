@@ -58,7 +58,7 @@ Window_editor_menubar_text::Window_editor_menubar_text(QWidget *parent) : SmallW
     setFixedSize(1200, 900);
     setWindowTitle("编辑文本");
 
-    db = Global::database();
+    db = CacheAgent::getInstance().database();
 
     button_accept = new GradientButton(this);
     button_accept->setGeometry(720 - 28, 900 - 96, 240, 80);
@@ -122,7 +122,7 @@ void Window_editor_menubar_text::updateList()
 
 void Window_editor_menubar_text::accept()
 {
-    Global::databaseUpdate(db);
+    CacheAgent::getInstance().databaseUpdate(db);
     end();
 }
 

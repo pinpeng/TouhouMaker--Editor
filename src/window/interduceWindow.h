@@ -5,7 +5,7 @@
 
 #include "window/smallWindow.h"
 #include "window/newProjectWindow.h"
-#include "window_welcome_setting.h"
+#include "window/editorSettingWindow.h"
 
 #include "window_editor_main.h"
 
@@ -45,7 +45,7 @@ private:
 
 
     NewProjectWindow *_newProjectWindow;
-    Window_welcome_setting *win_setting;
+    EditorSettingWindow * _editorSettingWindow;
 
     Window_editor_main *win_editor;
 

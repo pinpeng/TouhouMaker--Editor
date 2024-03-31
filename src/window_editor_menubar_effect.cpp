@@ -5,7 +5,7 @@ Window_editor_menubar_effect::Window_editor_menubar_effect(QWidget *parent) : Sm
     setFixedSize(1200, 900);
     setWindowTitle("编辑特效");
 
-    db = Global::database();
+    db = CacheAgent::getInstance().database();
 
     button_accept = new GradientButton(this);
     button_accept->setGeometry(720 - 28, 900 - 96, 240, 80);
@@ -83,7 +83,7 @@ void Window_editor_menubar_effect::updateList()
 
 void Window_editor_menubar_effect::accept()
 {
-    Global::databaseUpdate(db);
+    CacheAgent::getInstance().databaseUpdate(db);
     end();
 }
 

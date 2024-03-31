@@ -1,6 +1,6 @@
 // #include "window_editor_treelist_rename.h"
 
-// #include "global.h"
+// #include "dataSet/cacheAgent.h"
 
 // Window_editor_treelist_rename::Window_editor_treelist_rename(QString _text, int _id, QWidget *parent) : Window_small(parent)
 // {
@@ -36,10 +36,10 @@
 // void Window_editor_treelist_rename::accept()
 // {
 //     if(name != lineEdit->text()) {
-//         Database db = Global::database();
+//         Database db = CacheAgent::getInstance().database();
 //         if(id >= 0) db.dialog_folder[id].name = lineEdit->text();
 //         else db.dialog_file[id].name = lineEdit->text();
-//         Global::databaseUpdate(db);
+//         CacheAgent::getInstance().databaseUpdate(db);
 //     }
 //     end();
 // }

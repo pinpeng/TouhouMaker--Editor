@@ -1,9 +1,9 @@
-#include "window_welcome_setting.h"
+#include "window/editorSettingWindow.h"
 
 #include <QDesktopServices>
 #include <QApplication>
 
-Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(parent)
+EditorSettingWindow::EditorSettingWindow(QWidget *parent) : SmallWindow(parent)
 {
     setFixedSize(1200, 640);
     setWindowTitle("设置（部分设置可能需要重启程序才能应用）");
@@ -31,7 +31,7 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
     chooseButton_color->addText("自定义");
     chooseButton_color->setTimer(_timer);
 
-    chooseButton_color->setIndex(Global::setting.themeColor());
+    chooseButton_color->setIndex(CacheAgent::getInstance().setting.themeColor());
 
     button_custom = new GradientButton(this);
     button_custom->setGeometry(960 - 32, 64, 240, 80);
@@ -45,13 +45,13 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
     dragStick_scale_editor->setGeometry(640 - 32, 144, 560, 80);
     dragStick_scale_editor->setTimer(_timer);
     dragStick_scale_editor->setRange(50, 150);
-    dragStick_scale_editor->setValue(Global::setting.editorScale() * 100.0);
+    dragStick_scale_editor->setValue(CacheAgent::getInstance().setting.editorScale() * 100.0);
 
     dragStick_scale_timeline = new Widget_DragStick(this);
     dragStick_scale_timeline->setGeometry(640 - 32, 224, 560, 80);
     dragStick_scale_timeline->setTimer(_timer);
     dragStick_scale_timeline->setRange(50, 150);
-    dragStick_scale_timeline->setValue(Global::setting.timelineScale() * 100.0);
+    dragStick_scale_timeline->setValue(CacheAgent::getInstance().setting.timelineScale() * 100.0);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -60,7 +60,7 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
     chooseButton_antialising->addText("开启（较慢）");
     chooseButton_antialising->addText("关闭（较快）");
     chooseButton_antialising->setTimer(_timer);
-    if(Global::setting.stageAntialising() == true){
+    if(CacheAgent::getInstance().setting.stageAntialising() == true){
         chooseButton_antialising->setIndex(0);
     }
     else{
@@ -75,11 +75,11 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
     chooseButton_tips->addText("仅重要提示");
     chooseButton_tips->addText("关闭并隐藏");
     chooseButton_tips->setTimer(_timer);
-    chooseButton_tips->setIndex(Global::setting.tips_action);
+    chooseButton_tips->setIndex(CacheAgent::getInstance().setting.tips_action);
 */
 }
 
-void Window_welcome_setting::paintEvent(QPaintEvent *)
+void EditorSettingWindow::paintEvent(QPaintEvent *)
 {
     Draw::smallWindow(this, this);
     Draw::begin(this);
@@ -94,7 +94,7 @@ void Window_welcome_setting::paintEvent(QPaintEvent *)
     Draw::end();
 }
 
-void Window_welcome_setting::color_custom()
+void EditorSettingWindow::color_custom()
 {
     if(!QFile::exists(QApplication::applicationDirPath() + "/color.ini")) Col::save();
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(QApplication::applicationDirPath() + "/color.ini"))) {
@@ -102,11 +102,11 @@ void Window_welcome_setting::color_custom()
     }
 }
 
-void Window_welcome_setting::save()
+void EditorSettingWindow::save()
 {
     // TODO... 后续Draw当中的主题画笔配置，用json在外部记录
     if(chooseButton_color->getIndex() == 0) {
-        Global::setting.setThemeColor(ThemeColor::DEFAULT);
+        CacheAgent::getInstance().setting.setThemeColor(ThemeColor::DEFAULT);
         // Col::list[Col::c_backgroundMain] = QColor(255, 255, 255);
         // Col::list[Col::c_backgroundSub] =  QColor(236, 236, 236);
         // Col::list[Col::c_textMain] =       QColor(32, 32, 32);
@@ -116,7 +116,7 @@ void Window_welcome_setting::save()
         // Col::list[Col::c_itemEdge] =       QColor(128, 128, 128);
         // Col::list[Col::c_inactive] =       QColor(32, 32, 32);
     } else if(chooseButton_color->getIndex() == 1) {
-        Global::setting.setThemeColor(ThemeColor::GRAY);
+        CacheAgent::getInstance().setting.setThemeColor(ThemeColor::GRAY);
         // Col::list[Col::c_backgroundMain] =    QColor(236, 236, 236);
         // Col::list[Col::c_backgroundSub] =     QColor(212, 212, 212);
         // Col::list[Col::c_textMain] =          QColor(0, 0, 0);
@@ -127,7 +127,7 @@ void Window_welcome_setting::save()
         // Col::list[Col::c_itemEdge] =          QColor(108, 108, 108);
         // Col::list[Col::c_inactive] =          QColor(16, 16, 16);
     } else if(chooseButton_color->getIndex() == 2) {
-        Global::setting.setThemeColor(ThemeColor::DARK);
+        CacheAgent::getInstance().setting.setThemeColor(ThemeColor::DARK);
         // Col::list[Col::c_backgroundMain] =    QColor(45, 45, 45);
         // Col::list[Col::c_backgroundSub] =     QColor(32, 32, 32);
         // Col::list[Col::c_textMain] =          QColor(224, 224, 224);
@@ -138,17 +138,17 @@ void Window_welcome_setting::save()
         // Col::list[Col::c_itemEdge] =          QColor(160, 160, 160);
         // Col::list[Col::c_inactive] =          QColor(128, 128, 128);
     } else { // custom
-        Global::setting.setThemeColor(ThemeColor::CUSTOM);
+        CacheAgent::getInstance().setting.setThemeColor(ThemeColor::CUSTOM);
         // Col::read();
     }
 
-    Global::setting.setEditorScale(dragStick_scale_editor->getValue() / 100.0);
-    // Global::setting.editor_scale = dragStick_scale_editor->getValue() / 100.0;
-    Global::setting.setTimelineScale(dragStick_scale_timeline->getValue() / 100.0);
+    CacheAgent::getInstance().setting.setEditorScale(dragStick_scale_editor->getValue() / 100.0);
+    // CacheAgent::getInstance().setting.editor_scale = dragStick_scale_editor->getValue() / 100.0;
+    CacheAgent::getInstance().setting.setTimelineScale(dragStick_scale_timeline->getValue() / 100.0);
 
-    Global::setting.setStageAntialising(chooseButton_antialising->getIndex() == 0? true: false);
-    Global::setting.setTipsAction(0);//chooseButton_tips->getIndex();
+    CacheAgent::getInstance().setting.setStageAntialising(chooseButton_antialising->getIndex() == 0? true: false);
+    CacheAgent::getInstance().setting.setTipsAction(0);//chooseButton_tips->getIndex();
 
-    Global::setting.save();
+    CacheAgent::getInstance().setting.save();
     end();
 }

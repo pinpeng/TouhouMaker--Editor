@@ -6,7 +6,7 @@
 // #include "widget/ellipticalLineEdit.h"
 // #include "widget/widget_itemlist.h"
 
-// #include "global.h"
+// #include "dataSet/cacheAgent.h"
 
 // class Window_find_character : public Window_small
 // {

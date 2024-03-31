@@ -1,8 +1,8 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include "dataSet/database/database_main.h"
-#include "dataSet/database/entity/database_define.h"
+#include "dataSet/memoryCache/database_main.h"
+#include "dataSet/memoryCache/database_define.h"
 #include "database_info.h"
 
 #include <QMap>

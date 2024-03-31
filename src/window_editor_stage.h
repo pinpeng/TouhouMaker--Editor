@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QTimer>
 
-#include "dataSet/database/database.h"
+#include "dataSet/memoryCache/database.h"
 #include "draw.h"
 
 #include "window_editor_stage_tips.h"

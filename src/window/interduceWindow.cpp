@@ -1,6 +1,6 @@
 #include "window/interduceWindow.h"
 #include <QFileDialog>
-#include "global.h"
+#include "dataSet/cacheAgent.h"
 #include "sprite.h"
 
 #include <QMouseEvent>
@@ -13,10 +13,10 @@ InterduceWindow::InterduceWindow(QWidget *parent) : SmallWindow(parent)
     setWindowTitle("欢迎使用THMK");
     setWindowIcon(QIcon(":/logo/mscb_icon.ico"));
 
-    QDir dir(Global::setting.lastProjectPath());
-    if(dir.exists() && !Global::setting.lastProjectPath().isEmpty()) {
+    QDir dir(CacheAgent::getInstance().setting.lastProjectPath());
+    if(dir.exists() && !CacheAgent::getInstance().setting.lastProjectPath().isEmpty()) {
         show_last = true;
-        show_last_name = Global::setting.lastProjectName();
+        show_last_name = CacheAgent::getInstance().setting.lastProjectName();
     }
 
     _newProjectButton   =   new GradientButton("新建项目",QRect(240, 185, 240, 80),this);
@@ -39,10 +39,10 @@ void InterduceWindow::paintEvent(QPaintEvent *event) {
     SmallWindow::paintEvent(event);
 
     // TODO... 下面这一坨好像初始化的时候设置过了
-    QDir dir(Global::setting.lastProjectPath());
-    if(dir.exists() && !Global::setting.lastProjectPath().isEmpty()) {
+    QDir dir(CacheAgent::getInstance().setting.lastProjectPath());
+    if(dir.exists() && !CacheAgent::getInstance().setting.lastProjectPath().isEmpty()) {
         show_last = true;
-        show_last_name = Global::setting.lastProjectName();
+        show_last_name = CacheAgent::getInstance().setting.lastProjectName();
     }
 
     float w_l = rect().x() + 8;
@@ -97,20 +97,20 @@ void InterduceWindow::mousePressEvent(QMouseEvent *event)
         // TODO... 后续修改成按钮
         if(show_last) {
             if(w_l + 490 < mx && mx < w_l + 690 && w_t + 280 - 50 < my && my < w_t + 280 + 30) {
-                QString str = Global::setting.lastProjectPath();
+                QString str = CacheAgent::getInstance().setting.lastProjectPath();
                 Database db;
                 if(db.read(str)) {
                     TransparentDialog::play("无法打开文件");
                 } else {
                     TransparentDialog::play("打开成功");
                     db.info.projectPosition = str;
-                    Global::databaseClean();
-                    Global::databaseUpdate(db);
-                    Global::setting.setLastProjectPosition(Global::databaseInfo().projectPosition,Global::databaseInfo().projectName);
-                    // Global::setting.global_last_name = Global::databaseInfo().projectName;
-                    // Global::setting.setLastProjectPath(Global::databaseInfo().projectPosition);
-                    // Global::setting.global_last_path = Global::databaseInfo().projectPosition;
-                    Global::setting.save();
+                    CacheAgent::getInstance().databaseClean();
+                    CacheAgent::getInstance().databaseUpdate(db);
+                    CacheAgent::getInstance().setting.setLastProjectPosition(CacheAgent::getInstance().databaseInfo().projectPosition,CacheAgent::getInstance().databaseInfo().projectName);
+                    // CacheAgent::getInstance().setting.global_last_name = CacheAgent::getInstance().databaseInfo().projectName;
+                    // CacheAgent::getInstance().setting.setLastProjectPath(CacheAgent::getInstance().databaseInfo().projectPosition);
+                    // CacheAgent::getInstance().setting.global_last_path = CacheAgent::getInstance().databaseInfo().projectPosition;
+                    CacheAgent::getInstance().setting.save();
                     openStartSlot();
                 }
             }
@@ -139,13 +139,13 @@ void InterduceWindow::openProjectSlot()
         } else {
             TransparentDialog::play("打开成功");
             db.info.projectPosition = str;
-            Global::databaseClean();
-            Global::databaseUpdate(db);
+            CacheAgent::getInstance().databaseClean();
+            CacheAgent::getInstance().databaseUpdate(db);
             
-            // Global::setting.global_last_name = Global::databaseInfo().projectName;
-            Global::setting.setLastProjectPosition(Global::databaseInfo().projectPosition,Global::databaseInfo().projectName);
-            // Global::setting.global_last_path = Global::databaseInfo().projectPosition;
-            Global::setting.save();
+            // CacheAgent::getInstance().setting.global_last_name = CacheAgent::getInstance().databaseInfo().projectName;
+            CacheAgent::getInstance().setting.setLastProjectPosition(CacheAgent::getInstance().databaseInfo().projectPosition,CacheAgent::getInstance().databaseInfo().projectName);
+            // CacheAgent::getInstance().setting.global_last_path = CacheAgent::getInstance().databaseInfo().projectPosition;
+            CacheAgent::getInstance().setting.save();
             openStartSlot();
         }
     }
@@ -153,10 +153,11 @@ void InterduceWindow::openProjectSlot()
 
 void InterduceWindow::settingSlot()
 {
-    win_setting = new Window_welcome_setting();
-    win_setting->setWindowModality(Qt::ApplicationModal);
-    win_setting->setAttribute(Qt::WA_DeleteOnClose);
-    win_setting->show();
+    // TODO... 后续修改创建时机，初始化创建，关闭按钮连接hide
+    _editorSettingWindow = new EditorSettingWindow();
+    _editorSettingWindow->setWindowModality(Qt::ApplicationModal);
+    _editorSettingWindow->setAttribute(Qt::WA_DeleteOnClose);
+    _editorSettingWindow->show();
 }
 
 void InterduceWindow::helpSlot()

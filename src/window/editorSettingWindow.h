@@ -9,14 +9,14 @@
 #include "widget/ellipticalLineEdit.h"
 #include "widget/widget_dragstick.h"
 
-#include "global.h"
+#include "dataSet/cacheAgent.h"
 
-class Window_welcome_setting : public SmallWindow
+class EditorSettingWindow : public SmallWindow
 {
     Q_OBJECT
 
 public:
-    explicit Window_welcome_setting(QWidget *parent = nullptr);
+    explicit EditorSettingWindow(QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *);
 

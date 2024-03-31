@@ -12,7 +12,7 @@ Window_editor_main::Window_editor_main(QWidget *parent) : QWidget(parent)
     setWindowIcon(QIcon(":/logo/mscb_icon.ico"));
     setWindowState(Qt::WindowMaximized);
     setMinimumSize(1600, 960);
-    //Database_info *info = &Global::database_list.top().info;
+    //Database_info *info = &CacheAgent::getInstance().database_list.top().info;
 
     setWindowTitle("Tou Hou Maker ~ 车万没课儿");
     setStyleSheet("background-color:rgb(" +
@@ -114,7 +114,7 @@ void Window_editor_main::backToHome()
 
 void Window_editor_main::undo()
 {
-    if(Global::databaseUndo()) {
+    if(CacheAgent::getInstance().databaseUndo()) {
         TransparentDialog::play(this, "撤销");
         emit stageUpdateList(-1);
     } else TransparentDialog::play(this, "撤销失败");
@@ -123,7 +123,7 @@ void Window_editor_main::undo()
 void Window_editor_main::redo()
 {
 
-    if(Global::databaseRedo()) {
+    if(CacheAgent::getInstance().databaseRedo()) {
         TransparentDialog::play(this, "重做");
         emit stageUpdateList(-1);
     } else TransparentDialog::play(this, "重做失败");
@@ -131,7 +131,7 @@ void Window_editor_main::redo()
 
 void Window_editor_main::save()
 {
-    if(Global::database().save()) {
+    if(CacheAgent::getInstance().database().save()) {
         TransparentDialog::play("保存失败");
         send_tips(2);
     } else {
@@ -142,16 +142,16 @@ void Window_editor_main::save()
 
 void Window_editor_main::pack()
 {
-    if(Global::database().save()) {
+    if(CacheAgent::getInstance().database().save()) {
         TransparentDialog::play("保存失败");
         send_tips(4);
     } else {
-        if(Global::database().pack()) {
+        if(CacheAgent::getInstance().database().pack()) {
             TransparentDialog::play("导出失败");
             send_tips(4);
         } else {
             send_tips(3);
-            if(!QDesktopServices::openUrl(QUrl::fromLocalFile(Global::databaseInfo().projectPosition + "/output"))) {
+            if(!QDesktopServices::openUrl(QUrl::fromLocalFile(CacheAgent::getInstance().databaseInfo().projectPosition + "/output"))) {
                 TransparentDialog::play("无法打开文件夹");
             }
         }

@@ -6,7 +6,7 @@
 
 #include "draw.h"
 
-#include "global.h"
+#include "dataSet/cacheAgent.h"
 
 NewProjectWindow::NewProjectWindow(QWidget *parent) : SmallWindow(parent)
 {
@@ -89,33 +89,38 @@ void NewProjectWindow::createProjectSlot()
         return;
     }
 
-    Global::databaseInit(_projectNameLineEdit->text(), dir.path());
-    Database db = Global::database();
+    // TODO... 这里逻辑看起来很怪，后续修改
+    CacheAgent::getInstance().databaseInit(_projectNameLineEdit->text(), dir.path());
+    {
+        Database db = CacheAgent::getInstance().database();
+        // TODO... 这一坨都是没做的,目前会默认round_base被按了
+        // 目前会走到这里
+        if(round_base->isChecked()) {
+            db.projectInitBase();
+            CacheAgent::getInstance().databaseClean();
+            CacheAgent::getInstance().databaseUpdate(db);
+            db.save();
+        }
+        if(round_empty->isChecked()) {
+            db.projectInitEmpty();
+            CacheAgent::getInstance().databaseClean();
+            CacheAgent::getInstance().databaseUpdate(db);
+            db.save();
+        }
+        if(round_example->isChecked()) {
+            TransparentDialog::play("功能开发中");
+            return;
+            db.projectInitExample();
+            CacheAgent::getInstance().databaseClean();
+            CacheAgent::getInstance().databaseUpdate(db);
+            db.save();
+        }
+    }
 
-    if(round_base->isChecked()) {
-        db.projectInitBase();
-        Global::databaseClean();
-        Global::databaseUpdate(db);
-        db.save();
-    }
-    if(round_empty->isChecked()) {
-        db.projectInitEmpty();
-        Global::databaseClean();
-        Global::databaseUpdate(db);
-        db.save();
-    }
-    if(round_example->isChecked()) {
-        TransparentDialog::play("功能开发中");
-        return;
-        db.projectInitExample();
-        Global::databaseClean();
-        Global::databaseUpdate(db);
-        db.save();
-    }
-    // Global::setting.global_last_name = Global::databaseInfo().projectName;
-    Global::setting.setLastProjectPosition(Global::databaseInfo().projectPosition,Global::databaseInfo().projectName);
-    // Global::setting.global_last_path = Global::databaseInfo().projectPosition;
-    Global::setting.save();
+    // CacheAgent::getInstance().setting.global_last_name = CacheAgent::getInstance().databaseInfo().projectName;
+    CacheAgent::getInstance().setting.setLastProjectPosition(CacheAgent::getInstance().databaseInfo().projectPosition,CacheAgent::getInstance().databaseInfo().projectName);
+    // CacheAgent::getInstance().setting.global_last_path = CacheAgent::getInstance().databaseInfo().projectPosition;
+    CacheAgent::getInstance().setting.save();
     emit requestClose();
     close();
 }

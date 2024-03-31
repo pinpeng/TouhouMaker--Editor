@@ -50,8 +50,8 @@ Window_editor_menubar_bullet_edit::Window_editor_menubar_bullet_edit(Database *_
 
         QString _spr_key = QString::number(file->image_id) + "_" +
                 QString::number(db->image[3][file->image_id].editTimer);
-        auto j = Global::sprite_buffer.find(_spr_key);
-        if(j != Global::sprite_buffer.end()) {
+        auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
+        if(j != CacheAgent::getInstance().sprite_buffer.end()) {
             if(db->image[3][file->image_id].state == 1) label->setPixmap(j.value().png);
             if(db->image[3][file->image_id].state == 2) {
                 label->setMovie(j.value().gif);
@@ -175,8 +175,8 @@ void Window_editor_menubar_bullet_edit::updateImage()
             QString _spr_key = QString::number(file->image_id) + "_" +
                     QString::number(db->image[3][file->image_id].editTimer);
 
-            auto j = Global::sprite_buffer.find(_spr_key);
-            if(j != Global::sprite_buffer.end()) {
+            auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
+            if(j != CacheAgent::getInstance().sprite_buffer.end()) {
                 if(db->image[3][file->image_id].state == 1) label->setPixmap(j.value().png);
                 if(db->image[3][file->image_id].state == 2) {
                     label->setMovie(j.value().gif);
