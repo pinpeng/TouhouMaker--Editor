@@ -111,7 +111,7 @@ bool Database::read(QString basePath) {
     for(int i = 0; i < tmp_stage_size[0]; i ++) {
         // 读取关卡数据
         DB_STAGE _stage;
-        _stage.id = fin.readLine().toInt();
+        _stage._stageId = fin.readLine().toInt();
         _stage.name = fin.readLine();
         _stage.length = fin.readLine().toInt();
         int _events_size = fin.readLine().toInt();
@@ -143,7 +143,7 @@ bool Database::read(QString basePath) {
     if(!file.open(QIODevice::ReadOnly)) return 1; fin.setDevice(&file);
     for(int i = 0; i < tmp_stage_size[1]; i ++) {
         DB_STAGE _stage;
-        _stage.id = fin.readLine().toInt();
+        _stage._stageId = fin.readLine().toInt();
         _stage.name = fin.readLine();
         _stage.length = fin.readLine().toInt();
         int _events_size = fin.readLine().toInt();
@@ -338,9 +338,6 @@ bool Database::save() {
     if(!dir.exists()) dir.mkdir(dir.path());
 
     CacheAgent::getInstance().setting.setLastProjectPosition(CacheAgent::getInstance().databaseInfo().projectPosition,CacheAgent::getInstance().databaseInfo().projectName);
-    // CacheAgent::getInstance().setting.global_last_name = CacheAgent::getInstance().databaseInfo().projectName;
-    // CacheAgent::getInstance().setting.setLastProjectPath(CacheAgent::getInstance().databaseInfo().projectPosition);
-    // CacheAgent::getInstance().setting.global_last_path = CacheAgent::getInstance().databaseInfo().projectPosition;
     CacheAgent::getInstance().setting.save();
 
     QFile file;
@@ -414,7 +411,7 @@ bool Database::save() {
     file.setFileName(basePath + "/stage/index0.txt");
     if(!file.open(QIODevice::WriteOnly)) return 1; fout.setDevice(&file);
     for(auto i = stage[0].begin(); i != stage[0].end(); i ++) {
-        fout << QString::number(i->id) << "\n" << i->name << "\n" << QString::number(i->length) << "\n" <<
+        fout << QString::number(i->_stageId) << "\n" << i->name << "\n" << QString::number(i->length) << "\n" <<
                 QString::number(i->events.size()) << "\n";
         for(auto j = i->events.begin(); j != i->events.end(); j ++) {
             fout << QString::number(j->id) << "\n" << QString::number(j->time) << "\n" << QString::number(j->type) << "\n" <<
@@ -433,7 +430,7 @@ bool Database::save() {
     file.setFileName(basePath + "/stage/index1.txt");
     if(!file.open(QIODevice::WriteOnly)) return 1; fout.setDevice(&file);
     for(auto i = stage[1].begin(); i != stage[1].end(); i ++) {
-        fout << QString::number(i->id) << "\n" << i->name << "\n" << QString::number(i->length) << "\n" <<
+        fout << QString::number(i->_stageId) << "\n" << i->name << "\n" << QString::number(i->length) << "\n" <<
                 QString::number(i->events.size()) << "\n";
         for(auto j = i->events.begin(); j != i->events.end(); j ++) {
             fout << QString::number(j->id) << "\n" << QString::number(j->time) << "\n" << QString::number(j->type) << "\n" <<

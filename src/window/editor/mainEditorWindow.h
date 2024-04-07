@@ -53,13 +53,16 @@ signals:
     void stageKeySelect();
     void stageKeyBrush();
 
-    void stageUpdateList(int);
+    // void stageUpdateList(int);
+
+private:
+    void syncWidget(int updateType);
 
 private:
     QVBoxLayout *_mainLayout;
 
     // 最顶上的菜单栏
-    Window_editor_menubar  *window_menubar;
+    Window_editor_menubar  *_menubar;
     // 中间那坨，包括游戏界面、游戏界面左边的和游戏界面右边的
     Window_editor_stage    *window_stage;
     Window_editor_treelist *window_treelist;

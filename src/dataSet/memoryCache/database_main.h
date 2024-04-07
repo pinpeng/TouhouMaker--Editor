@@ -70,7 +70,7 @@ struct DB_STAGE_EVENT {
 };
 
 struct DB_STAGE {
-    int id;
+    int _stageId;
     QString name;
     float length;
 

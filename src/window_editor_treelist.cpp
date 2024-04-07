@@ -39,7 +39,7 @@ void Window_editor_treelist::updateFromOutside(int _request_id)
     if(MainEditorWindow::id1 >= 1) {
         if(id_now != -1) {
             for(int i = 0; i < db.stage[MainEditorWindow::id1 - 1].size(); i ++) {
-                if(db.stage[MainEditorWindow::id1 - 1][i].id == id_now) {
+                if(db.stage[MainEditorWindow::id1 - 1][i]._stageId == id_now) {
                     MainEditorWindow::id2 = i;
                     flag = false;
                     break;
@@ -254,7 +254,7 @@ void Window_editor_treelist::mouseClickSelect1(float mx, float my, float _top)
                 } else {
                     MainEditorWindow::id1 = 1;
                     MainEditorWindow::id2 = i - 1;
-                    id_now = db.stage[0][MainEditorWindow::id2].id;
+                    id_now = db.stage[0][MainEditorWindow::id2]._stageId;
                     emit requestUpdate(0);
                     return;
                 }
@@ -343,7 +343,7 @@ void Window_editor_treelist::mouseClickSelect2(float mx, float my, float _top)
                 } else {
                     MainEditorWindow::id1 = 2;
                     MainEditorWindow::id2 = i - 1;
-                    id_now = db.stage[1][MainEditorWindow::id2].id;
+                    id_now = db.stage[1][MainEditorWindow::id2]._stageId;
                     emit requestUpdate(0);
                     return;
                 }

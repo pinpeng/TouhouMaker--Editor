@@ -96,15 +96,15 @@ void Database::stage_append(int _type, QString _name)
     stage[_type].append(DB_STAGE(++CacheAgent::getInstance().stage_id_top, _name));
 }
 
-void Database::stage_delete_id(int _type, int _id)
-{
-    for(auto i = stage[_type].begin(); i != stage[_type].end(); i ++) {
-        if(i->id == _id) {
-            stage[_type].erase(i);
-            break;
-        }
-    }
-}
+// void Database::stage_delete_id(int _type, int _id)
+// {
+//     for(auto i = stage[_type].begin(); i != stage[_type].end(); i ++) {
+//         if(i->id == _id) {
+//             stage[_type].erase(i);
+//             break;
+//         }
+//     }
+// }
 
 void Database::stage_delete_pos(int _type, int _pos)
 {

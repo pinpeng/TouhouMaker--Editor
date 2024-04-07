@@ -43,7 +43,7 @@ struct Database
     QString getText(int _index, int _lan);
 
     void stage_append(int _type, QString _name);
-    void stage_delete_id(int _type, int _id);
+    // void stage_delete_id(int _type, int _id);
     void stage_delete_pos(int _type, int _pos);
 
 

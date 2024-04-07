@@ -3,6 +3,8 @@
 #include <QApplication>
 #include <QDesktopServices>
 
+#include "window/editor/editorConfig.h"
+
 int MainEditorWindow::id1 = -1;
 int MainEditorWindow::id2 = -1;
 int MainEditorWindow::id3 = -1;
@@ -25,44 +27,35 @@ MainEditorWindow::MainEditorWindow(QWidget *parent) : QWidget(parent)
 
     _mainLayout = new QVBoxLayout(this);
 
-    window_menubar = new Window_editor_menubar(this);
+    _menubar = new Window_editor_menubar(this);
     window_stage = new Window_editor_stage(this);
     window_timeline = new Window_editor_timeline(this);
 
-    _mainLayout->addWidget(window_menubar);
+    _mainLayout->addWidget(_menubar);
     _mainLayout->addWidget(window_stage);
     _mainLayout->addWidget(window_timeline);
 
     setLayout(_mainLayout);
 
-    connect(window_menubar, SIGNAL(requestBackToHome()), this, SLOT(backToHome()));
-    connect(window_menubar, SIGNAL(requestUndo()), this, SLOT(undo()));
-    connect(window_menubar, SIGNAL(requestRedo()), this, SLOT(redo()));
+    connect(_menubar, SIGNAL(requestBackToHome()), this, SLOT(backToHome()));
+    connect(_menubar, SIGNAL(requestUndo()), this, SLOT(undo()));
+    connect(_menubar, SIGNAL(requestRedo()), this, SLOT(redo()));
 
-
-    /*connect(this, SIGNAL(stageKeyArrow() ), window_stage, SLOT(keyArrow()));
-    connect(this, SIGNAL(stageKeyMove()  ), window_stage, SLOT(keyMove()));
-    connect(this, SIGNAL(stageKeyCut()   ), window_stage, SLOT(keyCut()));
-    connect(this, SIGNAL(stageKeySelect()), window_stage, SLOT(keySelect()));
-    connect(this, SIGNAL(stageKeyBrush() ), window_stage, SLOT(keyBrush()));*/
 
     window_treelist = new Window_editor_treelist(this);
     window_treelist->fatherWindow = this;
 
-    connect(this, SIGNAL(stageUpdateList(int)), window_stage,       SLOT(updateFromOutside(int)));
-    connect(this, SIGNAL(stageUpdateList(int)), window_timeline,    SLOT(updateFromOutside(int)));
-    connect(this, SIGNAL(stageUpdateList(int)), window_treelist,    SLOT(updateFromOutside(int)));
-
 
     connect(window_treelist,    SIGNAL(requestUpdate(int)), this, SLOT(stageUpdateListCall(int)));
     connect(window_stage,       SIGNAL(requestUpdate(int)), this, SLOT(stageUpdateListCall(int)));
-    connect(window_menubar,     SIGNAL(requestUpdate(int)), this, SLOT(stageUpdateListCall(int)));
+    connect(_menubar,     SIGNAL(requestUpdate(int)), this, SLOT(stageUpdateListCall(int)));
     connect(window_timeline,    SIGNAL(requestUpdate(int)), this, SLOT(stageUpdateListCall(int)));
+}
 
-    //Window_editor_stage_tips *tips = new Window_editor_stage_tips();
-    //tips->show();
-    //connect(this, SIGNAL(destroyed()), tips, SLOT(close()));
-    //tips->show();
+void MainEditorWindow::syncWidget(int updateType){
+    window_stage->updateFromOutside(updateType);
+    window_timeline->updateFromOutside(updateType);
+    window_treelist->updateFromOutside(updateType);
 }
 
 void MainEditorWindow::keyPressEvent(QKeyEvent *event)
@@ -79,17 +72,7 @@ void MainEditorWindow::keyPressEvent(QKeyEvent *event)
             break;
         default: break;
         }
-    } else {
-        switch (event->key()) {
-        //case Qt::Key_F2: window_treelist->renameFromOutside(); break;
-        /*case Qt::Key_D: emit stageKeyArrow(); break;
-        case Qt::Key_V: emit stageKeyMove(); break;
-        case Qt::Key_E: emit stageKeyCut(); break;
-        case Qt::Key_S: emit stageKeySelect(); break;
-        case Qt::Key_B: emit stageKeyBrush(); break;*/
-        default: break;
-        }
-    }
+    } 
 }
 
 void MainEditorWindow::closeEvent(QCloseEvent *event)
@@ -115,7 +98,7 @@ void MainEditorWindow::undo()
 {
     if(CacheAgent::getInstance().databaseUndo()) {
         TransparentDialog::play(this, "撤销");
-        emit stageUpdateList(-1);
+        syncWidget(EditorWindow::ENUM_UPDATE_BY_UNDO);
     } else TransparentDialog::play(this, "撤销失败");
 }
 
@@ -124,7 +107,7 @@ void MainEditorWindow::redo()
 
     if(CacheAgent::getInstance().databaseRedo()) {
         TransparentDialog::play(this, "重做");
-        emit stageUpdateList(-1);
+        syncWidget(EditorWindow::ENUM_UPDATE_BY_REDO);
     } else TransparentDialog::play(this, "重做失败");
 }
 
@@ -165,7 +148,7 @@ void MainEditorWindow::ending()
 
 void MainEditorWindow::stageUpdateListCall(int i)
 {
-    emit stageUpdateList(i);
+    syncWidget(i);
 }
 
 

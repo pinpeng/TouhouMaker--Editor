@@ -76,7 +76,7 @@ private:
 signals:
     void requestUpdate(int _request_id);
 
-private slots:
+public slots:
     void timeoutRepaint();
 
     void updateFromOutside(int _request_id);

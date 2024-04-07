@@ -10,15 +10,9 @@ Window_ask::Window_ask(QString _text, QWidget *parent) : SmallWindow(parent)
 
     text = _text;
 
-    button_accept = new GradientButton(this);
-    button_accept->setGeometry(160 - 8, 144, 240, 80);
-    button_accept->setText("确定");
-    // button_accept->setTimer(_timer);
+    button_accept = new GradientButton("确定",QRect(160 - 8, 144, 240, 80),this);
 
-    button_cancel = new GradientButton(this);
-    button_cancel->setGeometry(400 + 8, 144, 240, 80);
-    button_cancel->setText("取消");
-    // button_cancel->setTimer(_timer);
+    button_cancel = new GradientButton("取消",QRect(400 + 8, 144, 240, 80),this);
 
     connect(button_accept, SIGNAL(pressed()), this, SLOT(accept_slot()));
     connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));

@@ -32,7 +32,7 @@ DB_STAGE::DB_STAGE()
 
 DB_STAGE::DB_STAGE(int _id, QString _name)
 {
-    id = _id;
+    _stageId = _id;
     name = _name;
     length = 18000;
 
