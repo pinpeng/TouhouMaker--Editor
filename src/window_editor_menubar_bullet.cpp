@@ -24,14 +24,14 @@ Window_editor_menubar_bullet::Window_editor_menubar_bullet(QWidget *parent) : Sm
 
     select_group = new QButtonGroup(this);
     for(int i = 0; i < 3; i ++) {
-        roundButton[i] = new Widget_RoundButton(this);
+        roundButton[i] = new RoundButton(this);
         roundButton[i]->setText(_text[i]);
         roundButton[i]->setGeometry(48 + 180 * i, 84, 180, 60);
         select_group->addButton(roundButton[i]);
         connect(roundButton[i], SIGNAL(stateChanged()), this, SLOT(updateList()));
     }
 
-    itemList = new Widget_ItemList(this);
+    itemList = new ItemList(this);
     itemList->setGeometry(16, 64 + 80, 1200 - 36, 580);
 
     button_add = new GradientButton(this);

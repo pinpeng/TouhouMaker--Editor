@@ -4,7 +4,7 @@
 // #include "window_small.h"
 // #include "widget/gradientButton.h"
 // #include "widget/ellipticalLineEdit.h"
-// #include "widget/widget_itemlist.h"
+// #include "widget/itemlist.h"
 
 // #include "dataSet/cacheAgent.h"
 
@@ -23,7 +23,7 @@
 
 //     EllipticalLineEdit *lineEdit;
 //     GradientButton *button_find;
-//     Widget_ItemList *itemList;
+//     ItemList *itemList;
 
 // public slots:
 //     void find();

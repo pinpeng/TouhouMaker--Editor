@@ -1,4 +1,4 @@
-#include "widget/widget_itemlist.h"
+#include "widget/itemlist.h"
 
 
 #include "draw.h"
@@ -13,12 +13,12 @@ itemSTR::itemSTR(QList<QString> _text)
     text.append(_text);
 }
 
-Widget_ItemList::Widget_ItemList(QWidget *parent) : QWidget(parent)
+ItemList::ItemList(QWidget *parent) : QWidget(parent)
 {
     resetIndex();
 }
 
-void Widget_ItemList::paintEvent(QPaintEvent *)
+void ItemList::paintEvent(QPaintEvent *)
 {
     float w_l = rect().x() + 12;
     float w_r = rect().right() - 8;
@@ -112,7 +112,7 @@ void Widget_ItemList::paintEvent(QPaintEvent *)
     Draw::end();
 }
 
-void Widget_ItemList::mousePressEvent(QMouseEvent *event)
+void ItemList::mousePressEvent(QMouseEvent *event)
 {
     int size_max = items.size();
     if(!size_max) return;
@@ -136,7 +136,7 @@ void Widget_ItemList::mousePressEvent(QMouseEvent *event)
     repaint();
 }
 
-void Widget_ItemList::mouseDoubleClickEvent(QMouseEvent *event)
+void ItemList::mouseDoubleClickEvent(QMouseEvent *event)
 {
     int size_max = items.size();
     if(!size_max) return;
@@ -151,19 +151,19 @@ void Widget_ItemList::mouseDoubleClickEvent(QMouseEvent *event)
     }
 }
 
-void Widget_ItemList::wheelEvent(QWheelEvent *event)
+void ItemList::wheelEvent(QWheelEvent *event)
 {
     item_top -= event->angleDelta().y() / 120;
     if(item_top < 0) item_top = 0;
     repaint();
 }
 
-int Widget_ItemList::getHeadSize()
+int ItemList::getHeadSize()
 {
     return head_text.size();
 }
 
-void Widget_ItemList::setHeadTextList(QList<QString> _text_list)
+void ItemList::setHeadTextList(QList<QString> _text_list)
 {
     item_index = -1;
     head_text.clear();
@@ -171,23 +171,23 @@ void Widget_ItemList::setHeadTextList(QList<QString> _text_list)
     repaint();
 }
 
-void Widget_ItemList::setHeadText(int _index, QString _text)
+void ItemList::setHeadText(int _index, QString _text)
 {
     head_text[_index] = _text;
     repaint();
 }
 
-QList<QString> Widget_ItemList::getHeadTextList()
+QList<QString> ItemList::getHeadTextList()
 {
     return head_text;
 }
 
-QString Widget_ItemList::getHeadText(int _index)
+QString ItemList::getHeadText(int _index)
 {
     return head_text[_index];
 }
 
-void Widget_ItemList::setHeadWidthList(QList<int> _width_list)
+void ItemList::setHeadWidthList(QList<int> _width_list)
 {
     item_index = -1;
     head_width.clear();
@@ -195,35 +195,35 @@ void Widget_ItemList::setHeadWidthList(QList<int> _width_list)
     repaint();
 }
 
-void Widget_ItemList::setHeadWidth(int _index, int _width)
+void ItemList::setHeadWidth(int _index, int _width)
 {
     head_width[_index] = _width;
     repaint();
 }
 
-QList<int> Widget_ItemList::getHeadWidthList()
+QList<int> ItemList::getHeadWidthList()
 {
     return head_width;
 }
 
-int Widget_ItemList::getHeadWidth(int _index)
+int ItemList::getHeadWidth(int _index)
 {
     return head_width[_index];
 }
 
-void Widget_ItemList::headClear()
+void ItemList::headClear()
 {
     head_text.clear();
     head_width.clear();
     repaint();
 }
 
-int Widget_ItemList::getItemSize()
+int ItemList::getItemSize()
 {
     return items.size();
 }
 
-void Widget_ItemList::setItemList(QList<itemSTR> _item_list)
+void ItemList::setItemList(QList<itemSTR> _item_list)
 {
     item_index = -1;
     items.clear();
@@ -231,48 +231,48 @@ void Widget_ItemList::setItemList(QList<itemSTR> _item_list)
     repaint();
 }
 
-void Widget_ItemList::setItem(int _index, itemSTR _item)
+void ItemList::setItem(int _index, itemSTR _item)
 {
     items[_index] = _item;
     repaint();
 }
 
-QList<itemSTR> Widget_ItemList::getItemList()
+QList<itemSTR> ItemList::getItemList()
 {
     return items;
 }
 
-itemSTR Widget_ItemList::getItem(int _index)
+itemSTR ItemList::getItem(int _index)
 {
     return items[_index];
 }
 
-void Widget_ItemList::itemClear()
+void ItemList::itemClear()
 {
     item_index = -1;
     items.clear();
     repaint();
 }
 
-int Widget_ItemList::index()
+int ItemList::index()
 {
     return item_index;
 }
 
-void Widget_ItemList::resetIndex()
+void ItemList::resetIndex()
 {
     item_index = -1;
     emit select(-1);
 }
 
-void Widget_ItemList::setIndex(int _index)
+void ItemList::setIndex(int _index)
 {
      item_index = _index;
      item_top = _index;
      emit select(item_index);
 }
 
-void Widget_ItemList::clear()
+void ItemList::clear()
 {
     headClear();
     itemClear();

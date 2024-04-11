@@ -39,7 +39,7 @@ Window_find::Window_find(Database *_db, int _type, int _group, int *_index, QWid
     button_noone->setText("取消选择");
     // button_noone->setTimer(_timer);
 
-    itemList = new Widget_ItemList(this);
+    itemList = new ItemList(this);
     itemList->setGeometry(16, 64 + 80, 1000 - 76, 660);
 
     connect(button_find, SIGNAL(pressed()), this, SLOT(find()));
@@ -88,7 +88,7 @@ Window_find::Window_find(Database *_db, int _type, int _group, float *_index, QW
     button_noone->setText("取消选择");
     // button_noone->setTimer(_timer);
 
-    itemList = new Widget_ItemList(this);
+    itemList = new ItemList(this);
     itemList->setGeometry(16, 64 + 80, 1000 - 76, 660);
 
     connect(button_find, SIGNAL(pressed()), this, SLOT(find()));

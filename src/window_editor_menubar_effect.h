@@ -3,10 +3,10 @@
 
 #include "window/smallWindow.h"
 #include "widget/gradientButton.h"
-#include "widget/widget_roundbutton.h"
-#include "widget/widget_choosebutton.h"
+#include "widget/roundButton.h"
+#include "widget/chooseButton.h"
 #include "widget/ellipticalLineEdit.h"
-#include "widget/widget_itemlist.h"
+#include "widget/itemlist.h"
 
 #include "dataSet/cacheAgent.h"
 
@@ -27,10 +27,10 @@ private:
 
     Database db;
 
-    Widget_ItemList *itemList;
+    ItemList *itemList;
 
     QButtonGroup *select_group;
-    Widget_RoundButton *roundButton[3];
+    RoundButton *roundButton[3];
 
     GradientButton *button_add;
     GradientButton *button_del;

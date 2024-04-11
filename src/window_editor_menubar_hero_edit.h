@@ -5,8 +5,8 @@
 
 #include "widget/ellipticalLineEdit.h"
 #include "widget/gradientButton.h"
-#include "widget/widget_roundbutton.h"
-#include "widget/widget_choosebutton.h"
+#include "widget/roundButton.h"
+#include "widget/chooseButton.h"
 
 #include "dataSet/cacheAgent.h"
 
@@ -26,13 +26,13 @@ private:
     DB_hero *file;
 
     int language_last = 0;
-    Widget_ChooseButton *chooseButton_language;
+    ChooseButton *chooseButton_language;
     EllipticalLineEdit *lineEdit;
 
-    Widget_ChooseButton *chooseButton_bullet;
+    ChooseButton *chooseButton_bullet;
     GradientButton *button_bullet1;
     GradientButton *button_bullet2;
-    Widget_ChooseButton *chooseButton_skill;
+    ChooseButton *chooseButton_skill;
     GradientButton *button_skill1;
     GradientButton *button_skill2;
     EllipticalLineEdit *lineEdit_s1;
@@ -65,7 +65,7 @@ private:
 
     EllipticalLineEdit *lineEdit_name;
     EllipticalLineEdit *lineEdit_hp;
-    Widget_ChooseButton *chooseButton_range;
+    ChooseButton *chooseButton_range;
     EllipticalLineEdit *lineEdit_collision;
 
     float code_scroll_top = 0;
@@ -97,7 +97,7 @@ private:
     QLabel *label[3];
 
     int language_last = 0;
-    Widget_ChooseButton *chooseButton_language;
+    ChooseButton *chooseButton_language;
     EllipticalLineEdit *lineEdit;
 
 public slots:

@@ -5,7 +5,7 @@
 
 #include "widget/ellipticalLineEdit.h"
 #include "widget/gradientButton.h"
-#include "widget/widget_roundbutton.h"
+#include "widget/roundButton.h"
 
 
 class NewProjectWindow : public SmallWindow
@@ -28,9 +28,9 @@ private:
 
     QButtonGroup *buttonBox_type;
 
-    Widget_RoundButton * round_base;
-    Widget_RoundButton * round_empty;
-    Widget_RoundButton * round_example;
+    RoundButton * round_base;
+    RoundButton * round_empty;
+    RoundButton * round_example;
 
     GradientButton *_acceptButton;
     GradientButton *_cancelButton;

@@ -22,19 +22,19 @@ Window_editor_menubar_bullet_edit::Window_editor_menubar_bullet_edit(Database *_
 
     QStringList _list;
     _list << "圆形" << "激光（开发中）";
-    chooseButton_type = new Widget_ChooseButton(this);
+    chooseButton_type = new ChooseButton(this);
     chooseButton_type->setGeometry(32 + 900, 64 + 80 * 0, 440, 80);
     chooseButton_type->addTextList(_list);
     chooseButton_type->setIndex(file->data["type"]);
-    chooseButton_type->setTimer(_timer);
+    // chooseButton_type->setTimer(_timer);
 
     _list.clear();
     _list << "离开屏幕" << "离开较远" << "不消失";
-    chooseButton_range = new Widget_ChooseButton(this);
+    chooseButton_range = new ChooseButton(this);
     chooseButton_range->setGeometry(32 + 200, 64 + 80 * 1, 440, 80);
     chooseButton_range->addTextList(_list);
     chooseButton_range->setIndex(file->data["range"]);
-    chooseButton_range->setTimer(_timer);
+    // chooseButton_range->setTimer(_timer);
 
     lineEdit_collision = new EllipticalLineEdit(this);
     lineEdit_collision->setGeometry(32 + 900, 64 + 80 * 1, 440, 80);

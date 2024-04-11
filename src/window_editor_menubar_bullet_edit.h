@@ -5,8 +5,8 @@
 
 #include "widget/ellipticalLineEdit.h"
 #include "widget/gradientButton.h"
-#include "widget/widget_roundbutton.h"
-#include "widget/widget_choosebutton.h"
+#include "widget/roundButton.h"
+#include "widget/chooseButton.h"
 
 #include "dataSet/cacheAgent.h"
 
@@ -30,8 +30,8 @@ private:
     int group;
 
     EllipticalLineEdit *lineEdit_name;
-    Widget_ChooseButton *chooseButton_type;
-    Widget_ChooseButton *chooseButton_range;
+    ChooseButton *chooseButton_type;
+    ChooseButton *chooseButton_range;
     EllipticalLineEdit *lineEdit_collision;
 
     float code_scroll_top = 0;

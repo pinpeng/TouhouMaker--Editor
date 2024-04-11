@@ -4,8 +4,8 @@
 #include "window/smallWindow.h"
 
 #include "widget/gradientButton.h"
-#include "widget/widget_roundbutton.h"
-#include "widget/widget_choosebutton.h"
+#include "widget/roundButton.h"
+#include "widget/chooseButton.h"
 #include "widget/ellipticalLineEdit.h"
 #include "widget/widget_dragstick.h"
 
@@ -25,15 +25,15 @@ private:
     GradientButton *button_accept;
     GradientButton *button_cancel;
 
-    Widget_ChooseButton *chooseButton_color;
+    ChooseButton *chooseButton_color;
     GradientButton *button_custom;
 
     Widget_DragStick *dragStick_scale_editor;
     Widget_DragStick *dragStick_scale_timeline;
 
 
-    Widget_ChooseButton *chooseButton_antialising;
-    //Widget_ChooseButton *chooseButton_tips;
+    ChooseButton *chooseButton_antialising;
+    //ChooseButton *chooseButton_tips;
 
 
 public slots:

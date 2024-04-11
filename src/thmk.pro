@@ -40,24 +40,24 @@ SOURCES += \
     toolkit/timeoperator.cpp \
     widget/gradientButton.cpp \
     widget/closeButton.cpp \
-    widget/widget_choosebutton.cpp \
+    widget/choosebutton.cpp \
     widget/widget_dragstick.cpp \
-    widget/widget_itemlist.cpp \
+    widget/itemlist.cpp \
     widget/ellipticalLineEdit.cpp \
-    widget/widget_roundbutton.cpp \
+    widget/roundbutton.cpp \
     widget/widget_textEdit.cpp \
     window/interduceWindow.cpp \
     window/newProjectWindow.cpp \
     window_ask.cpp \
     window/editor/mainEditorWindow.cpp \
-    window_editor_menubar.cpp \
+    window/editor/menuBar/editorMenubar.cpp \
     window_editor_menubar_audio.cpp \
     window_editor_menubar_audio_edit.cpp \
     window_editor_menubar_bullet.cpp \
     window_editor_menubar_bullet_edit.cpp \
     window_editor_menubar_effect.cpp \
     window_editor_menubar_effect_edit.cpp \
-    window_editor_menubar_hero.cpp \
+    window/editor/menuBar/characterEditor.cpp \
     window_editor_menubar_hero_edit.cpp \
     window_editor_menubar_image.cpp \
     window_editor_menubar_image_edit.cpp \
@@ -95,23 +95,23 @@ HEADERS += \
     toolkit/timeoperator.h \
     widget/gradientButton.h \
     widget/closeButton.h \
-    widget/widget_choosebutton.h \
+    widget/choosebutton.h \
     widget/widget_dragstick.h \
-    widget/widget_itemlist.h \
+    widget/itemlist.h \
     widget/ellipticalLineEdit.h \
-    widget/widget_roundbutton.h \
+    widget/roundbutton.h \
     widget/widget_textEdit.h \
     window/interduceWindow.h \
     window_ask.h \
     window/editor/mainEditorWindow.h \
-    window_editor_menubar.h \
+    window/editor/menuBar/editorMenubar.h \
     window_editor_menubar_audio.h \
     window_editor_menubar_audio_edit.h \
     window_editor_menubar_bullet.h \
     window_editor_menubar_bullet_edit.h \
     window_editor_menubar_effect.h \
     window_editor_menubar_effect_edit.h \
-    window_editor_menubar_hero.h \
+    window/editor/menuBar/characterEditor.h \
     window_editor_menubar_hero_edit.h \
     window_editor_menubar_image.h \
     window_editor_menubar_image_edit.h \

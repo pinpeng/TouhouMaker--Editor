@@ -5,8 +5,8 @@
 
 #include "widget/ellipticalLineEdit.h"
 #include "widget/gradientButton.h"
-#include "widget/widget_roundbutton.h"
-#include "widget/widget_choosebutton.h"
+#include "widget/roundButton.h"
+#include "widget/chooseButton.h"
 
 #include "dataSet/cacheAgent.h"
 

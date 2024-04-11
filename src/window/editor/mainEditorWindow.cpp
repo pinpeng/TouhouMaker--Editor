@@ -27,7 +27,7 @@ MainEditorWindow::MainEditorWindow(QWidget *parent) : QWidget(parent)
 
     _mainLayout = new QVBoxLayout(this);
 
-    _menubar = new Window_editor_menubar(this);
+    _menubar = new EditorMenubar(this);
     window_stage = new Window_editor_stage(this);
     window_timeline = new Window_editor_timeline(this);
 
@@ -115,10 +115,10 @@ void MainEditorWindow::save()
 {
     if(CacheAgent::getInstance().database().save()) {
         TransparentDialog::play("保存失败");
-        send_tips(2);
+        // send_tips(2);
     } else {
         TransparentDialog::play("保存成功");
-        send_tips(1);
+        // send_tips(1);
     }
 }
 
@@ -126,13 +126,13 @@ void MainEditorWindow::pack()
 {
     if(CacheAgent::getInstance().database().save()) {
         TransparentDialog::play("保存失败");
-        send_tips(4);
+        // send_tips(4);
     } else {
         if(CacheAgent::getInstance().database().pack()) {
             TransparentDialog::play("导出失败");
-            send_tips(4);
+            // send_tips(4);
         } else {
-            send_tips(3);
+            // send_tips(3);
             if(!QDesktopServices::openUrl(QUrl::fromLocalFile(CacheAgent::getInstance().databaseInfo().projectPosition + "/output"))) {
                 TransparentDialog::play("无法打开文件夹");
             }

@@ -1,15 +1,15 @@
-#include "widget/widget_roundbutton.h"
+#include "widget/roundButton.h"
 #include "globalSource/sourceAgent.h"
 #include "draw.h"
 
-Widget_RoundButton::Widget_RoundButton(QWidget *parent) : QRadioButton(parent)
+RoundButton::RoundButton(QWidget *parent) : QRadioButton(parent)
 {
     setFixedHeight(36);
     const auto& timer = SourceAgent::GetInstance().GetTimer(GlobalSource::TIMER_REPAINT);
     connect(timer.data(), SIGNAL(timeout()), this, SLOT(timeoutRepaint()));
 }
 
-void Widget_RoundButton::timeoutRepaint()
+void RoundButton::timeoutRepaint()
 {
     if(underMouse()) alpha = qMin(double(alpha + speed), 1.0);
     else alpha = qMax(double(alpha - speed), 0.0);
@@ -26,7 +26,7 @@ void Widget_RoundButton::timeoutRepaint()
     repaint();
 }
 
- void Widget_RoundButton::paintEvent(QPaintEvent *)
+ void RoundButton::paintEvent(QPaintEvent *)
  {
 
      Draw::begin(this);
@@ -54,7 +54,7 @@ void Widget_RoundButton::timeoutRepaint()
      Draw::end();
  }
 
-void Widget_RoundButton::mousePressEvent(QMouseEvent *event)
+void RoundButton::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton) {
         float x = event->x();
@@ -68,7 +68,7 @@ void Widget_RoundButton::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void Widget_RoundButton::slow()
+void RoundButton::slow()
 {
     speed = 0.05;
 }

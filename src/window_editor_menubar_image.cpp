@@ -28,7 +28,7 @@ Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Smal
 
     select_group = new QButtonGroup(this);
     for(int i = 0; i < 4; i ++) {
-        roundButton[i] = new Widget_RoundButton(this);
+        roundButton[i] = new RoundButton(this);
         roundButton[i]->setText(_text[i]);
         roundButton[i]->setGeometry(48 + 120 * i, 84, 120, 60);
         select_group->addButton(roundButton[i]);
@@ -41,7 +41,7 @@ Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Smal
     button_openFolder->setGeometry(616 - 60, 64, 400 - 36, 80);
     connect(button_openFolder, SIGNAL(pressed()), this, SLOT(openFolder()));
 
-    itemList = new Widget_ItemList(this);
+    itemList = new ItemList(this);
     itemList->setGeometry(16, 64 + 80, 1000 - 36 - 60, 580);
 
     button_add = new GradientButton(this);

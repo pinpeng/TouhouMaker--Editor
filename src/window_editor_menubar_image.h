@@ -3,9 +3,9 @@
 
 #include "window/smallWindow.h"
 #include "widget/gradientButton.h"
-#include "widget/widget_roundbutton.h"
+#include "widget/roundButton.h"
 #include "widget/ellipticalLineEdit.h"
-#include "widget/widget_itemlist.h"
+#include "widget/itemlist.h"
 
 #include "dataSet/cacheAgent.h"
 
@@ -28,11 +28,11 @@ private:
     Database db;
 
     QButtonGroup *select_group;
-    Widget_RoundButton *roundButton[4];
+    RoundButton *roundButton[4];
 
     GradientButton *button_openFolder;
 
-    Widget_ItemList *itemList;
+    ItemList *itemList;
 
     GradientButton *button_add;
     GradientButton *button_del;

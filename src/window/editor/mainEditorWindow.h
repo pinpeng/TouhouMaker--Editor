@@ -9,7 +9,7 @@
 #include <QGraphicsEffect>
 
 #include "window_editor_stage.h"
-#include "window_editor_menubar.h"
+#include "window/editor/menuBar/editorMenubar.h"
 #include "window_editor_treelist.h"
 #include "window_editor_timeline.h"
 
@@ -62,7 +62,7 @@ private:
     QVBoxLayout *_mainLayout;
 
     // 最顶上的菜单栏
-    Window_editor_menubar  *_menubar;
+    EditorMenubar  *_menubar;
     // 中间那坨，包括游戏界面、游戏界面左边的和游戏界面右边的
     Window_editor_stage    *window_stage;
     Window_editor_treelist *window_treelist;

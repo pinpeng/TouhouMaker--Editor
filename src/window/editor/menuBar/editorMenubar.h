@@ -8,18 +8,19 @@
 #include "window_ask.h"
 #include "basethread.h"
 #include "window_editor_menubar_setting.h"
-#include "window_editor_menubar_hero.h"
+#include "window/editor/menuBar/editorMenubar.h"
+#include "window/editor/menuBar/characterEditor.h"
 #include "window_editor_menubar_bullet.h"
 #include "window_editor_menubar_audio.h"
 #include "window_editor_menubar_image.h"
 #include "window_editor_menubar_effect.h"
 #include "window_editor_menubar_text.h"
 
-class Window_editor_menubar : public QWidget
+class EditorMenubar : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Window_editor_menubar(QWidget *parent = nullptr);
+    explicit EditorMenubar(QWidget *parent = nullptr);
 
     void drawItems(float left, float top);
     void paintEvent(QPaintEvent *);
@@ -35,7 +36,7 @@ private:
     float mouse_y;
 
     Window_editor_menubar_setting    *window_func0;
-    Window_editor_menubar_hero       *window_func1;
+    CharacterEditor       *window_func1;
     Window_editor_menubar_bullet     *window_func2;
     Window_editor_menubar_image      *window_func3;
     Window_editor_menubar_effect     *window_func4;

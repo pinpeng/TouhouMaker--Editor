@@ -333,7 +333,7 @@ void Window_ask_ex::addChooseButton(QString _text, int *_index, QStringList _str
     typeList[page][i] = ITEM_TYPE::CHOOSE_BUTTON_i;
     idList[page][i] = id;
     textList[page][i] = _text;
-    w_chooseButton[id] = new Widget_ChooseButton(this);
+    w_chooseButton[id] = new ChooseButton(this);
 
     w_chooseButton[id]->show();
     // w_chooseButton[id]->setTimer(_timer);
@@ -359,7 +359,7 @@ void Window_ask_ex::addChooseButton(QString _text, float *_index, QStringList _s
     typeList[page][i] = ITEM_TYPE::CHOOSE_BUTTON_f;
     idList[page][i] = id;
     textList[page][i] = _text;
-    w_chooseButton[id] = new Widget_ChooseButton(this);
+    w_chooseButton[id] = new ChooseButton(this);
 
     w_chooseButton[id]->show();
     // w_chooseButton[id]->setTimer(_timer);

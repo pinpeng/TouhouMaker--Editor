@@ -4,8 +4,8 @@
 #include "window/smallWindow.h"
 #include "widget/gradientButton.h"
 #include "widget/ellipticalLineEdit.h"
-#include "widget/widget_itemlist.h"
-#include "widget/widget_roundbutton.h"
+#include "widget/itemlist.h"
+#include "widget/roundButton.h"
 
 #include "dataSet/cacheAgent.h"
 
@@ -47,7 +47,7 @@ private:
     GradientButton *button_find;
     GradientButton *button_noone;
 
-    Widget_ItemList *itemList;
+    ItemList *itemList;
 
 public slots:
     void find();

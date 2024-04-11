@@ -4,8 +4,8 @@
 // #include "window_small.h"
 // #include "widget/gradientButton.h"
 // #include "widget/ellipticalLineEdit.h"
-// #include "widget/widget_itemlist.h"
-// #include "widget/widget_roundbutton.h"
+// #include "widget/itemlist.h"
+// #include "widget/roundButton.h"
 
 // #include "dataSet/cacheAgent.h"
 
@@ -24,14 +24,14 @@
 
 //     QString type_arr[6] = {"长视频", "长视频文件夹", "短视频", "短视频文件夹", "脚本", "脚本文件夹"};
 //     QButtonGroup *buttonBox_type;
-//     Widget_RoundButton *roundButton_all;
-//     Widget_RoundButton *roundButton_1;
-//     Widget_RoundButton *roundButton_2;
-//     Widget_RoundButton *roundButton_3;
+//     RoundButton *roundButton_all;
+//     RoundButton *roundButton_1;
+//     RoundButton *roundButton_2;
+//     RoundButton *roundButton_3;
 
 //     EllipticalLineEdit *lineEdit;
 //     GradientButton *button_find;
-//     Widget_ItemList *itemList;
+//     ItemList *itemList;
 
 // public slots:
 //     void find();

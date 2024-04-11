@@ -9,8 +9,8 @@ Window_editor_menubar_text_edit::Window_editor_menubar_text_edit(Database *_db, 
     file = _file;
     setWindowTitle("编辑文本 ID=" + QString::number(file->__id));
 
-    chooseButton_language = new Widget_ChooseButton(this);
-    chooseButton_language->setTimer(_timer);
+    chooseButton_language = new ChooseButton(this);
+    // chooseButton_language->setTimer(_timer);
     chooseButton_language->addTextList(db->info.language);
     chooseButton_language->setGeometry(32 + 548, 64, 360, 80);
     connect(chooseButton_language, SIGNAL(indexChanged(int)), this, SLOT(languageChanged(int)));
@@ -73,13 +73,13 @@ Window_editor_menubar_text::Window_editor_menubar_text(QWidget *parent) : SmallW
     connect(button_accept, SIGNAL(pressed()), this, SLOT(accept()));
     connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));
 
-    chooseButton = new Widget_ChooseButton(this);
-    chooseButton->setTimer(_timer);
+    chooseButton = new ChooseButton(this);
+    // chooseButton->setTimer(_timer);
     chooseButton->addTextList(db.info.language);
     chooseButton->setGeometry(816, 64, 400 - 36, 80);
     connect(chooseButton, SIGNAL(indexChanged(int)), this, SLOT(updateList()));
 
-    itemList = new Widget_ItemList(this);
+    itemList = new ItemList(this);
     itemList->setGeometry(16, 64 + 80, 1200 - 36, 660);
 
     connect(button_accept, SIGNAL(pressed()), this, SLOT(accept()));

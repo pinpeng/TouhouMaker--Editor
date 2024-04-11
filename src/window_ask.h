@@ -4,7 +4,7 @@
 #include "window/smallWindow.h"
 
 #include "widget/gradientButton.h"
-#include "widget/widget_choosebutton.h"
+#include "widget/chooseButton.h"
 #include "widget/ellipticalLineEdit.h"
 #include "widget/widget_dragstick.h"
 #include "widget/widget_textEdit.h"
@@ -134,7 +134,7 @@ private:
     float w_lineEdit_data_min[16];
     float w_lineEdit_data_max[16];
 
-    Widget_ChooseButton *w_chooseButton[16];
+    ChooseButton *w_chooseButton[16];
     int *w_chooseButton_data_i[16];
     float *w_chooseButton_data_f[16];
 

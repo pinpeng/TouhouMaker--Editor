@@ -23,13 +23,13 @@ EditorSettingWindow::EditorSettingWindow(QWidget *parent) : SmallWindow(parent)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    chooseButton_color = new Widget_ChooseButton(this);
+    chooseButton_color = new ChooseButton(this);
     chooseButton_color->setGeometry(640 - 32, 64, 320, 70);
     chooseButton_color->addText("默认");
     chooseButton_color->addText("浅灰");
     chooseButton_color->addText("深色");
     chooseButton_color->addText("自定义");
-    chooseButton_color->setTimer(_timer);
+    // chooseButton_color->setTimer(_timer);
 
     chooseButton_color->setIndex(CacheAgent::getInstance().setting.themeColor());
 
@@ -55,11 +55,11 @@ EditorSettingWindow::EditorSettingWindow(QWidget *parent) : SmallWindow(parent)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    chooseButton_antialising = new Widget_ChooseButton(this);
+    chooseButton_antialising = new ChooseButton(this);
     chooseButton_antialising->setGeometry(640 - 32, 304, 560, 70);
     chooseButton_antialising->addText("开启（较慢）");
     chooseButton_antialising->addText("关闭（较快）");
-    chooseButton_antialising->setTimer(_timer);
+    // chooseButton_antialising->setTimer(_timer);
     if(CacheAgent::getInstance().setting.stageAntialising() == true){
         chooseButton_antialising->setIndex(0);
     }
@@ -69,7 +69,7 @@ EditorSettingWindow::EditorSettingWindow(QWidget *parent) : SmallWindow(parent)
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /*chooseButton_tips = new Widget_ChooseButton(this);
+    /*chooseButton_tips = new ChooseButton(this);
     chooseButton_tips->setGeometry(640 - 32, 384, 560, 70);
     chooseButton_tips->addText("全部开启");
     chooseButton_tips->addText("仅重要提示");

@@ -16,7 +16,7 @@
 //     button_find->setText("搜索");
 //     button_find->setTimer(_timer);
 
-//     itemList = new Widget_ItemList(this);
+//     itemList = new ItemList(this);
 //     itemList->setGeometry(32, 144, 1200 - 64, 640 - 16);
 //     itemList->setHeadSize(128, 700);
 //     //itemList->setShowIcon();

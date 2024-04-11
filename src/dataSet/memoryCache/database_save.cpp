@@ -337,12 +337,14 @@ bool Database::save() {
     dir.setPath(basePath + "/image");
     if(!dir.exists()) dir.mkdir(dir.path());
 
+    // 保存上次配置
     CacheAgent::getInstance().setting.setLastProjectPosition(CacheAgent::getInstance().databaseInfo().projectPosition,CacheAgent::getInstance().databaseInfo().projectName);
     CacheAgent::getInstance().setting.save();
 
     QFile file;
     QTextStream fout;
 
+    // 保存到文件中
     file.setFileName(basePath + "/index.thmkproj");
     if(!file.open(QIODevice::WriteOnly)) return 1; fout.setDevice(&file);
 

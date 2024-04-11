@@ -9,7 +9,7 @@
 #include <QMouseEvent>
 #include "basethread.h"
 
-class Widget_RoundButton : public QRadioButton
+class RoundButton : public QRadioButton
 {
     Q_OBJECT
 
@@ -23,7 +23,7 @@ private:
     bool refreshed = false;
 
 public:
-    explicit Widget_RoundButton(QWidget *parent = nullptr);
+    explicit RoundButton(QWidget *parent = nullptr);
 
      void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *event) override;

@@ -1,5 +1,5 @@
-#ifndef WIDGET_ITEMLIST_H
-#define WIDGET_ITEMLIST_H
+#ifndef ItemList_H
+#define ItemList_H
 
 #include <QWidget>
 #include <QList>
@@ -13,12 +13,12 @@ struct itemSTR {
     itemSTR(QList<QString> _text);
 };
 
-class Widget_ItemList : public QWidget
+class ItemList : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Widget_ItemList(QWidget *parent = nullptr);
+    explicit ItemList(QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
 
@@ -75,4 +75,4 @@ signals:
 
 };
 
-#endif // WIDGET_ITEMLIST_H
+#endif // ItemList_H

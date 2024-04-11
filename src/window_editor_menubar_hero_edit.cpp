@@ -14,8 +14,8 @@ Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db
     db = _db;
     file = _file;
 
-    chooseButton_language = new Widget_ChooseButton(this);
-    chooseButton_language->setTimer(_timer);
+    chooseButton_language = new ChooseButton(this);
+    // chooseButton_language->setTimer(_timer);
     chooseButton_language->addTextList(db->info.language);
     chooseButton_language->setGeometry(32 + 160, 64, 480, 80);
     connect(chooseButton_language, SIGNAL(indexChanged(int)), this, SLOT(languageChanged(int)));
@@ -24,8 +24,8 @@ Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db
     lineEdit->setGeometry(32 + 160, 64 + 80 * 1, 480, 80);
     lineEdit->setText(db->getText(file->name, 0));
 
-    chooseButton_bullet = new Widget_ChooseButton(this);
-    chooseButton_bullet->setTimer(_timer);
+    chooseButton_bullet = new ChooseButton(this);
+    // chooseButton_bullet->setTimer(_timer);
     chooseButton_bullet->addTextList({"无弹幕", "仅弹幕1", "仅弹幕2", "两种弹幕"});
     chooseButton_bullet->setGeometry(32 + 320, 64 + 80 * 2, 320, 80);
     chooseButton_bullet->setIndex(file->bullet_type);
@@ -39,8 +39,8 @@ Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db
     button_bullet2->setText("设置弹幕2");
     button_bullet2->setGeometry(32 + 320, 64 + 80 * 3, 320, 80);
 
-    chooseButton_skill = new Widget_ChooseButton(this);
-    chooseButton_skill->setTimer(_timer);
+    chooseButton_skill = new ChooseButton(this);
+    // chooseButton_skill->setTimer(_timer);
     chooseButton_skill->addTextList({"无符卡", "仅符卡1", "仅符卡2", "两种符卡"});
     chooseButton_skill->setGeometry(32 + 320, 64 + 80 * 4, 320, 80);
     chooseButton_skill->setIndex(file->skill_type);
@@ -162,11 +162,11 @@ Window_editor_menubar_hero_edit1::Window_editor_menubar_hero_edit1(Database *_db
 
     QStringList _list;
     _list << "离开屏幕" << "离开较远" << "不消失";
-    chooseButton_range = new Widget_ChooseButton(this);
+    chooseButton_range = new ChooseButton(this);
     chooseButton_range->setGeometry(32 + 200, 64 + 80 * 1, 440, 80);
     chooseButton_range->addTextList(_list);
     chooseButton_range->setIndex(file->data["range"]);
-    chooseButton_range->setTimer(_timer);
+    // chooseButton_range->setTimer(_timer);
 
     lineEdit_collision = new EllipticalLineEdit(this);
     lineEdit_collision->setGeometry(32 + 900, 64 + 80 * 1, 440, 80);
@@ -352,8 +352,8 @@ Window_editor_menubar_hero_edit2::Window_editor_menubar_hero_edit2(Database *_db
     db = _db;
     file = _file;
 
-    chooseButton_language = new Widget_ChooseButton(this);
-    chooseButton_language->setTimer(_timer);
+    chooseButton_language = new ChooseButton(this);
+    // chooseButton_language->setTimer(_timer);
     chooseButton_language->addTextList(db->info.language);
     chooseButton_language->setGeometry(32 + 160, 64, 540, 80);
     connect(chooseButton_language, SIGNAL(indexChanged(int)), this, SLOT(languageChanged(int)));

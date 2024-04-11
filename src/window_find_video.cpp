@@ -17,10 +17,10 @@
 //     button_find->setTimer(_timer);
 
 //     buttonBox_type = new QButtonGroup(this);
-//     roundButton_all = new Widget_RoundButton(this);
-//     roundButton_1 = new Widget_RoundButton(this);
-//     roundButton_2 = new Widget_RoundButton(this);
-//     roundButton_3 = new Widget_RoundButton(this);
+//     roundButton_all = new RoundButton(this);
+//     roundButton_1 = new RoundButton(this);
+//     roundButton_2 = new RoundButton(this);
+//     roundButton_3 = new RoundButton(this);
 //     buttonBox_type->addButton(roundButton_all);
 //     buttonBox_type->addButton(roundButton_1);
 //     buttonBox_type->addButton(roundButton_2);
@@ -40,7 +40,7 @@
 //     roundButton_3->setGeometry(64 + 540, 68, 180, 80);
 //     roundButton_3->setTimer(_timer);
 
-//     itemList = new Widget_ItemList(this);
+//     itemList = new ItemList(this);
 //     itemList->setGeometry(32, 144 + 48, 1200 - 64, 640 - 16);
 //     itemList->setHeadSize(128, 700);
 //     //itemList->setShowIcon();

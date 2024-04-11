@@ -22,16 +22,16 @@ NewProjectWindow::NewProjectWindow(QWidget *parent) : SmallWindow(parent)
 
     {
         // TODO... 按钮组现在未实装，等待后续版本实装
-        round_base = new Widget_RoundButton(this);
+        round_base = new RoundButton(this);
         round_base->setText("基本项目");
         round_base->setGeometry(250, 336, 240, 40);
         round_base->setChecked(true);
 
-        round_empty = new Widget_RoundButton(this);
+        round_empty = new RoundButton(this);
         round_empty->setText("空白项目");
         round_empty->setGeometry(450, 336, 240, 40);
 
-        round_example = new Widget_RoundButton(this);
+        round_example = new RoundButton(this);
         round_example->setText("示例项目");
         round_example->setGeometry(650, 336, 240, 40);
 

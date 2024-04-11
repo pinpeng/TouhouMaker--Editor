@@ -1,25 +1,22 @@
-#include "widget/widget_choosebutton.h"
-
+#include "widget/chooseButton.h"
+#include "globalSource/sourceAgent.h"
 #include <QMouseEvent>
 #include "draw.h"
 
 #include <QtMath>
 
-Widget_ChooseButton::Widget_ChooseButton(QWidget *parent) : QWidget(parent)
+ChooseButton::ChooseButton(QWidget *parent) : QWidget(parent)
 {
     setFixedHeight(80);
+    auto& repaintTimer = SourceAgent::GetInstance().GetTimer(GlobalSource::TIMER_REPAINT);
+    connect(repaintTimer.data(), SIGNAL(timeout()), this, SLOT(timeoutRepaint()));
 }
 
-void Widget_ChooseButton::setText(int index, QString _text) {
-    text[index] = _text;
+void ChooseButton::setText(int index, QString text) {
+    _textList[index] = text;
 }
 
-void Widget_ChooseButton::setTimer(BaseThread *thread)
-{
-    connect(thread, SIGNAL(timeout()), this, SLOT(timeoutRepaint()));
-}
-
-void Widget_ChooseButton::timeoutRepaint()
+void ChooseButton::timeoutRepaint()
 {
     QPoint point = mapFromGlobal(QCursor::pos());
     float w_l = rect().x() + 12;
@@ -48,7 +45,7 @@ void Widget_ChooseButton::timeoutRepaint()
     repaint();
 }
 
-void Widget_ChooseButton::paintEvent(QPaintEvent *) {
+void ChooseButton::paintEvent(QPaintEvent *) {
 
     float w_l = rect().x() + 12;
     float w_r = rect().right() - 8;
@@ -91,18 +88,18 @@ void Widget_ChooseButton::paintEvent(QPaintEvent *) {
     setPenColor_c(c_theme);
     Draw::setTextDefault();
 
-    if(text.size()) {
-        if(index < 0) index = 0;
-        if(index > text.size()) index = text.size() - 1;
+    if(_textList.size()) {
+        if(_index < 0) _index = 0;
+        if(_index > _textList.size()) _index = _textList.size() - 1;
         setPenColor_c(c_theme);
-        Draw::text(rect().center().x(), rect().center().y() + 2, text[index], Qt::AlignCenter);
+        Draw::text(rect().center().x(), rect().center().y() + 2, _textList[_index], Qt::AlignCenter);
     }
     Draw::end();
 }
 
-void Widget_ChooseButton::mousePressEvent(QMouseEvent *event)
+void ChooseButton::mousePressEvent(QMouseEvent *event)
 {
-    if(!text.size()) return;
+    if(!_textList.size()) return;
 
     if(event->button() == Qt::LeftButton) {
         float w_l = rect().x() + 12;
@@ -111,17 +108,17 @@ void Widget_ChooseButton::mousePressEvent(QMouseEvent *event)
         float w_b = rect().bottom() - 8;
         float w_h = (w_b - w_t) / 2;
 
-        int tmp = index;
+        int tmp = _index;
         if(abs(event->y() - (w_t + w_h)) < w_h - 8) {
             if(abs(event->x() - (w_l + w_h)) < w_h - 8) {
-                index = index - 1;
-                if(index < 0) index = text.size() - 1;
+                _index = _index - 1;
+                if(_index < 0) _index = _textList.size() - 1;
             } else if(abs(event->x() - (w_r - w_h)) < w_h - 8) {
-                index = index + 1;
-                if(index >= text.size()) index = 0;
+                _index = _index + 1;
+                if(_index >= _textList.size()) _index = 0;
             }
         }
-        if(tmp != index) emit indexChanged(index);
+        if(tmp != _index) emit indexChanged(_index);
     }
     repaint();
 }

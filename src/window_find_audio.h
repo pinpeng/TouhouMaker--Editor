@@ -4,8 +4,8 @@
 #include "window/smallWindow.h"
 #include "widget/gradientButton.h"
 #include "widget/ellipticalLineEdit.h"
-#include "widget/widget_itemlist.h"
-#include "widget/widget_roundbutton.h"
+#include "widget/itemlist.h"
+#include "widget/roundButton.h"
 
 #include "dataSet/cacheAgent.h"
 
@@ -24,14 +24,14 @@ private:
 
     QString type_arr[6] = {"音乐", "音乐文件夹", "音效", "音效文件夹", "配音", "配音文件夹"};
     QButtonGroup *buttonBox_type;
-    Widget_RoundButton *roundButton_all;
-    Widget_RoundButton *roundButton_1;
-    Widget_RoundButton *roundButton_2;
-    Widget_RoundButton *roundButton_3;
+    RoundButton *roundButton_all;
+    RoundButton *roundButton_1;
+    RoundButton *roundButton_2;
+    RoundButton *roundButton_3;
 
     EllipticalLineEdit *lineEdit;
     GradientButton *button_find;
-    Widget_ItemList *itemList;
+    ItemList *itemList;
 
 public slots:
     void find();

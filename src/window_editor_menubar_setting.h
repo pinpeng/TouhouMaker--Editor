@@ -3,9 +3,9 @@
 
 #include "window/smallWindow.h"
 #include "widget/gradientButton.h"
-#include "widget/widget_roundbutton.h"
+#include "widget/roundButton.h"
 #include "widget/ellipticalLineEdit.h"
-#include "widget/widget_itemlist.h"
+#include "widget/itemlist.h"
 
 #include "dataSet/cacheAgent.h"
 
@@ -26,25 +26,25 @@ private:
     Database db;
 
     /*QButtonGroup *buttonBox_start_with_logo;
-    Widget_RoundButton *roundButton_swl_yes;
-    Widget_RoundButton *roundButton_swl_no;*/
+    RoundButton *roundButton_swl_yes;
+    RoundButton *roundButton_swl_no;*/
 
     /*QButtonGroup *buttonBox_reading_action;
-    Widget_RoundButton *roundButton_ra_default;
-    Widget_RoundButton *roundButton_ra_static;
-    Widget_RoundButton *roundButton_ra_dynamic;
-    Widget_RoundButton *roundButton_ra_custom;
+    RoundButton *roundButton_ra_default;
+    RoundButton *roundButton_ra_static;
+    RoundButton *roundButton_ra_dynamic;
+    RoundButton *roundButton_ra_custom;
     GradientButton *button_ra_custom;
     Window_editor_menubar_setting_ra *window_ra_custom;*/
 
     /*QButtonGroup *buttonBox_using_cg_collection;
-    Widget_RoundButton *roundButton_ucc_yes;
-    Widget_RoundButton *roundButton_ucc_no;*/
+    RoundButton *roundButton_ucc_yes;
+    RoundButton *roundButton_ucc_no;*/
 
     EllipticalLineEdit *lineEdit_name;
     GradientButton *button_reset_name;
 
-    Widget_ItemList *itemList_lan;
+    ItemList *itemList_lan;
 
     GradientButton *button_lan_add;
     GradientButton *button_lan_del;

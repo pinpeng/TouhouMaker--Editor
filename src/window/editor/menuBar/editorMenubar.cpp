@@ -1,4 +1,4 @@
-#include "window_editor_menubar.h"
+#include "window/editor/menuBar/editorMenubar.h"
 
 #include "draw.h"
 #include "dataSet/cacheAgent.h"
@@ -15,7 +15,7 @@
 
 #include "qzipwriter_p.h"
 
-Window_editor_menubar::Window_editor_menubar(QWidget *parent) : QWidget(parent)
+EditorMenubar::EditorMenubar(QWidget *parent) : QWidget(parent)
 {
     setAttribute(Qt::WA_TranslucentBackground);
     setFixedHeight(80.0 * CacheAgent::getInstance().setting.editorScale());
@@ -29,7 +29,7 @@ Window_editor_menubar::Window_editor_menubar(QWidget *parent) : QWidget(parent)
 
 }
 
-void Window_editor_menubar::drawItems(float left, float top)
+void EditorMenubar::drawItems(float left, float top)
 {
     static QString text_arr[12] = {"保存", "导出", "撤销", "重做", "设置", "角色", "子弹", "图像", "特效", "音频", "文本", "帮助"};
 
@@ -61,7 +61,7 @@ void Window_editor_menubar::drawItems(float left, float top)
 
 }
 
-void Window_editor_menubar::paintEvent(QPaintEvent *)
+void EditorMenubar::paintEvent(QPaintEvent *)
 {
     float ss = CacheAgent::getInstance().setting.editorScale();
 
@@ -92,7 +92,7 @@ void Window_editor_menubar::paintEvent(QPaintEvent *)
 }
 
 // TODO... 现在是通过像素来判断鼠标按键位置的，后续考虑通过button修改
-void Window_editor_menubar::mousePressEvent(QMouseEvent *event)
+void EditorMenubar::mousePressEvent(QMouseEvent *event)
 {
     float ss = CacheAgent::getInstance().setting.editorScale();
     mouse_x = event->pos().x();
@@ -137,13 +137,13 @@ void Window_editor_menubar::mousePressEvent(QMouseEvent *event)
 
 }
 
-void Window_editor_menubar::mouseMoveEvent(QMouseEvent *event)
+void EditorMenubar::mouseMoveEvent(QMouseEvent *event)
 {
     mouse_x = event->pos().x();
     mouse_y = event->pos().y();
 }
 
-void Window_editor_menubar::pack_final()
+void EditorMenubar::pack_final()
 {
     QDir path = QApplication::applicationDirPath() + "/output";
     if(!path.exists()) {
@@ -218,45 +218,45 @@ void Window_editor_menubar::pack_final()
 
 }
 
-void Window_editor_menubar::timeoutRepaint()
+void EditorMenubar::timeoutRepaint()
 {
     if(!isActiveWindow()) return;
     repaint();
 }
 
-void Window_editor_menubar::backToHome()
+void EditorMenubar::backToHome()
 {
     emit requestBackToHome();
 }
 
-void Window_editor_menubar::save()
+void EditorMenubar::save()
 {
     if(CacheAgent::getInstance().database().save()) {
         TransparentDialog::play("保存失败");
-        send_tips(2);
+        // send_tips(2);
     } else {
         TransparentDialog::play("保存成功");
-        send_tips(1);
+        // send_tips(1);
     }
 }
 
-void Window_editor_menubar::pack()
+void EditorMenubar::pack()
 {
     if(CacheAgent::getInstance().database().save()) {
         TransparentDialog::play("保存失败");
-        send_tips(4);
+        // send_tips(4);
     } else {
         if(CacheAgent::getInstance().database().pack()) {
             TransparentDialog::play("导出失败");
-            send_tips(4);
+            // send_tips(4);
         } else {
-            send_tips(3);
+            // send_tips(3);
             pack_final();
         }
     }
 }
 
-void Window_editor_menubar::func0()
+void EditorMenubar::func0()
 {
     TransparentDialog::play("功能开发中");
     /*
@@ -268,16 +268,17 @@ void Window_editor_menubar::func0()
     */
 }
 
-void Window_editor_menubar::func1()
+void EditorMenubar::func1()
 {
-    window_func1 = new Window_editor_menubar_hero();
+    // TODO... 目前每次都是新建一个窗口，后续可能要保存窗口，但可能也并不需要
+    window_func1 = new CharacterEditor();
     window_func1->setWindowModality(Qt::ApplicationModal);
     window_func1->setAttribute(Qt::WA_DeleteOnClose);
     connect(window_func1, SIGNAL(closed()), this, SLOT(stageUpdateListCall()));
     window_func1->show();
 }
 
-void Window_editor_menubar::func2()
+void EditorMenubar::func2()
 {
     window_func2 = new Window_editor_menubar_bullet();
     window_func2->setWindowModality(Qt::ApplicationModal);
@@ -286,7 +287,7 @@ void Window_editor_menubar::func2()
     window_func2->show();
 }
 
-void Window_editor_menubar::func3()
+void EditorMenubar::func3()
 {
     window_func3 = new Window_editor_menubar_image();
     window_func3->setWindowModality(Qt::ApplicationModal);
@@ -295,7 +296,7 @@ void Window_editor_menubar::func3()
     window_func3->show();
 }
 
-void Window_editor_menubar::func4()
+void EditorMenubar::func4()
 {
     TransparentDialog::play("功能开发中");
     /*
@@ -307,7 +308,7 @@ void Window_editor_menubar::func4()
     */
 }
 
-void Window_editor_menubar::func5()
+void EditorMenubar::func5()
 {
     window_func5 = new Window_editor_menubar_audio();
     window_func5->setWindowModality(Qt::ApplicationModal);
@@ -316,7 +317,7 @@ void Window_editor_menubar::func5()
     window_func5->show();
 }
 
-void Window_editor_menubar::func6()
+void EditorMenubar::func6()
 {
     window_func6 = new Window_editor_menubar_text();
     window_func6->setWindowModality(Qt::ApplicationModal);
@@ -326,15 +327,15 @@ void Window_editor_menubar::func6()
 }
 
 
-void Window_editor_menubar::func7()
+void EditorMenubar::func7()
 {
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(QApplication::applicationDirPath() + "/help.pdf"))) {
         TransparentDialog::play(this, "帮不了你了");
-        send_tips(0);
+        // send_tips(0);
     }
 }
 
-void Window_editor_menubar::stageUpdateListCall()
+void EditorMenubar::stageUpdateListCall()
 {
     emit requestUpdate(1);
 }

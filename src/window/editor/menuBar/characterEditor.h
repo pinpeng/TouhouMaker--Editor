@@ -3,54 +3,55 @@
 
 #include "window/smallWindow.h"
 #include "widget/gradientButton.h"
-#include "widget/widget_roundbutton.h"
-#include "widget/widget_choosebutton.h"
+#include "widget/roundButton.h"
+#include "widget/chooseButton.h"
 #include "widget/ellipticalLineEdit.h"
-#include "widget/widget_itemlist.h"
+#include "widget/itemlist.h"
 
 #include "dataSet/cacheAgent.h"
 
 #include "window_editor_menubar_hero_edit.h"
 
 
-class Window_editor_menubar_hero : public SmallWindow
+class CharacterEditor : public SmallWindow
 {
     Q_OBJECT
 
 public:
 
-    explicit Window_editor_menubar_hero(QWidget *parent = nullptr);
-
-    void paintEvent(QPaintEvent *);
+    explicit CharacterEditor(QWidget *parent = nullptr);
 
 private:
 
     Database db;
 
-    Widget_ItemList *itemList;
+    ItemList *_itemList;
 
-    Widget_ChooseButton *chooseButton;
+    ChooseButton *chooseButton;
 
-    QButtonGroup *select_group;
-    Widget_RoundButton *roundButton[3];
+    QButtonGroup *_characterGroup;
+    RoundButton *roundButton[3];
 
-    GradientButton *button_add;
-    GradientButton *button_del;
+    GradientButton *_addButton;
+    GradientButton *_delButton;
 
-    GradientButton *button_accept;
-    GradientButton *button_cancel;
+    GradientButton *_acceptButton;
+    GradientButton *_cancelButton;
 
     Window_editor_menubar_hero_edit0 *window_editor0;
     Window_editor_menubar_hero_edit1 *window_editor1;
     Window_editor_menubar_hero_edit2 *window_editor2;
 
-    void editHeroStart(int _index);
+    void editHeroStart(int index);
 
 public slots:
+    /**
+     * @brief 刷新列表
+    */
     void updateList();
     void accept();
 
-    void editHero(int _index);
+    void editHero(int index);
 
     void add();
     void del();

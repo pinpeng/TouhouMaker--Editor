@@ -1,76 +1,60 @@
-#include "window_editor_menubar_hero.h"
+#include "window/editor/menuBar/characterEditor.h"
 
-Window_editor_menubar_hero::Window_editor_menubar_hero(QWidget *parent) : SmallWindow(parent)
+CharacterEditor::CharacterEditor(QWidget *parent) : SmallWindow(parent)
 {
     setFixedSize(1200, 900);
     setWindowTitle("编辑角色");
 
     db = CacheAgent::getInstance().database();
 
-    button_accept = new GradientButton(this);
-    button_accept->setGeometry(720 - 28, 900 - 96, 240, 80);
-    button_accept->setText("确定");
-    // button_accept->setTimer(_timer);
+    _acceptButton = new GradientButton("确定",QRect(720 - 28, 900 - 96, 240, 80),this);
 
-    button_cancel = new GradientButton(this);
-    button_cancel->setGeometry(960 - 20, 900 - 96, 240, 80);
-    button_cancel->setText("取消");
-    // button_cancel->setTimer(_timer);
+    _cancelButton = new GradientButton("取消",QRect(960 - 20, 900 - 96, 240, 80),this);
 
     QString _text[3] = { "主角", "小怪", "BOSS" };
 
-    select_group = new QButtonGroup(this);
+    _characterGroup = new QButtonGroup(this);
     for(int i = 0; i < 3; i ++) {
-        roundButton[i] = new Widget_RoundButton(this);
+        roundButton[i] = new RoundButton(this);
         roundButton[i]->setText(_text[i]);
         roundButton[i]->setGeometry(48 + 180 * i, 84, 180, 60);
-        select_group->addButton(roundButton[i]);
+        _characterGroup->addButton(roundButton[i]);
+        // TODO... 后续修改connect到ButtonGroup
         connect(roundButton[i], SIGNAL(stateChanged()), this, SLOT(updateList()));
     }
 
-    chooseButton = new Widget_ChooseButton(this);
-    chooseButton->setTimer(_timer);
+    // 语言切换按钮，目前就当不存在吧
+    chooseButton = new ChooseButton(this);
     chooseButton->addTextList(db.info.language);
     chooseButton->setGeometry(816, 64, 400 - 36, 80);
     connect(chooseButton, SIGNAL(indexChanged(int)), this, SLOT(updateList()));
 
-    itemList = new Widget_ItemList(this);
-    itemList->setGeometry(16, 64 + 80, 1200 - 36, 580);
+    _itemList = new ItemList(this);
+    _itemList->setGeometry(16, 64 + 80, 1200 - 36, 580);
 
 
-    button_add = new GradientButton(this);
-    button_del = new GradientButton(this);
-    button_add->setGeometry(12, 724, 580, 80);
-    button_add->setText("新建");
-    // button_add->setTimer(_timer);
-    button_del->setGeometry(600, 724, 580, 80);
-    button_del->setText("删除");
-    // button_del->setTimer(_timer);
+    _addButton = new GradientButton("新建",QRect(12, 724, 580, 80),this);
+    _delButton = new GradientButton("删除",QRect(600, 724, 580, 80),this);
 
-    connect(button_add, SIGNAL(pressed()), this, SLOT(add()));
-    connect(button_del, SIGNAL(pressed()), this, SLOT(del()));
+    connect(_acceptButton, SIGNAL(pressed()), this, SLOT(accept()));
+    connect(_cancelButton, SIGNAL(pressed()), this, SLOT(end()));
 
-    connect(button_accept, SIGNAL(pressed()), this, SLOT(accept()));
-    connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));
+    connect(_addButton, SIGNAL(pressed()), this, SLOT(add()));
+    connect(_delButton, SIGNAL(pressed()), this, SLOT(del()));
 
-    connect(itemList, SIGNAL(doubleClicked(int)), this, SLOT(editHero(int)));
+    connect(_itemList, SIGNAL(doubleClicked(int)), this, SLOT(editHero(int)));
 
     roundButton[0]->setChecked(true);
     updateList();
 }
 
-void Window_editor_menubar_hero::paintEvent(QPaintEvent *)
-{
-    Draw::smallWindow(this, this);
-}
-
-void Window_editor_menubar_hero::updateList()
+void CharacterEditor::updateList()
 {
     QList<itemSTR> tmpList;
-    QList<QString> text_list;
-    text_list << "ID" << "名称";
-    itemList->setHeadTextList(text_list);
-    itemList->setHeadWidthList({120, 360});
+    // QList<QString> headTextList;
+    // headTextList << "ID" << "名称";
+    _itemList->setHeadTextList({"ID","名称"});
+    _itemList->setHeadWidthList({120, 360});
 
     if(roundButton[0]->isChecked()) {
         for(auto i = db.hero.begin(); i != db.hero.end(); i ++) {
@@ -97,25 +81,25 @@ void Window_editor_menubar_hero::updateList()
         }
     }
 
-    itemList->setItemList(tmpList);
+    _itemList->setItemList(tmpList);
 }
 
-void Window_editor_menubar_hero::accept()
+void CharacterEditor::accept()
 {
     CacheAgent::getInstance().databaseUpdate(db);
     end();
 }
 
 
-void Window_editor_menubar_hero::editHero(int _index)
+void CharacterEditor::editHero(int _index)
 {
     if(_index == -1) return;
-    if(itemList->index() == -1) return;
+    if(_itemList->index() == -1) return;
 
-    editHeroStart(itemList->getItem(_index).text[0].toInt());
+    editHeroStart(_itemList->getItem(_index).text[0].toInt());
 }
 
-void Window_editor_menubar_hero::editHeroStart(int _index)
+void CharacterEditor::editHeroStart(int _index)
 {
     if(roundButton[0]->isChecked()) {
         TransparentDialog::play("功能开发中");
@@ -143,25 +127,25 @@ void Window_editor_menubar_hero::editHeroStart(int _index)
     }
 }
 
-void Window_editor_menubar_hero::add()
+void CharacterEditor::add()
 {
     if(roundButton[0]->isChecked()) db.hero_append();
     if(roundButton[1]->isChecked()) db.enemy_append();
     if(roundButton[2]->isChecked()) db.boss_append();
 
-    itemList->resetIndex();
+    _itemList->resetIndex();
     updateList();
 }
 
-void Window_editor_menubar_hero::del()
+void CharacterEditor::del()
 {
-    int index = itemList->index();
+    int index = _itemList->index();
     if(index == -1) { TransparentDialog::play(this, "未选中项目"); return; }
-    if(roundButton[0]->isChecked()) db.hero_delete( itemList->getItem(index).text[0].toInt());
-    if(roundButton[1]->isChecked()) db.enemy_delete(itemList->getItem(index).text[0].toInt());
-    if(roundButton[2]->isChecked()) db.boss_delete( itemList->getItem(index).text[0].toInt());
+    if(roundButton[0]->isChecked()) db.hero_delete( _itemList->getItem(index).text[0].toInt());
+    if(roundButton[1]->isChecked()) db.enemy_delete(_itemList->getItem(index).text[0].toInt());
+    if(roundButton[2]->isChecked()) db.boss_delete( _itemList->getItem(index).text[0].toInt());
 
-    itemList->resetIndex();
+    _itemList->resetIndex();
     updateList();
 }
 

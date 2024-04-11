@@ -9,13 +9,13 @@
 
 #include "basethread.h"
 
-class Widget_ChooseButton : public QWidget
+class ChooseButton : public QWidget
 {
     Q_OBJECT
 
 private:
-    QStringList text;
-    int index = 0;
+    QStringList _textList;
+    int _index = 0;
 
     float alpha1 = 0;
     float alpha2 = 0;
@@ -24,26 +24,26 @@ private:
     bool refreshed = false;
 
 public:
-    explicit Widget_ChooseButton(QWidget *parent = nullptr);
+    explicit ChooseButton(QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
 
     void mousePressEvent(QMouseEvent *event) override;
 
-    void setTimer(BaseThread *thread);
-    inline void setTimer(QTimer& timer){}
+    // void setTimer(BaseThread *thread);
+    // inline void setTimer(QTimer& timer){}
 
-    void setIndex(int _index) { index = _index; };
-    int getIndex() { return index; }
+    void setIndex(int index) { _index = index; };
+    int getIndex() { return _index; }
 
     float getAlpha1() { return alpha1; }
     float getAlpha2() { return alpha2; }
 
-    QString getText(int index) { return text[index]; }
-    void clear() { text.clear(); }
-    void addText(QString _text) { text.append(_text); }
-    void addTextList(QStringList _text) { text.append(_text); }
-    void setText(int index, QString _text);
+    QString getText(int index) { return _textList[index]; }
+    void clear() { _textList.clear(); }
+    void addText(QString text) { _textList.append(text); }
+    void addTextList(QStringList text) { _textList.append(text); }
+    void setText(int index, QString text);
 
 private slots:
     void timeoutRepaint();

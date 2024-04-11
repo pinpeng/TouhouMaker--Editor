@@ -3,12 +3,12 @@
 
 #include "window/smallWindow.h"
 #include "widget/gradientButton.h"
-#include "widget/widget_roundbutton.h"
+#include "widget/roundButton.h"
 #include "widget/ellipticalLineEdit.h"
 #include "widget/widget_textEdit.h"
-#include "widget/widget_itemlist.h"
+#include "widget/itemlist.h"
 
-#include "widget/widget_choosebutton.h"
+#include "widget/chooseButton.h"
 #include "window_ask.h"
 
 #include "dataSet/cacheAgent.h"
@@ -28,7 +28,7 @@ private:
     DB_text *file;
 
     int language_last = 0;
-    Widget_ChooseButton *chooseButton_language;
+    ChooseButton *chooseButton_language;
 
     Widget_TextEdit *textEdit;
 
@@ -53,9 +53,9 @@ private:
 
     Database db;
 
-    Widget_ChooseButton *chooseButton;
+    ChooseButton *chooseButton;
 
-    Widget_ItemList *itemList;
+    ItemList *itemList;
 
     GradientButton *button_accept;
     GradientButton *button_cancel;
