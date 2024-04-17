@@ -53,14 +53,14 @@ SOURCES += \
     window/editor/menuBar/editorMenubar.cpp \
     window_editor_menubar_audio.cpp \
     window_editor_menubar_audio_edit.cpp \
-    window_editor_menubar_bullet.cpp \
-    window_editor_menubar_bullet_edit.cpp \
+    window/editor/menuBar/bulletInfoList.cpp \
+    window/editor/menuBar/bulletEditor.cpp \
     window_editor_menubar_effect.cpp \
     window_editor_menubar_effect_edit.cpp \
     window/editor/menuBar/characterEditor.cpp \
     window_editor_menubar_hero_edit.cpp \
-    window_editor_menubar_image.cpp \
-    window_editor_menubar_image_edit.cpp \
+    window/editor/menuBar/imageInfoList.cpp \
+    window/editor/menuBar/imageEditor.cpp \
     window_editor_menubar_setting.cpp \
     window_editor_menubar_setting_language.cpp \
     window_editor_menubar_text.cpp \
@@ -107,14 +107,14 @@ HEADERS += \
     window/editor/menuBar/editorMenubar.h \
     window_editor_menubar_audio.h \
     window_editor_menubar_audio_edit.h \
-    window_editor_menubar_bullet.h \
-    window_editor_menubar_bullet_edit.h \
+    window/editor/menuBar/bulletInfoList.h \
+    window/editor/menuBar/bulletEditor.h \
     window_editor_menubar_effect.h \
     window_editor_menubar_effect_edit.h \
     window/editor/menuBar/characterEditor.h \
     window_editor_menubar_hero_edit.h \
-    window_editor_menubar_image.h \
-    window_editor_menubar_image_edit.h \
+    window/editor/menuBar/imageInfoList.h \
+    window/editor/menuBar/imageEditor.h \
     window_editor_menubar_setting.h \
     window_editor_menubar_setting_language.h \
     window_editor_menubar_text.h \

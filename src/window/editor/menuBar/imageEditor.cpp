@@ -1,11 +1,11 @@
-#include "window_editor_menubar_image_edit.h"
+#include "window/editor/menuBar/imageEditor.h"
 
 #include "widget/transparentDialog.h"
 
 #include <QFileDialog>
 #include <QDesktopServices>
 
-Window_editor_menubar_image_edit::Window_editor_menubar_image_edit(Database *_db, DB_image *_file, QWidget *parent) : SmallWindow(parent)
+ImageEditor::ImageEditor(Database *_db, DB_image *_file, QWidget *parent) : SmallWindow(parent)
 {
     setFixedSize(800, 240);
     setWindowTitle("编辑图像");
@@ -20,12 +20,10 @@ Window_editor_menubar_image_edit::Window_editor_menubar_image_edit(Database *_db
     button_open = new GradientButton(this);
     button_open->setGeometry(32 + 260, 64 + 80 * 1, 240, 80);
     button_open->setText("打开...");
-    // button_open->setTimer(_timer);
 
     button_preview = new GradientButton(this);
     button_preview->setGeometry(32 + 500, 64 + 80 * 1, 240, 80);
     button_preview->setText("预览");
-    // button_preview->setTimer(_timer);
 
     connect(button_open, SIGNAL(pressed()), this, SLOT(open()));
     connect(button_preview, SIGNAL(pressed()), this, SLOT(preview()));
@@ -42,7 +40,7 @@ Window_editor_menubar_image_edit::Window_editor_menubar_image_edit(Database *_db
 
 }
 
-void Window_editor_menubar_image_edit::paintEvent(QPaintEvent *)
+void ImageEditor::paintEvent(QPaintEvent *)
 {
     Draw::smallWindow(this, this);
 
@@ -56,7 +54,7 @@ void Window_editor_menubar_image_edit::paintEvent(QPaintEvent *)
     Draw::end();
 }
 
-void Window_editor_menubar_image_edit::open()
+void ImageEditor::open()
 {
     QString basePath = CacheAgent::getInstance().database().info.projectPosition;
     QString str = QFileDialog::getOpenFileName(this, "打开图像", basePath, "(*.png *.gif)");
@@ -98,7 +96,7 @@ void Window_editor_menubar_image_edit::open()
     }
 }
 
-void Window_editor_menubar_image_edit::preview()
+void ImageEditor::preview()
 {
     if(file->state == 0) {
         TransparentDialog::play(this, "还没导入哦");
@@ -116,7 +114,7 @@ void Window_editor_menubar_image_edit::preview()
     QDesktopServices::openUrl(QUrl::fromLocalFile(basePath));
 }
 
-void Window_editor_menubar_image_edit::end()
+void ImageEditor::end()
 {
     file->name = lineEdit->text();
 

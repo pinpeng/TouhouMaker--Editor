@@ -9,17 +9,17 @@
 
 #include "dataSet/cacheAgent.h"
 
-#include "window_editor_menubar_image_edit.h"
+#include "window/editor/menuBar/imageEditor.h"
 
 #include "window_find.h"
 
-class Window_editor_menubar_image : public SmallWindow
+class ImageInfoList : public SmallWindow
 {
     Q_OBJECT
 
 public:
 
-    explicit Window_editor_menubar_image(QWidget *parent = nullptr);
+    explicit ImageInfoList(QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *);
 
@@ -44,15 +44,15 @@ private:
 
     QLabel *label;
 
-    Window_editor_menubar_image_edit *window_editor;
+    ImageEditor *window_editor;
 
-    void editAudioStart(int _index);
+    void editAudioStart(int index);
 
 public slots:
     void updateList();
     void accept();
 
-    void editAudio(int _index);
+    void editAudio(int index);
     void openFolder();
 
     void add();

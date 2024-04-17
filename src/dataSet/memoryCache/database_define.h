@@ -14,7 +14,7 @@
 
 struct Database;
 
-class Window_editor_menubar_bullet_edit;
+class BulletEditor;
 
 class Window_editor_menubar_effect_edit;
 
@@ -126,9 +126,9 @@ struct DB_bullet {
     void init();
     void updateData();
 
-    void renderCode(Window_editor_menubar_bullet_edit *window, Database *db, QRectF _rect, float *_line, int _group);
-    bool editCode(Window_editor_menubar_bullet_edit *window, Database *db, QRectF _rect, float *_line, float mx, float my, int _group);
-    void wheelEvent(Window_editor_menubar_bullet_edit *window, Database *db, QRectF _rect, float *_line);
+    void renderCode(BulletEditor *window, Database *db, QRectF _rect, float *_line, int _group);
+    bool editCode(BulletEditor *window, Database *db, QRectF _rect, float *_line, float mx, float my, int _group);
+    void wheelEvent(BulletEditor *window, Database *db, QRectF _rect, float *_line);
 };
 
 struct DB_effect {

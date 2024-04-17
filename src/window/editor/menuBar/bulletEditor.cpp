@@ -1,4 +1,4 @@
-#include "window_editor_menubar_bullet_edit.h"
+#include "window/editor/menuBar/bulletEditor.h"
 
 #include "widget/transparentDialog.h"
 
@@ -7,7 +7,7 @@
 #include <QLabel>
 #include "window_find.h"
 
-Window_editor_menubar_bullet_edit::Window_editor_menubar_bullet_edit(Database *_db, DB_bullet *_file, int _group, QWidget *parent) : SmallWindow(parent)
+BulletEditor::BulletEditor(Database *_db, DB_bullet *_file, int _group, QWidget *parent) : SmallWindow(parent)
 {
     setFixedSize(1600, 900);
     setWindowTitle("编辑子弹");
@@ -16,29 +16,29 @@ Window_editor_menubar_bullet_edit::Window_editor_menubar_bullet_edit(Database *_
     file = _file;
     group = _group;
 
-    lineEdit_name = new EllipticalLineEdit(this);
-    lineEdit_name->setGeometry(32 + 200, 64 + 80 * 0, 440, 80);
-    lineEdit_name->setText(file->name);
+    _nameLineEdit = new EllipticalLineEdit(this);
+    _nameLineEdit->setGeometry(32 + 200, 64 + 80 * 0, 440, 80);
+    _nameLineEdit->setText(file->name);
 
     QStringList _list;
     _list << "圆形" << "激光（开发中）";
-    chooseButton_type = new ChooseButton(this);
-    chooseButton_type->setGeometry(32 + 900, 64 + 80 * 0, 440, 80);
-    chooseButton_type->addTextList(_list);
-    chooseButton_type->setIndex(file->data["type"]);
-    // chooseButton_type->setTimer(_timer);
+    _bulletTypeChooseButton = new ChooseButton(this);
+    _bulletTypeChooseButton->setGeometry(32 + 900, 64 + 80 * 0, 440, 80);
+    _bulletTypeChooseButton->addTextList(_list);
+    _bulletTypeChooseButton->setIndex(file->data["type"]);
+    // _bulletTypeChooseButton->setTimer(_timer);
 
     _list.clear();
     _list << "离开屏幕" << "离开较远" << "不消失";
-    chooseButton_range = new ChooseButton(this);
-    chooseButton_range->setGeometry(32 + 200, 64 + 80 * 1, 440, 80);
-    chooseButton_range->addTextList(_list);
-    chooseButton_range->setIndex(file->data["range"]);
-    // chooseButton_range->setTimer(_timer);
+    _destoryRangeChooseButton = new ChooseButton(this);
+    _destoryRangeChooseButton->setGeometry(32 + 200, 64 + 80 * 1, 440, 80);
+    _destoryRangeChooseButton->addTextList(_list);
+    _destoryRangeChooseButton->setIndex(file->data["range"]);
+    // _destoryRangeChooseButton->setTimer(_timer);
 
-    lineEdit_collision = new EllipticalLineEdit(this);
-    lineEdit_collision->setGeometry(32 + 900, 64 + 80 * 1, 440, 80);
-    lineEdit_collision->setText(QString::number(file->data["collision"]));
+    _bulletCollisionLineEdit = new EllipticalLineEdit(this);
+    _bulletCollisionLineEdit->setGeometry(32 + 900, 64 + 80 * 1, 440, 80);
+    _bulletCollisionLineEdit->setText(QString::number(file->data["collision"]));
 
     label = new QLabel(this);
     label->setScaledContents(false);
@@ -63,7 +63,7 @@ Window_editor_menubar_bullet_edit::Window_editor_menubar_bullet_edit(Database *_
 
 }
 
-void Window_editor_menubar_bullet_edit::paintEvent(QPaintEvent *)
+void BulletEditor::paintEvent(QPaintEvent *)
 {
     Draw::smallWindow(this, this);
 
@@ -98,13 +98,14 @@ void Window_editor_menubar_bullet_edit::paintEvent(QPaintEvent *)
     Draw::end();
 }
 
-void Window_editor_menubar_bullet_edit::mousePressEvent(QMouseEvent *event)
+void BulletEditor::mousePressEvent(QMouseEvent *event)
 {
     SmallWindow::mousePressEvent(event);
 
     float mx = event->pos().x();
     float my = event->pos().y();
     bool flag = false;
+    // 点击右边设置图片
     if(1382 < mx && mx < 1382 + 192 &&
        72 < my && my < 72 + 144) {
         Window_find *window_find = new Window_find(db, Window_find::type_image, 3, &file->image_id);
@@ -114,6 +115,7 @@ void Window_editor_menubar_bullet_edit::mousePressEvent(QMouseEvent *event)
         connect(window_find, SIGNAL(closed()), this, SLOT(updateImage()));
     }
 
+    // 设置阶段（共有X个阶段）
     if(rect().left() + 24 < mx && mx < rect().right() - 24 &&
        234 < my && my < rect().bottom() - 24) {
         flag = file->editCode(this, db, QRectF(rect().left() + 24, 234, rect().right() - 48 - rect().left(), rect().bottom() - 258),
@@ -122,7 +124,7 @@ void Window_editor_menubar_bullet_edit::mousePressEvent(QMouseEvent *event)
     if(flag) repaint();
 }
 
-void Window_editor_menubar_bullet_edit::wheelEvent(QWheelEvent *event)
+void BulletEditor::wheelEvent(QWheelEvent *event)
 {
     float tmp = code_scroll_top;
     code_scroll_top -= float(event->angleDelta().y()) / 120.0;
@@ -131,18 +133,18 @@ void Window_editor_menubar_bullet_edit::wheelEvent(QWheelEvent *event)
     if(tmp != code_scroll_top) repaint();
 }
 
-void Window_editor_menubar_bullet_edit::end()
+void BulletEditor::end()
 {
-    file->name = lineEdit_name->text();
-    file->data["type"] = chooseButton_type->getIndex();
-    file->data["range"] = chooseButton_range->getIndex();
-    float tmp = lineEdit_collision->text().toFloat();
+    file->name = _nameLineEdit->text();
+    file->data["type"] = _bulletTypeChooseButton->getIndex();
+    file->data["range"] = _destoryRangeChooseButton->getIndex();
+    float tmp = _bulletCollisionLineEdit->text().toFloat();
     file->data["collision"] = qMax(-1.0f, qMin(tmp, 100.0f));
     _isClosing = true;
     emit closed();
 }
 
-void Window_editor_menubar_bullet_edit::updateData()
+void BulletEditor::updateData()
 {
     file->updateData();
 
@@ -163,7 +165,7 @@ void Window_editor_menubar_bullet_edit::updateData()
     repaint();
 }
 
-void Window_editor_menubar_bullet_edit::updateImage()
+void BulletEditor::updateImage()
 {
     if(file->image_id == -1) {
         label->setPixmap(QPixmap());

@@ -148,6 +148,7 @@ DB_audio::DB_audio(int _id, QString _name)
     state = 0;
 }
 
+// TODO... 图片页面现在在撤回（缓存回滚）时无法正确显示图片
 DB_image::DB_image()
 {
     __id = 0;

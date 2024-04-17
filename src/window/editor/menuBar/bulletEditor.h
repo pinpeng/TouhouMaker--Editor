@@ -10,13 +10,13 @@
 
 #include "dataSet/cacheAgent.h"
 
-class Window_editor_menubar_bullet_edit : public SmallWindow
+class BulletEditor : public SmallWindow
 {
 
     Q_OBJECT
 
 public:
-    explicit Window_editor_menubar_bullet_edit(Database *_db, DB_bullet *_file, int _group, QWidget *parent = nullptr);
+    explicit BulletEditor(Database *_db, DB_bullet *_file, int _group, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *event) override;
@@ -27,12 +27,13 @@ private:
     DB_bullet *file;
     QLabel *label;
 
+    // boss？ enemy？ hero？
     int group;
 
-    EllipticalLineEdit *lineEdit_name;
-    ChooseButton *chooseButton_type;
-    ChooseButton *chooseButton_range;
-    EllipticalLineEdit *lineEdit_collision;
+    EllipticalLineEdit *_nameLineEdit;
+    ChooseButton *_bulletTypeChooseButton;
+    ChooseButton *_destoryRangeChooseButton;
+    EllipticalLineEdit *_bulletCollisionLineEdit;
 
     float code_scroll_top = 0;
 

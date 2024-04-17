@@ -9,44 +9,44 @@
 
 #include "dataSet/cacheAgent.h"
 
-#include "window_editor_menubar_bullet_edit.h"
+#include "window/editor/menuBar/bulletEditor.h"
 
 
-class Window_editor_menubar_bullet : public SmallWindow
+class BulletInfoList : public SmallWindow
 {
     Q_OBJECT
 
 public:
 
-    explicit Window_editor_menubar_bullet(QWidget *parent = nullptr);
-
-    void paintEvent(QPaintEvent *);
+    explicit BulletInfoList(QWidget *parent = nullptr);
 
 private:
 
     Database db;
 
-    QButtonGroup *select_group;
+    QButtonGroup *_bulletselectgroup;
     RoundButton *roundButton[3];
 
     ItemList *itemList;
 
-    GradientButton *button_add;
-    GradientButton *button_del;
+    GradientButton *_addbutton;
+    GradientButton *_delbutton;
 
-    GradientButton *button_accept;
-    GradientButton *button_cancel;
+    GradientButton *_acceptbutton;
+    GradientButton *_cancelbutton;
 
-    Window_editor_menubar_bullet_edit *window_editor;
+    BulletEditor *window_editor;
 
+    int _curListGroup;
+private:
 
-    void editBulletStart(int _index);
+    void editBulletStart(int index);
 
 public slots:
     void updateList();
     void accept();
 
-    void editBullet(int _index);
+    void editBullet(int index);
 
     void add();
     void del();

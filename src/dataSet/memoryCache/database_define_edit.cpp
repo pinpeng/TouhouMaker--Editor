@@ -1,6 +1,6 @@
 #include "dataSet/memoryCache/database_define.h"
 
-#include "window_editor_menubar_bullet_edit.h"
+#include "window/editor/menuBar/bulletEditor.h"
 #include "window_editor_menubar_effect_edit.h"
 #include "window_editor_menubar_hero_edit.h"
 
@@ -77,7 +77,7 @@ void DB_bullet::updateData()
 
 }
 
-void DB_bullet::renderCode(Window_editor_menubar_bullet_edit *window, Database *db, QRectF _rect, float *_line, int _group)
+void DB_bullet::renderCode(BulletEditor *window, Database *db, QRectF _rect, float *_line, int _group)
 {
 
     int line_show_max = floor(_rect.height() / 40) - 2;
@@ -169,7 +169,7 @@ void DB_bullet::renderCode(Window_editor_menubar_bullet_edit *window, Database *
 
 }
 
-bool DB_bullet::editCode(Window_editor_menubar_bullet_edit *window, Database *db, QRectF _rect, float *_line, float mx, float my, int _group)
+bool DB_bullet::editCode(BulletEditor *window, Database *db, QRectF _rect, float *_line, float mx, float my, int _group)
 {
     static QStringList _type = {"无限持续", "有限时间"};
 
@@ -180,12 +180,15 @@ bool DB_bullet::editCode(Window_editor_menubar_bullet_edit *window, Database *db
     float mid_x = _rect.left() + 16;
     float mid_y = _rect.top() + 24;
     float line_num = 0;
+    // 点击了表头
     if(abs(my - mid_y) < 20) {
+        // TODO... 这个后续使用单例，不要写宏了
         ask_create("设置阶段数");
         ask_add_lineEdit_int("阶段数量", &data["stage"], 0, 20);
         window->connect(window_ask_ex, SIGNAL(closed()), window, SLOT(updateData()));
     }
 
+    // TODO... 这地方为UI注入组件，但最好修改一下写的方法
     for(int i = 0; i < data["stage"]; i ++) {
         QString tmp = QString::number(i) + "_";
 
@@ -209,6 +212,7 @@ bool DB_bullet::editCode(Window_editor_menubar_bullet_edit *window, Database *db
         }
         line_num ++;
 
+        // TODO... 这一坨没找到在哪
         for(int j = 0; j < data[tmp + "event"]; j ++) {
             QString tmp1 = tmp + QString::number(j) + "_";
 
@@ -262,7 +266,7 @@ bool DB_bullet::editCode(Window_editor_menubar_bullet_edit *window, Database *db
     return false;
 }
 
-void DB_bullet::wheelEvent(Window_editor_menubar_bullet_edit *window, Database *db, QRectF _rect, float *_line)
+void DB_bullet::wheelEvent(BulletEditor *window, Database *db, QRectF _rect, float *_line)
 {
     int line_show_max = floor(_rect.height() / 40) - 2;
     int line_max = 0;

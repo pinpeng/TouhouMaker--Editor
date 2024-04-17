@@ -1,9 +1,9 @@
-#include "window_editor_menubar_image.h"
+#include "window/editor/menuBar/imageInfoList.h"
 
 #include "qdesktopservices.h"
 #include <QLabel>
 
-Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : SmallWindow(parent)
+ImageInfoList::ImageInfoList(QWidget *parent) : SmallWindow(parent)
 {
     setFixedSize(1600, 900);
     setWindowTitle("编辑图像");
@@ -13,16 +13,13 @@ Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Smal
     button_accept = new GradientButton(this);
     button_accept->setGeometry(1120 - 28, 900 - 96, 240, 80);
     button_accept->setText("确定");
-    // button_accept->setTimer(_timer);
 
     button_cancel = new GradientButton(this);
     button_cancel->setGeometry(1360 - 20, 900 - 96, 240, 80);
     button_cancel->setText("取消");
-    // button_cancel->setTimer(_timer);
 
     connect(button_accept, SIGNAL(pressed()), this, SLOT(accept()));
     connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));
-
 
     QString _text[4] = { "背景", "特效", "立绘", "子弹" };
 
@@ -32,11 +29,12 @@ Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Smal
         roundButton[i]->setText(_text[i]);
         roundButton[i]->setGeometry(48 + 120 * i, 84, 120, 60);
         select_group->addButton(roundButton[i]);
+        // TODO... 后续绑定到QButtonGroup上面
         connect(roundButton[i], SIGNAL(stateChanged()), this, SLOT(updateList()));
     }
+    roundButton[0]->setChecked(true);
 
     button_openFolder = new GradientButton(this);
-    // button_openFolder->setTimer(_timer);
     button_openFolder->setText("打开图像文件夹");
     button_openFolder->setGeometry(616 - 60, 64, 400 - 36, 80);
     connect(button_openFolder, SIGNAL(pressed()), this, SLOT(openFolder()));
@@ -45,13 +43,12 @@ Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Smal
     itemList->setGeometry(16, 64 + 80, 1000 - 36 - 60, 580);
 
     button_add = new GradientButton(this);
-    button_del = new GradientButton(this);
     button_add->setGeometry(12, 724, 450, 80);
     button_add->setText("新建");
-    // button_add->setTimer(_timer);
+
+    button_del = new GradientButton(this);
     button_del->setGeometry(500 - 30, 724, 450, 80);
     button_del->setText("删除");
-    // button_del->setTimer(_timer);
 
     connect(button_add, SIGNAL(pressed()), this, SLOT(add()));
     connect(button_del, SIGNAL(pressed()), this, SLOT(del()));
@@ -66,11 +63,10 @@ Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Smal
     label->setScaledContents(true);
     label->setGeometry(932, 72, 640, 724);
 
-    roundButton[0]->setChecked(true);
     updateList();
 }
 
-void Window_editor_menubar_image::paintEvent(QPaintEvent *)
+void ImageInfoList::paintEvent(QPaintEvent *)
 {
     Draw::smallWindow(this, this);
 
@@ -120,7 +116,7 @@ void Window_editor_menubar_image::paintEvent(QPaintEvent *)
     Draw::end();
 }
 
-void Window_editor_menubar_image::updateList()
+void ImageInfoList::updateList()
 {
 
     QList<itemSTR> tmpList;
@@ -130,7 +126,11 @@ void Window_editor_menubar_image::updateList()
     itemList->setHeadWidthList({120, 540, 240});
 
     int tmp = -1;
-    for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) tmp = i;
+    for(int i = 0; i < 4; i ++){
+        if(roundButton[i]->isChecked()){
+            tmp = i;
+        }
+    }
 
     for(auto i = db.image[tmp].begin(); i != db.image[tmp].end(); i ++) {
         itemSTR tmp_item;
@@ -142,41 +142,44 @@ void Window_editor_menubar_image::updateList()
     itemList->setItemList(tmpList);
 }
 
-void Window_editor_menubar_image::accept()
+void ImageInfoList::accept()
 {
     CacheAgent::getInstance().databaseUpdate(db);
     end();
 }
 
-void Window_editor_menubar_image::editAudio(int _index)
+void ImageInfoList::editAudio(int index)
 {
-    if(_index == -1) return;
+    if(index == -1) return;
     if(itemList->index() == -1) return;
 
-    editAudioStart(itemList->getItem(_index).text[0].toInt());
+    // 0-索引，1-名称，2-状态
+    editAudioStart(itemList->getItem(index).text[0].toInt());
 }
 
-void Window_editor_menubar_image::openFolder()
+void ImageInfoList::openFolder()
 {
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(CacheAgent::getInstance().databaseInfo().projectPosition + "/image"))) {
         TransparentDialog::play("无法打开文件夹");
     }
 }
 
-void Window_editor_menubar_image::editAudioStart(int _index)
+void ImageInfoList::editAudioStart(int index)
 {
 
-    for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) {
-        window_editor = new Window_editor_menubar_image_edit(&db, &db.image[i][_index]);
-        connect(window_editor, SIGNAL(closed()), this, SLOT(updateList()));
-        window_editor->setWindowModality(Qt::ApplicationModal);
-        window_editor->setAttribute(Qt::WA_DeleteOnClose);
-        window_editor->show();
+    for(int i = 0; i < 4; i ++){
+        if(roundButton[i]->isChecked()) {
+            window_editor = new ImageEditor(&db, &db.image[i][index]);
+            connect(window_editor, SIGNAL(closed()), this, SLOT(updateList()));
+            window_editor->setWindowModality(Qt::ApplicationModal);
+            window_editor->setAttribute(Qt::WA_DeleteOnClose);
+            window_editor->show();
+        }
     }
 
 }
 
-void Window_editor_menubar_image::add()
+void ImageInfoList::add()
 {
     for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) db.image_append(i);
 
@@ -184,7 +187,7 @@ void Window_editor_menubar_image::add()
     updateList();
 }
 
-void Window_editor_menubar_image::del()
+void ImageInfoList::del()
 {
     int index = itemList->index();
     if(index == -1) { TransparentDialog::play(this, "未选中项目"); return; }

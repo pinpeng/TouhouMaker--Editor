@@ -9,13 +9,13 @@
 
 #include "dataSet/cacheAgent.h"
 
-class Window_editor_menubar_image_edit : public SmallWindow
+class ImageEditor : public SmallWindow
 {
 
     Q_OBJECT
 
 public:
-    explicit Window_editor_menubar_image_edit(Database *_db, DB_image *_file, QWidget *parent = nullptr);
+    explicit ImageEditor(Database *_db, DB_image *_file, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
 

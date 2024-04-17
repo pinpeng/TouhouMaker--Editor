@@ -280,7 +280,7 @@ void EditorMenubar::func1()
 
 void EditorMenubar::func2()
 {
-    window_func2 = new Window_editor_menubar_bullet();
+    window_func2 = new BulletInfoList();
     window_func2->setWindowModality(Qt::ApplicationModal);
     window_func2->setAttribute(Qt::WA_DeleteOnClose);
     connect(window_func2, SIGNAL(closed()), this, SLOT(stageUpdateListCall()));
@@ -289,7 +289,7 @@ void EditorMenubar::func2()
 
 void EditorMenubar::func3()
 {
-    window_func3 = new Window_editor_menubar_image();
+    window_func3 = new ImageInfoList();
     window_func3->setWindowModality(Qt::ApplicationModal);
     window_func3->setAttribute(Qt::WA_DeleteOnClose);
     connect(window_func3, SIGNAL(closed()), this, SLOT(stageUpdateListCall()));

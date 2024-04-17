@@ -10,9 +10,9 @@
 #include "window_editor_menubar_setting.h"
 #include "window/editor/menuBar/editorMenubar.h"
 #include "window/editor/menuBar/characterEditor.h"
-#include "window_editor_menubar_bullet.h"
+#include "window/editor/menuBar/BulletInfoList.h"
 #include "window_editor_menubar_audio.h"
-#include "window_editor_menubar_image.h"
+#include "window/editor/menuBar/imageInfoList.h"
 #include "window_editor_menubar_effect.h"
 #include "window_editor_menubar_text.h"
 
@@ -37,8 +37,8 @@ private:
 
     Window_editor_menubar_setting    *window_func0;
     CharacterEditor       *window_func1;
-    Window_editor_menubar_bullet     *window_func2;
-    Window_editor_menubar_image      *window_func3;
+    BulletInfoList     *window_func2;
+    ImageInfoList      *window_func3;
     Window_editor_menubar_effect     *window_func4;
     Window_editor_menubar_audio      *window_func5;
     Window_editor_menubar_text       *window_func6;
