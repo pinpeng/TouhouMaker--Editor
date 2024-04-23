@@ -14,8 +14,10 @@ struct Setting
 
     float editor_scale; // 0.75 -- 1.5
 
-    float timeline_scale; // 50 -- 200
+    float timeline_scale; // 25 -- 300
     bool stage_antialising;
+
+    int isScaleFirstTimeSet; //0 = is not set, 1 = is set
 
     int tips_action; // 0 = all, 1 = half, 2 = close
 
@@ -34,6 +36,8 @@ struct Setting
         timeline_scale = file->value("stage/view_scale", 100.0).toFloat();
         stage_antialising = file->value("stage/antialising", true).toBool();
 
+        isScaleFirstTimeSet = file->value("global/SFTS", 0).toInt();
+
         tips_action = file->value("tips/action", 0).toInt();
 
         delete file;
@@ -49,6 +53,8 @@ struct Setting
 
         file->setValue("stage/view_scale", timeline_scale);
         file->setValue("stage/antialising", stage_antialising);
+
+        file->setValue("global/SFTS", isScaleFirstTimeSet);
 
         file->setValue("tips/action", tips_action);
         delete file;

@@ -1,7 +1,7 @@
 #include "database_main.h"
 
 #include <QDir>
-#include <QLabel>
+
 #include "global.h"
 #include "database.h"
 

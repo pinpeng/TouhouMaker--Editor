@@ -3,7 +3,12 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
-Window_ask::Window_ask(QString _text, QWidget *parent) : SmallWindow(parent)
+#include "global.h"
+#include <QApplication>
+#include <qt_windows.h>
+#include <QDesktopWidget>
+
+Window_ask::Window_ask(QString _text, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(800, 240);
     setWindowTitle("提问");
@@ -49,7 +54,7 @@ void Window_ask::accept_slot()
     end();
 }
 
-Window_ask_ex::Window_ask_ex(QString _title, Database *_db, QWidget *parent) : SmallWindow(parent)
+Window_ask_ex::Window_ask_ex(QString _title, Database *_db, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(800, 160);
     setWindowTitle(_title);
@@ -88,120 +93,245 @@ Window_ask_ex::Window_ask_ex(QString _title, Database *_db, QWidget *parent) : S
 
 void Window_ask_ex::resetSize(int line_now)
 {
+    QRect rect_scr = QApplication::desktop()->screenGeometry();
     if(page_number == 1) {
         setFixedSize(800, 160 + 80 * (line_now + 1));
         button_accept->setGeometry(160 - 8, 64 + 80 * (line_now + 1), 240, 80);
         button_cancel->setGeometry(400 + 8, 64 + 80 * (line_now + 1), 240, 80);
     } else {
-        setFixedSize(1560, 160 + 80 * (line_now + 1));
-        button_accept->setGeometry(550 - 8, 64 + 80 * (line_now + 1), 240, 80);
-        button_cancel->setGeometry(770 + 8, 64 + 80 * (line_now + 1), 240, 80);
+        if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+        {
+            setFixedSize(1560, 160 + 80 * (line_now + 1));
+            button_accept->setGeometry(550 - 8, 64 + 80 * (line_now + 1), 240, 80);
+            button_cancel->setGeometry(770 + 8, 64 + 80 * (line_now + 1), 240, 80);
+        }
+        else
+        {
+            //缩小1.3倍
+            setFixedSize(1200, 160 + 80 * (line_now + 1));
+            button_accept->setGeometry(423 - 8, 64 + 80 * (line_now + 1), 160, 80);
+            button_cancel->setGeometry(593 + 8, 64 + 80 * (line_now + 1), 160, 80);
+        }
     }
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 }
 
 void Window_ask_ex::paintEvent(QPaintEvent *)
 {
-    Draw::smallWindow(this, this);
+    QRect rect_scr = QApplication::desktop()->screenGeometry();
+    if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+    {
+        Draw::smallWindow(this, this);
 
-    Draw::begin(this);
-    Draw::setAntialising();
+        Draw::begin(this);
+        Draw::setAntialising();
 
-    setPenColor_c(c_textMain);
-    Draw::setTextDefault();
+        setPenColor_c(c_textMain);
+        Draw::setTextDefault();
 
-    for(int i = 0; i < page_number; i ++) {
-        int line_now = 0;
-        for(int j = 0; j < 16; j ++) {
-            if(idList[i][j] == -1) break;
-            switch (typeList[i][j]) {
-            case ITEM_TYPE::TEXT:
-                //Draw::text(rect().left() + 32 + 760 * i, 104 + line_now * 80, textList[i][j], Qt::AlignLeft | Qt::AlignVCenter);
-                line_now += 3;
-                break;
+        for(int i = 0; i < page_number; i ++) {
+            int line_now = 0;
+            for(int j = 0; j < 16; j ++) {
+                if(idList[i][j] == -1) break;
+                switch (typeList[i][j]) {
+                case ITEM_TYPE::TEXT:
+                    //Draw::text(rect().left() + 32 + 760 * i, 104 + line_now * 80, textList[i][j], Qt::AlignLeft | Qt::AlignVCenter);
+                    line_now += 3;
+                    break;
 
-            case ITEM_TYPE::TEXTLINE_STR:
-            case ITEM_TYPE::TEXTLINE_INT_i:
-            case ITEM_TYPE::TEXTLINE_INT_f:
-            case ITEM_TYPE::TEXTLINE_FLOAT_i:
-            case ITEM_TYPE::TEXTLINE_FLOAT_f:
-            case ITEM_TYPE::CHOOSE_BUTTON_i:
-            case ITEM_TYPE::CHOOSE_BUTTON_f:
-            case ITEM_TYPE::DRAG_STICK_i:
-            case ITEM_TYPE::DRAG_STICK_f:
-                Draw::text(rect().left() + 32 + 760 * i, 104 + line_now * 80, textList[i][j], Qt::AlignLeft | Qt::AlignVCenter);
-                line_now ++;
-                break;
+                case ITEM_TYPE::TEXTLINE_STR:
+                case ITEM_TYPE::TEXTLINE_INT_i:
+                case ITEM_TYPE::TEXTLINE_INT_f:
+                case ITEM_TYPE::TEXTLINE_FLOAT_i:
+                case ITEM_TYPE::TEXTLINE_FLOAT_f:
+                case ITEM_TYPE::CHOOSE_BUTTON_i:
+                case ITEM_TYPE::CHOOSE_BUTTON_f:
+                case ITEM_TYPE::DRAG_STICK_i:
+                case ITEM_TYPE::DRAG_STICK_f:
+                    //QRect rect_scr = QApplication::desktop()->screenGeometry();
+                    //if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+                    //{
+                    Draw::text(rect().left() + 32 + 760 * i, 104 + line_now * 80, textList[i][j], Qt::AlignLeft | Qt::AlignVCenter);
+                    line_now ++;
+                    break;
 
-            case ITEM_TYPE::FIND_BUTTON_i:
-            case ITEM_TYPE::FIND_BUTTON_f: {
-                int _id = idList[i][j];
-                bool type = typeList[i][j] == ITEM_TYPE::FIND_BUTTON_i;
-                QString _str = "<未选择>";
-                int _id_item;
-                if(type) _id_item = *w_findButton_data_buffer_i[_id];
-                else _id_item = *w_findButton_data_buffer_f[_id];
+                case ITEM_TYPE::FIND_BUTTON_i:
+                case ITEM_TYPE::FIND_BUTTON_f: {
+                    int _id = idList[i][j];
+                    bool type = typeList[i][j] == ITEM_TYPE::FIND_BUTTON_i;
+                    QString _str = "<未选择>";
+                    int _id_item;
+                    if(type) _id_item = *w_findButton_data_buffer_i[_id];
+                    else _id_item = *w_findButton_data_buffer_f[_id];
 
-                switch(w_findButton_type[_id]) {
+                    switch(w_findButton_type[_id]) {
 
-                case Window_find::type_hero: {
-                    if(db->hero.find(_id_item) != db->hero.end()) {
-                        _str = "<" + db->getText(db->hero[_id_item].name, 0) + ">";
+                    case Window_find::type_hero: {
+                        if(db->hero.find(_id_item) != db->hero.end()) {
+                            _str = "<" + db->getText(db->hero[_id_item].name, 0) + ">";
+                        }
+                    } break;
+
+                    case Window_find::type_enemy: {
+                        if(db->enemy.find(_id_item) != db->enemy.end()) {
+                            _str = "<" + db->enemy[_id_item].name + ">";
+                        }
+                    } break;
+
+                    case Window_find::type_boss: {
+                        if(db->boss.find(_id_item) != db->boss.end()) {
+                            _str = "<" + db->getText(db->boss[_id_item].name, 0) + ">";
+                        }
+                    } break;
+
+                    case Window_find::type_bullet: {
+                        if(db->bullet[w_findButton_group[_id]].find(_id_item) != db->bullet[w_findButton_group[_id]].end()) {
+                            _str = "<" + db->bullet[w_findButton_group[_id]][_id_item].name + ">";
+                        }
+                    } break;
+
+                    case Window_find::type_image: {
+                        if(db->image[w_findButton_group[_id]].find(_id_item) != db->image[w_findButton_group[_id]].end()) {
+                            _str = "<" + db->image[w_findButton_group[_id]][_id_item].name + ">";
+                        }
+                    } break;
+
+                    case Window_find::type_effect: {
+                        if(db->effect[w_findButton_group[_id]].find(_id_item) != db->effect[w_findButton_group[_id]].end()) {
+                            _str = "<" + db->effect[w_findButton_group[_id]][_id_item].name + ">";
+                        }
+                    } break;
+
+                    case Window_find::type_audio: {
+                        if(db->audio[w_findButton_group[_id]].find(_id_item) != db->audio[w_findButton_group[_id]].end()) {
+                            _str = "<" + db->audio[w_findButton_group[_id]][_id_item].name + ">";
+                        }
+                    } break;
+
+                    default:
+                        break;
                     }
+
+                    Draw::text(rect().left() + 32 + 760 * i, 104 + line_now * 80, textList[i][j] + _str, Qt::AlignLeft | Qt::AlignVCenter);
+                    line_now ++;
                 } break;
 
-                case Window_find::type_enemy: {
-                    if(db->enemy.find(_id_item) != db->enemy.end()) {
-                        _str = "<" + db->enemy[_id_item].name + ">";
-                    }
-                } break;
-
-                case Window_find::type_boss: {
-                    if(db->boss.find(_id_item) != db->boss.end()) {
-                        _str = "<" + db->getText(db->boss[_id_item].name, 0) + ">";
-                    }
-                } break;
-
-                case Window_find::type_bullet: {
-                    if(db->bullet[w_findButton_group[_id]].find(_id_item) != db->bullet[w_findButton_group[_id]].end()) {
-                        _str = "<" + db->bullet[w_findButton_group[_id]][_id_item].name + ">";
-                    }
-                } break;
-
-                case Window_find::type_image: {
-                    if(db->image[w_findButton_group[_id]].find(_id_item) != db->image[w_findButton_group[_id]].end()) {
-                        _str = "<" + db->image[w_findButton_group[_id]][_id_item].name + ">";
-                    }
-                } break;
-
-                case Window_find::type_effect: {
-                    if(db->effect[w_findButton_group[_id]].find(_id_item) != db->effect[w_findButton_group[_id]].end()) {
-                        _str = "<" + db->effect[w_findButton_group[_id]][_id_item].name + ">";
-                    }
-                } break;
-
-                case Window_find::type_audio: {
-                    if(db->audio[w_findButton_group[_id]].find(_id_item) != db->audio[w_findButton_group[_id]].end()) {
-                        _str = "<" + db->audio[w_findButton_group[_id]][_id_item].name + ">";
-                    }
-                } break;
-
+                case ITEM_TYPE::NONE:
                 default:
                     break;
                 }
-
-                Draw::text(rect().left() + 32 + 760 * i, 104 + line_now * 80, textList[i][j] + _str, Qt::AlignLeft | Qt::AlignVCenter);
-                line_now ++;
-            } break;
-
-            case ITEM_TYPE::NONE:
-            default:
-                break;
             }
         }
-    }
 
-    Draw::end();
+        Draw::end();
+    }
+    else
+    {
+        Draw::smallWindow(this, this);
+
+        Draw::begin(this);
+        Draw::setAntialising();
+
+        setPenColor_c(c_textMain);
+        Draw::setTextDefault();
+
+        for(int i = 0; i < page_number; i ++) {
+            int line_now = 0;
+            for(int j = 0; j < 16; j ++) {
+                if(idList[i][j] == -1) break;
+                switch (typeList[i][j]) {
+                case ITEM_TYPE::TEXT:
+                    //Draw::text(rect().left() + 32 + 760 * i, 104 + line_now * 80, textList[i][j], Qt::AlignLeft | Qt::AlignVCenter);
+                    line_now += 3;
+                    break;
+
+                case ITEM_TYPE::TEXTLINE_STR:
+                case ITEM_TYPE::TEXTLINE_INT_i:
+                case ITEM_TYPE::TEXTLINE_INT_f:
+                case ITEM_TYPE::TEXTLINE_FLOAT_i:
+                case ITEM_TYPE::TEXTLINE_FLOAT_f:
+                case ITEM_TYPE::CHOOSE_BUTTON_i:
+                case ITEM_TYPE::CHOOSE_BUTTON_f:
+                case ITEM_TYPE::DRAG_STICK_i:
+                case ITEM_TYPE::DRAG_STICK_f:
+                    //QRect rect_scr = QApplication::desktop()->screenGeometry();
+                    //if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+                    //{
+                    Draw::text(rect().left() + 32 + 560 * i, 104 + line_now * 80, textList[i][j], Qt::AlignLeft | Qt::AlignVCenter);
+                    line_now ++;
+                    break;
+
+                case ITEM_TYPE::FIND_BUTTON_i:
+                case ITEM_TYPE::FIND_BUTTON_f: {
+                    int _id = idList[i][j];
+                    bool type = typeList[i][j] == ITEM_TYPE::FIND_BUTTON_i;
+                    QString _str = "<未选择>";
+                    int _id_item;
+                    if(type) _id_item = *w_findButton_data_buffer_i[_id];
+                    else _id_item = *w_findButton_data_buffer_f[_id];
+
+                    switch(w_findButton_type[_id]) {
+
+                    case Window_find::type_hero: {
+                        if(db->hero.find(_id_item) != db->hero.end()) {
+                            _str = "<" + db->getText(db->hero[_id_item].name, 0) + ">";
+                        }
+                    } break;
+
+                    case Window_find::type_enemy: {
+                        if(db->enemy.find(_id_item) != db->enemy.end()) {
+                            _str = "<" + db->enemy[_id_item].name + ">";
+                        }
+                    } break;
+
+                    case Window_find::type_boss: {
+                        if(db->boss.find(_id_item) != db->boss.end()) {
+                            _str = "<" + db->getText(db->boss[_id_item].name, 0) + ">";
+                        }
+                    } break;
+
+                    case Window_find::type_bullet: {
+                        if(db->bullet[w_findButton_group[_id]].find(_id_item) != db->bullet[w_findButton_group[_id]].end()) {
+                            _str = "<" + db->bullet[w_findButton_group[_id]][_id_item].name + ">";
+                        }
+                    } break;
+
+                    case Window_find::type_image: {
+                        if(db->image[w_findButton_group[_id]].find(_id_item) != db->image[w_findButton_group[_id]].end()) {
+                            _str = "<" + db->image[w_findButton_group[_id]][_id_item].name + ">";
+                        }
+                    } break;
+
+                    case Window_find::type_effect: {
+                        if(db->effect[w_findButton_group[_id]].find(_id_item) != db->effect[w_findButton_group[_id]].end()) {
+                            _str = "<" + db->effect[w_findButton_group[_id]][_id_item].name + ">";
+                        }
+                    } break;
+
+                    case Window_find::type_audio: {
+                        if(db->audio[w_findButton_group[_id]].find(_id_item) != db->audio[w_findButton_group[_id]].end()) {
+                            _str = "<" + db->audio[w_findButton_group[_id]][_id_item].name + ">";
+                        }
+                    } break;
+
+                    default:
+                        break;
+                    }
+
+                    Draw::text(rect().left() + 32 + 760 * i, 104 + line_now * 80, textList[i][j] + _str, Qt::AlignLeft | Qt::AlignVCenter);
+                    line_now ++;
+                } break;
+
+                case ITEM_TYPE::NONE:
+                default:
+                    break;
+                }
+            }
+        }
+
+        Draw::end();
+
+    }
 
 }
 
@@ -237,8 +367,15 @@ void Window_ask_ex::addTextEdit(QString _text, QString *_str)
     w_textEdit[id]->setText(*_str);
     w_textEdit[id]->setBackgroundText(_text);
     w_textEdit_data_s[id] = _str;
-
-    w_textEdit[id]->setGeometry(40 + 760 * page, 64 + 80 * (line_now), 720, 80 + 160);
+    QRect rect_scr = QApplication::desktop()->screenGeometry();
+    if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+    {
+        w_textEdit[id]->setGeometry(40 + 760 * page, 64 + 80 * (line_now), 720, 80 + 160);
+    }
+    else
+    {
+        w_textEdit[id]->setGeometry(40 + 584 * page, 64 + 80 * (line_now), 553, 80 + 160);
+    }
 
     line_now += 2;
 
@@ -265,7 +402,15 @@ void Window_ask_ex::addLineEdit(QString _text, QString *_str)
     w_lineEdit[id]->setText(*_str);
     w_lineEdit_data_s[id] = _str;
 
-    w_lineEdit[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    QRect rect_scr = QApplication::desktop()->screenGeometry();
+    if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+    {
+        w_lineEdit[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    }
+    else
+    {
+        w_lineEdit[id]->setGeometry(280 + 560 * page, 64 + 80 * line_now, 300, 80);
+    }
 
     resetSize(line_now);
 }
@@ -293,7 +438,15 @@ void Window_ask_ex::addLineEdit(QString _text, int *_val, float _min, float _max
     w_lineEdit_data_min[id] = _min;
     w_lineEdit_data_max[id] = _max;
 
-    w_lineEdit[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    QRect rect_scr = QApplication::desktop()->screenGeometry();
+    if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+    {
+        w_lineEdit[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    }
+    else
+    {
+        w_lineEdit[id]->setGeometry(280 + 560 * page, 64 + 80 * line_now, 300, 80);
+    }
 
     resetSize(line_now);
 }
@@ -321,7 +474,15 @@ void Window_ask_ex::addLineEdit(QString _text, float *_val, float _min, float _m
     w_lineEdit_data_min[id] = _min;
     w_lineEdit_data_max[id] = _max;
 
-    w_lineEdit[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    QRect rect_scr = QApplication::desktop()->screenGeometry();
+    if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+    {
+        w_lineEdit[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    }
+    else
+    {
+        w_lineEdit[id]->setGeometry(280 + 560 * page, 64 + 80 * line_now, 300, 80);
+    }
 
     resetSize(line_now);
 }
@@ -347,7 +508,15 @@ void Window_ask_ex::addChooseButton(QString _text, int *_index, QStringList _str
     w_chooseButton[id]->setIndex(*_index);
     w_chooseButton_data_i[id] = _index;
 
-    w_chooseButton[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    QRect rect_scr = QApplication::desktop()->screenGeometry();
+    if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+    {
+        w_chooseButton[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    }
+    else
+    {
+        w_chooseButton[id]->setGeometry(280 + 560 * page, 64 + 80 * line_now, 300, 80);
+    }
 
     resetSize(line_now);
 }
@@ -373,7 +542,15 @@ void Window_ask_ex::addChooseButton(QString _text, float *_index, QStringList _s
     w_chooseButton[id]->setIndex(*_index);
     w_chooseButton_data_f[id] = _index;
 
-    w_chooseButton[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    QRect rect_scr = QApplication::desktop()->screenGeometry();
+    if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+    {
+        w_chooseButton[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    }
+    else
+    {
+        w_chooseButton[id]->setGeometry(280 + 560 * page, 64 + 80 * line_now, 300, 80);
+    }
 
     resetSize(line_now);
 }
@@ -401,7 +578,15 @@ void Window_ask_ex::addDragStick(QString _text, int *_val, float min, float max,
     w_dragStick[id]->setShowMul(_mul);
     w_dragStick_data_i[id] = _val;
 
-    w_dragStick[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    QRect rect_scr = QApplication::desktop()->screenGeometry();
+    if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+    {
+        w_dragStick[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    }
+    else
+    {
+        w_dragStick[id]->setGeometry(280 + 560 * page, 64 + 80 * line_now, 300, 80);
+    }
 
     resetSize(line_now);
 }
@@ -429,7 +614,15 @@ void Window_ask_ex::addDragStick(QString _text, float *_val, float min, float ma
     w_dragStick[id]->setShowMul(_mul);
     w_dragStick_data_f[id] = _val;
 
-    w_dragStick[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    QRect rect_scr = QApplication::desktop()->screenGeometry();
+    if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+    {
+        w_dragStick[id]->setGeometry(280 + 760 * page, 64 + 80 * line_now, 480, 80);
+    }
+    else
+    {
+        w_dragStick[id]->setGeometry(280 + 560 * page, 64 + 80 * line_now, 300, 80);
+    }
 
     resetSize(line_now);
 }
@@ -458,7 +651,15 @@ void Window_ask_ex::addFindButton(QString _text, int _type, int _group, int *_in
     w_findButton_data_buffer_i[id] = new int;
     *w_findButton_data_buffer_i[id] = *_index;
 
-    w_findButton[id]->setGeometry(480 + 760 * page, 64 + 80 * line_now, 280, 80);
+    QRect rect_scr = QApplication::desktop()->screenGeometry();
+    if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+    {
+        w_findButton[id]->setGeometry(480 + 760 * page, 64 + 80 * line_now, 280, 80);
+    }
+    else
+    {
+        w_findButton[id]->setGeometry(480 + 560 * page, 64 + 80 * line_now, 215, 80);
+    }
 
     if(id == 0) connect(w_findButton[id], SIGNAL(pressed()), this, SLOT(findButtonPressed0_i()));
     if(id == 1) connect(w_findButton[id], SIGNAL(pressed()), this, SLOT(findButtonPressed1_i()));
@@ -492,7 +693,15 @@ void Window_ask_ex::addFindButton(QString _text, int _type, int _group, float *_
     w_findButton_data_buffer_f[id] = new float;
     *w_findButton_data_buffer_f[id] = *_index;
 
-    w_findButton[id]->setGeometry(480 + 760 * page, 64 + 80 * line_now, 280, 80);
+    QRect rect_scr = QApplication::desktop()->screenGeometry();
+    if(rect_scr.width() >= 1900 && rect_scr.height() >= 1000)
+    {
+        w_findButton[id]->setGeometry(480 + 760 * page, 64 + 80 * line_now, 280, 80);
+    }
+    else
+    {
+        w_findButton[id]->setGeometry(480 + 560 * page, 64 + 80 * line_now, 215, 80);
+    }
 
     if(id == 0) connect(w_findButton[id], SIGNAL(pressed()), this, SLOT(findButtonPressed0_f()));
     if(id == 1) connect(w_findButton[id], SIGNAL(pressed()), this, SLOT(findButtonPressed1_f()));

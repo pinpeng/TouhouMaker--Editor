@@ -3,7 +3,7 @@
 
 #include "widget_button.h"
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 #include "window_welcome_newproject.h"
 #include "window_welcome_setting.h"
 
@@ -11,7 +11,7 @@
 
 #include "draw.h"
 
-class Window_welcome_main : public SmallWindow
+class Window_welcome_main : public Window_small
 {
     Q_OBJECT
 

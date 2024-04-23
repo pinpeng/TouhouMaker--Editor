@@ -1,7 +1,7 @@
 #ifndef WINDOW_EDITOR_MENUBAR_BULLET_H
 #define WINDOW_EDITOR_MENUBAR_BULLET_H
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 #include "widget_button.h"
 #include "widget_roundbutton.h"
 #include "widget_lineEdit.h"
@@ -12,7 +12,7 @@
 #include "window_editor_menubar_bullet_edit.h"
 
 
-class Window_editor_menubar_bullet : public SmallWindow
+class Window_editor_menubar_bullet : public Window_small
 {
     Q_OBJECT
 

@@ -1,19 +1,36 @@
 #include "window_editor_menubar_hero.h"
 
-Window_editor_menubar_hero::Window_editor_menubar_hero(QWidget *parent) : SmallWindow(parent)
+#include "global.h"
+#include <QApplication>
+#include <qt_windows.h>
+#include <QDesktopWidget>
+
+Window_editor_menubar_hero::Window_editor_menubar_hero(QWidget *parent) : Window_small(parent)
 {
-    setFixedSize(1200, 900);
+
+    QRect rect = QApplication::desktop()->screenGeometry();
+
+    if(rect.height() > 150)
+    {
+        setFixedSize(1200, rect.height() - 150);
+    }
+    else
+    {
+        setFixedSize(1200, 900);
+    }
     setWindowTitle("编辑角色");
 
     db = Global::database();
 
     button_accept = new Widget_Button(this);
-    button_accept->setGeometry(720 - 28, 900 - 96, 240, 80);
+    //button_accept->setGeometry(720 - 28, 900 - 96, 240, 80);
+    button_accept->setGeometry(720 - 28, rect.height() - 150 - 96, 240, 80);
     button_accept->setText("确定");
     button_accept->setTimer(timer);
 
     button_cancel = new Widget_Button(this);
-    button_cancel->setGeometry(960 - 20, 900 - 96, 240, 80);
+    //button_cancel->setGeometry(960 - 20, 900 - 96, 240, 80);
+    button_cancel->setGeometry(960 - 20, rect.height() - 150 - 96, 240, 80);
     button_cancel->setText("取消");
     button_cancel->setTimer(timer);
 
@@ -36,15 +53,18 @@ Window_editor_menubar_hero::Window_editor_menubar_hero(QWidget *parent) : SmallW
     connect(chooseButton, SIGNAL(indexChanged(int)), this, SLOT(updateList()));
 
     itemList = new Widget_ItemList(this);
-    itemList->setGeometry(16, 64 + 80, 1200 - 36, 580);
+    //itemList->setGeometry(16, 64 + 80, 1200 - 36, 580);
+    itemList->setGeometry(16, 64 + 80, 1200 - 36, rect.height() - 150 - 320);
 
 
     button_add = new Widget_Button(this);
     button_del = new Widget_Button(this);
-    button_add->setGeometry(12, 724, 580, 80);
+    //button_add->setGeometry(12, 724, 580, 80);
+    button_add->setGeometry(12, rect.height() - 150 - 176, 580, 80);
     button_add->setText("新建");
     button_add->setTimer(timer);
-    button_del->setGeometry(600, 724, 580, 80);
+    //button_del->setGeometry(600, 724, 580, 80);
+    button_del->setGeometry(600, rect.height() - 150 - 176, 580, 80);
     button_del->setText("删除");
     button_del->setTimer(timer);
 

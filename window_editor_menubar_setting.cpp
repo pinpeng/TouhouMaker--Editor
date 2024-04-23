@@ -1,6 +1,6 @@
 #include "window_editor_menubar_setting.h"
 
-Window_editor_menubar_setting::Window_editor_menubar_setting(QWidget *parent) : SmallWindow(parent)
+Window_editor_menubar_setting::Window_editor_menubar_setting(QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1200, 800);
     setWindowTitle("游戏设置（请参照帮助文档）");

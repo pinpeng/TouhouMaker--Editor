@@ -1,7 +1,7 @@
 #ifndef WINDOW_EDITOR_MENUBAR_AUDIO_H
 #define WINDOW_EDITOR_MENUBAR_AUDIO_H
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 #include "widget_button.h"
 #include "widget_roundbutton.h"
 #include "widget_lineEdit.h"
@@ -13,7 +13,7 @@
 
 #include "window_find_audio.h"
 
-class Window_editor_menubar_audio : public SmallWindow
+class Window_editor_menubar_audio : public Window_small
 {
     Q_OBJECT
 

@@ -2,10 +2,12 @@
 
 #include "message_box.h"
 
+#include "global.h"
+
 #include <QFileDialog>
 #include <QDesktopServices>
 
-Window_editor_menubar_effect_edit0::Window_editor_menubar_effect_edit0(Database *_db, DB_effect *_file, QWidget *parent) : SmallWindow(parent)
+Window_editor_menubar_effect_edit0::Window_editor_menubar_effect_edit0(Database *_db, DB_effect *_file, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1400, 640);
     setWindowTitle("编辑子弹特效");
@@ -45,7 +47,7 @@ void Window_editor_menubar_effect_edit0::end()
     emit closed();
 }
 
-Window_editor_menubar_effect_edit1::Window_editor_menubar_effect_edit1(Database *_db, DB_effect *_file, QWidget *parent) : SmallWindow(parent)
+Window_editor_menubar_effect_edit1::Window_editor_menubar_effect_edit1(Database *_db, DB_effect *_file, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1400, 640);
     setWindowTitle("编辑场景特效");
@@ -86,7 +88,7 @@ void Window_editor_menubar_effect_edit1::end()
 }
 
 
-Window_editor_menubar_effect_edit2::Window_editor_menubar_effect_edit2(Database *_db, DB_effect *_file, QWidget *parent) : SmallWindow(parent)
+Window_editor_menubar_effect_edit2::Window_editor_menubar_effect_edit2(Database *_db, DB_effect *_file, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1400, 640);
     setWindowTitle("编辑角色特效");

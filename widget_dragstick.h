@@ -8,7 +8,7 @@
 #include <QGraphicsEffect>
 
 #include <QtMath>
-#include "basethread.h"
+#include "window_small.h"
 
 class Widget_DragStick : public QWidget
 {

@@ -1,12 +1,17 @@
 #include "window_editor_menubar_hero_edit.h"
 
+#include "global.h"
+
 #include "message_box.h"
 
 #include <QFileDialog>
 #include <QDesktopServices>
-#include <QLabel>
 
-Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db, DB_hero *_file, QWidget *parent) : SmallWindow(parent)
+#include <QApplication>
+#include <qt_windows.h>
+#include <QDesktopWidget>
+
+Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db, DB_hero *_file, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1400, 640);
     setWindowTitle("编辑主角");
@@ -143,37 +148,80 @@ void Window_editor_menubar_hero_edit0::languageChanged(int _index)
 }
 
 
-Window_editor_menubar_hero_edit1::Window_editor_menubar_hero_edit1(Database *_db, DB_enemy *_file, QWidget *parent) : SmallWindow(parent)
+Window_editor_menubar_hero_edit1::Window_editor_menubar_hero_edit1(Database *_db, DB_enemy *_file, QWidget *parent) : Window_small(parent)
 {
-    setFixedSize(1600, 900);
+    QRect rect = QApplication::desktop()->screenGeometry();
+    if(rect.width() >= 1900 && rect.height() >= 1000)
+    {
+        setFixedSize(1600, 900);
+    }
+    else
+    {
+        setFixedSize(1200, rect.height() - 150);
+    }
     setWindowTitle("编辑小怪");
 
     db = _db;
     file = _file;
 
     lineEdit_name = new Widget_LineEdit(this);
-    lineEdit_name->setGeometry(32 + 200, 64 + 80 * 0, 440, 80);
+    if(rect.width() >= 1900 && rect.height() >= 1000)
+    {
+        lineEdit_name->setGeometry(32 + 200, 64 + 80 * 0, 440, 80);
+    }
+    else
+    {
+        lineEdit_name->setGeometry(32 + 150, 64 + 80 * 0, 300, 80);
+    }
     lineEdit_name->setText(file->name);
 
     lineEdit_hp = new Widget_LineEdit(this);
-    lineEdit_hp->setGeometry(32 + 900, 64 + 80 * 0, 440, 80);
+    if(rect.width() >= 1900 && rect.height() >= 1000)
+    {
+        lineEdit_hp->setGeometry(32 + 900, 64 + 80 * 0, 440, 80);
+    }
+    else
+    {
+        lineEdit_hp->setGeometry(32 + 650, 64 + 80 * 0, 300, 80);
+    }
     lineEdit_hp->setText(QString::number(file->data["hp"]));
 
     QStringList _list;
     _list << "离开屏幕" << "离开较远" << "不消失";
     chooseButton_range = new Widget_ChooseButton(this);
-    chooseButton_range->setGeometry(32 + 200, 64 + 80 * 1, 440, 80);
+    if(rect.width() >= 1900 && rect.height() >= 1000)
+    {
+        chooseButton_range->setGeometry(32 + 200, 64 + 80 * 1, 440, 80);
+    }
+    else
+    {
+        chooseButton_range->setGeometry(32 + 150, 64 + 80 * 1, 300, 80);
+    }
     chooseButton_range->addTextList(_list);
     chooseButton_range->setIndex(file->data["range"]);
     chooseButton_range->setTimer(timer);
 
     lineEdit_collision = new Widget_LineEdit(this);
-    lineEdit_collision->setGeometry(32 + 900, 64 + 80 * 1, 440, 80);
+    if(rect.width() >= 1900 && rect.height() >= 1000)
+    {
+        lineEdit_collision->setGeometry(32 + 900, 64 + 80 * 1, 440, 80);
+    }
+    else
+    {
+        lineEdit_collision->setGeometry(32 + 650, 64 + 80 * 1, 300, 80);
+    }
     lineEdit_collision->setText(QString::number(file->data["collision"]));
 
     label = new QLabel(this);
     label->setScaledContents(false);
-    label->setGeometry(1382, 72, 192, 144);
+    if(rect.width() >= 1900 && rect.height() >= 1000)
+    {
+        label->setGeometry(1382, 72, 192, 144);
+    }
+    else
+    {
+        label->setGeometry(1382 - 400, 72, 192, 144);
+    }
 
     if(file->image_id != -1 &&
             db->image[4].find(file->image_id) != db->image[4].end() &&
@@ -195,38 +243,77 @@ Window_editor_menubar_hero_edit1::Window_editor_menubar_hero_edit1(Database *_db
 
 void Window_editor_menubar_hero_edit1::paintEvent(QPaintEvent *)
 {
-    Draw::smallWindow(this, this);
+    QRect rect_ = QApplication::desktop()->screenGeometry();
+    if(rect_.width() >= 1900 && rect_.height() >= 1000)
+    {
+        Draw::smallWindow(this, this);
 
-    Draw::begin(this);
-    Draw::setAntialising();
-    Draw::setTextDefault();
-    setPenColor_c(c_textMain);
+        Draw::begin(this);
+        Draw::setAntialising();
+        Draw::setTextDefault();
+        setPenColor_c(c_textMain);
 
-    Draw::text(32, 104 + 80 * 0, "名称", Qt::AlignLeft | Qt::AlignVCenter);
-    Draw::text(32 + 680, 104 + 80 * 0, "血量", Qt::AlignLeft | Qt::AlignVCenter);
-    Draw::text(32, 104 + 80 * 1, "消失条件", Qt::AlignLeft | Qt::AlignVCenter);
-    Draw::text(32 + 680, 104 + 80 * 1, "碰撞范围", Qt::AlignLeft | Qt::AlignVCenter);
+        Draw::text(32, 104 + 80 * 0, "名称", Qt::AlignLeft | Qt::AlignVCenter);
+        Draw::text(32 + 680, 104 + 80 * 0, "血量", Qt::AlignLeft | Qt::AlignVCenter);
+        Draw::text(32, 104 + 80 * 1, "消失条件", Qt::AlignLeft | Qt::AlignVCenter);
+        Draw::text(32 + 680, 104 + 80 * 1, "碰撞范围", Qt::AlignLeft | Qt::AlignVCenter);
 
-    Draw::painter->drawTiledPixmap(1382, 72, 192, 144, Sprite(ui_background), 0, 0);
+        Draw::painter->drawTiledPixmap(1382, 72, 192, 144, Sprite(ui_background), 0, 0);
 
-    setPenColor_c(c_theme);
-    setBrushColor_false();
-    Draw::rect(1382, 72, 1382 + 192, 72 + 144, 2);
+        setPenColor_c(c_theme);
+        setBrushColor_false();
+        Draw::rect(1382, 72, 1382 + 192, 72 + 144, 2);
 
-    if(file->image_id == -1 || db->image[4].find(file->image_id) == db->image[4].end() ||
-            !db->image[4][file->image_id].state) {
+        if(file->image_id == -1 || db->image[4].find(file->image_id) == db->image[4].end() ||
+                !db->image[4][file->image_id].state) {
+            Draw::setTextSize(16);
+            Draw::text(1382 + 192 / 2, 72 + 144 / 2 + 2, "未设置图像\n点此设置", Qt::AlignCenter);
+        }
+
+        setPenColor_c(c_itemEdge);
+        setBrushColor_c(c_backgroundMain);
+        Draw::roundRect(rect().left() + 24, 234, rect().right() - 24, rect().bottom() - 24, 4, 2);
+
         Draw::setTextSize(16);
-        Draw::text(1382 + 192 / 2, 72 + 144 / 2 + 2, "未设置图像\n点此设置", Qt::AlignCenter);
+        file->renderCode(this, db, QRectF(rect().left() + 24, 234, rect().right() - 48 - rect().left(), rect().bottom() - 258), &code_scroll_top);
+
+        Draw::end();
     }
+    else
+    {
+        Draw::smallWindow(this, this);
 
-    setPenColor_c(c_itemEdge);
-    setBrushColor_c(c_backgroundMain);
-    Draw::roundRect(rect().left() + 24, 234, rect().right() - 24, rect().bottom() - 24, 4, 2);
+        Draw::begin(this);
+        Draw::setAntialising();
+        Draw::setTextDefault();
+        setPenColor_c(c_textMain);
 
-    Draw::setTextSize(16);
-    file->renderCode(this, db, QRectF(rect().left() + 24, 234, rect().right() - 48 - rect().left(), rect().bottom() - 258), &code_scroll_top);
+        Draw::text(32, 104 + 80 * 0, "名称", Qt::AlignLeft | Qt::AlignVCenter);
+        Draw::text(32 + 500, 104 + 80 * 0, "血量", Qt::AlignLeft | Qt::AlignVCenter);
+        Draw::text(32, 104 + 80 * 1, "消失条件", Qt::AlignLeft | Qt::AlignVCenter);
+        Draw::text(32 + 500, 104 + 80 * 1, "碰撞范围", Qt::AlignLeft | Qt::AlignVCenter);
 
-    Draw::end();
+        Draw::painter->drawTiledPixmap(1382 - 400, 72, 192, 144, Sprite(ui_background), 0, 0);
+
+        setPenColor_c(c_theme);
+        setBrushColor_false();
+        Draw::rect(1382 - 400, 72, 1382 - 400 + 192, 72 + 144, 2);
+
+        if(file->image_id == -1 || db->image[4].find(file->image_id) == db->image[4].end() ||
+                !db->image[4][file->image_id].state) {
+            Draw::setTextSize(16);
+            Draw::text(1382 - 400 + 192 / 2, 72 + 144 / 2 + 2, "未设置图像\n点此设置", Qt::AlignCenter);
+        }
+
+        setPenColor_c(c_itemEdge);
+        setBrushColor_c(c_backgroundMain);
+        Draw::roundRect(rect().left() + 24, 234, rect().right() - 24, rect().bottom() - 24, 4, 2);
+
+        Draw::setTextSize(16);
+        file->renderCode(this, db, QRectF(rect().left() + 24, 234, rect().right() - 48 - rect().left(), rect().bottom() - 258), &code_scroll_top);
+
+        Draw::end();
+    }
 }
 
 void Window_editor_menubar_hero_edit1::mousePressEvent(QMouseEvent *event)
@@ -237,7 +324,7 @@ void Window_editor_menubar_hero_edit1::mousePressEvent(QMouseEvent *event)
     float my = event->pos().y();
     bool flag = false;
 
-    if(1382 < mx && mx < 1382 + 192 &&
+    if(1382 - 400 < mx && mx < 1382 - 400 + 192 &&
        72 < my && my < 72 + 144) {
         if(file->image_id == -1) {
             int tmp = ++Global::image_id_top;
@@ -343,7 +430,7 @@ void Window_editor_menubar_hero_edit1::updateData()
     repaint();
 }
 
-Window_editor_menubar_hero_edit2::Window_editor_menubar_hero_edit2(Database *_db, DB_boss *_file, QWidget *parent) : SmallWindow(parent)
+Window_editor_menubar_hero_edit2::Window_editor_menubar_hero_edit2(Database *_db, DB_boss *_file, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(800, 640);
     setWindowTitle("编辑BOSS");

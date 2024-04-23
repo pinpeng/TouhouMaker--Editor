@@ -15,7 +15,7 @@
 
 #include <windows.h>
 #include <QWindow>
-#include <QLabel>
+
 #include <QDesktopServices>
 
 #include <processthreadsapi.h>

@@ -1,6 +1,8 @@
 #include "window_editor_menubar_setting_language.h"
 
-Window_editor_menubar_setting_language::Window_editor_menubar_setting_language(QString *_str, QWidget *parent) : SmallWindow(parent)
+#include "global.h"
+
+Window_editor_menubar_setting_language::Window_editor_menubar_setting_language(QString *_str, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(640, 240);
     setWindowTitle("重命名语言");

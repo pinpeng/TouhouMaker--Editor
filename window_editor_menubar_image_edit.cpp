@@ -2,10 +2,12 @@
 
 #include "message_box.h"
 
+#include "global.h"
+
 #include <QFileDialog>
 #include <QDesktopServices>
 
-Window_editor_menubar_image_edit::Window_editor_menubar_image_edit(Database *_db, DB_image *_file, QWidget *parent) : SmallWindow(parent)
+Window_editor_menubar_image_edit::Window_editor_menubar_image_edit(Database *_db, DB_image *_file, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(800, 240);
     setWindowTitle("编辑图像");

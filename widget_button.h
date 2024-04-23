@@ -6,7 +6,7 @@
 
 #include <QGraphicsEffect>
 
-#include "basethread.h"
+#include "window_small.h"
 
 class Widget_Button : public QPushButton
 {

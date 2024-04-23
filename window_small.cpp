@@ -1,10 +1,35 @@
-#include "window/smallWindow.h"
+#include "window_small.h"
 
-void SmallWindow::paintEvent(QPaintEvent *) {
+BaseThread::BaseThread()
+{
+
+}
+
+BaseThread::~BaseThread()
+{
+
+}
+
+void BaseThread::run()
+{
+    timer = new QTimer();
+    connect(timer, SIGNAL(timeout()), this, SLOT(timeoutRequest()));
+    connect(this, SIGNAL(finished()), timer, SLOT(stop()));
+    timer->start(1000 / 60);
+    exec();
+}
+
+void BaseThread::timeoutRequest()
+{
+    emit timeout();
+}
+
+
+void Window_small::paintEvent(QPaintEvent *) {
     Draw::smallWindow(this, this);
 }
 
-SmallWindow::SmallWindow(QWidget *parent) : QWidget(parent)
+Window_small::Window_small(QWidget *parent) : QWidget(parent)
 {
     setWindowIcon(QIcon(":/logo/mscb_icon.ico"));
     setMinimumSize(200, 180);
@@ -21,31 +46,31 @@ SmallWindow::SmallWindow(QWidget *parent) : QWidget(parent)
     connect(timer, SIGNAL(timeout()), buttonClose, SLOT(timeoutRepaint()));
 }
 
-SmallWindow::~SmallWindow()
+Window_small::~Window_small()
 {
     timer->quit();
     timer->wait();
     delete timer;
 }
 
-void SmallWindow::mousePressEvent(QMouseEvent *event) {
+void Window_small::mousePressEvent(QMouseEvent *event) {
     mousePress(event);
 }
 
-void SmallWindow::mouseMoveEvent(QMouseEvent *event) {
+void Window_small::mouseMoveEvent(QMouseEvent *event) {
     mouseMove(event);
 }
 
-void SmallWindow::mouseReleaseEvent(QMouseEvent *) {
+void Window_small::mouseReleaseEvent(QMouseEvent *) {
     mouseRelease();
 }
 
-void SmallWindow::mousePress(QMouseEvent *event)
+void Window_small::mousePress(QMouseEvent *event)
 {
     if(mousePressFunc(event)) return;
 }
 
-bool SmallWindow::mousePressFunc(QMouseEvent *event)
+bool Window_small::mousePressFunc(QMouseEvent *event)
 {
     if(isClosing) return true;
     if(event->button() == Qt::LeftButton) {
@@ -57,23 +82,23 @@ bool SmallWindow::mousePressFunc(QMouseEvent *event)
     return false;
 }
 
-void SmallWindow::mouseMove(QMouseEvent *event)
+void Window_small::mouseMove(QMouseEvent *event)
 {
     if(isMoving) { move(pos() + event->pos() - startMovingPos); }
 }
 
-void SmallWindow::mouseRelease()
+void Window_small::mouseRelease()
 {
     isMoving = false;
 }
 
-void SmallWindow::end()
+void Window_small::end()
 {
     isClosing = true;
     emit closed();
 }
 
-void SmallWindow::baseAlphaChange()
+void Window_small::baseAlphaChange()
 {
     if(!isActiveWindow()) {
         return;

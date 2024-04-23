@@ -1,4 +1,4 @@
-#include "window/interduceWindow.h"
+#include "window_welcome_main.h"
 
 #include <QFileDialog>
 #include "global.h"
@@ -8,7 +8,11 @@
 #include <QDesktopServices>
 #include <QApplication>
 
-Window_welcome_main::Window_welcome_main(QWidget *parent) : SmallWindow(parent)
+#include <qt_windows.h>
+#include <QDesktopWidget>
+#include <QFontDatabase>
+
+Window_welcome_main::Window_welcome_main(QWidget *parent) : Window_small(parent)
 {
     setFixedSize(720, 560);
     setWindowTitle("欢迎使用THMK");
@@ -71,6 +75,13 @@ void Window_welcome_main::paintEvent(QPaintEvent *) {
         show_last_name = Global::setting.global_last_name;
     }
 
+    if(Global::setting.isScaleFirstTimeSet != 1)
+    {
+        QRect rectSCR = QApplication::desktop()->screenGeometry();
+        Global::setting.editor_scale = rectSCR.height() / 1080.0;
+        Global::setting.isScaleFirstTimeSet = 1;
+    }
+
     float w_l = rect().x() + 8;
     float w_r = rect().right() - 8;
     float w_t = rect().y() + 8;
@@ -83,7 +94,7 @@ void Window_welcome_main::paintEvent(QPaintEvent *) {
     setPenColor_c(c_theme);
     Draw::setTextDefault();
     Draw::setTextSize(12);
-    Draw::text(w_l + 32, w_b - 12, "Ver 0.1.1 测试版\n(C)2024 Meboxen Studio", Qt::AlignLeft | Qt::AlignBottom);
+    Draw::text(w_l + 32, w_b - 12, "Ver 0.1.A2 测试版\n(C)2024 Meboxen Studio", Qt::AlignLeft | Qt::AlignBottom);
 
     Draw::sprite_size(Sprite(ui_author_web), w_r - 160, w_b - 144, 144, 144);
 

@@ -1,14 +1,14 @@
     #ifndef WINDOW_WELCOME_NEWPROJECT_H
 #define WINDOW_WELCOME_NEWPROJECT_H
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 
 #include "widget_lineEdit.h"
 #include "widget_button.h"
 #include "widget_roundbutton.h"
 
 
-class Window_welcome_newProject : public SmallWindow
+class Window_welcome_newProject : public Window_small
 {
 
     Q_OBJECT

@@ -1,7 +1,7 @@
 #ifndef WINDOW_EDITOR_MENUBAR_HERO_H
 #define WINDOW_EDITOR_MENUBAR_HERO_H
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 #include "widget_button.h"
 #include "widget_roundbutton.h"
 #include "widget_choosebutton.h"
@@ -13,7 +13,7 @@
 #include "window_editor_menubar_hero_edit.h"
 
 
-class Window_editor_menubar_hero : public SmallWindow
+class Window_editor_menubar_hero : public Window_small
 {
     Q_OBJECT
 

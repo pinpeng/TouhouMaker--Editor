@@ -1,7 +1,7 @@
 #ifndef WINDOW_ASK_H
 #define WINDOW_ASK_H
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 
 #include "widget_button.h"
 #include "widget_choosebutton.h"
@@ -13,7 +13,7 @@
 
 #include "database.h"
 
-class Window_ask : public SmallWindow
+class Window_ask : public Window_small
 {
     Q_OBJECT
 
@@ -38,7 +38,7 @@ signals:
 };
 
 
-class Window_ask_ex : public SmallWindow
+class Window_ask_ex : public Window_small
 {
     Q_OBJECT
 

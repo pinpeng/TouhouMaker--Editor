@@ -1,7 +1,7 @@
 #ifndef WINDOW_EDITOR_MENUBAR_SETTING_H
 #define WINDOW_EDITOR_MENUBAR_SETTING_H
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 #include "widget_button.h"
 #include "widget_roundbutton.h"
 #include "widget_lineEdit.h"
@@ -11,7 +11,7 @@
 
 #include "window_editor_menubar_setting_language.h"
 
-class Window_editor_menubar_setting : public SmallWindow
+class Window_editor_menubar_setting : public Window_small
 {
     Q_OBJECT
 

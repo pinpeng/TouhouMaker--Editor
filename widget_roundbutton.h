@@ -7,7 +7,7 @@
 #include <QTimer>
 
 #include <QMouseEvent>
-#include "basethread.h"
+#include "window_small.h"
 
 class Widget_RoundButton : public QRadioButton
 {

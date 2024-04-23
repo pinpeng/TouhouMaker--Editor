@@ -3,7 +3,17 @@
 #include <QDesktopServices>
 #include <QApplication>
 
-Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(parent)
+#include "global.h"
+#include "setting.h"
+#include "sprite.h"
+#include "draw.h"
+//#include <cstdio>
+
+#include <qt_windows.h>
+#include <QDesktopWidget>
+#include <QFontDatabase>
+
+Window_welcome_setting::Window_welcome_setting(QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1200, 640);
     setWindowTitle("设置（部分设置可能需要重启程序才能应用）");
@@ -39,18 +49,18 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : SmallWindow(pa
     button_custom->setTimer(timer);
     connect(button_custom, SIGNAL(pressed()), this, SLOT(color_custom()));
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     dragStick_scale_editor = new Widget_DragStick(this);
     dragStick_scale_editor->setGeometry(640 - 32, 144, 560, 80);
     dragStick_scale_editor->setTimer(timer);
-    dragStick_scale_editor->setRange(50, 150);
+    dragStick_scale_editor->setRange(25, 200);
     dragStick_scale_editor->setValue(Global::setting.editor_scale * 100.0);
 
     dragStick_scale_timeline = new Widget_DragStick(this);
     dragStick_scale_timeline->setGeometry(640 - 32, 224, 560, 80);
     dragStick_scale_timeline->setTimer(timer);
-    dragStick_scale_timeline->setRange(50, 150);
+    dragStick_scale_timeline->setRange(25, 200);
     dragStick_scale_timeline->setValue(Global::setting.timeline_scale * 100.0);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////

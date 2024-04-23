@@ -1,7 +1,7 @@
 #ifndef WINDOW_FIND_AUDIO_H
 #define WINDOW_FIND_AUDIO_H
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 #include "widget_button.h"
 #include "widget_lineEdit.h"
 #include "widget_itemlist.h"
@@ -9,7 +9,7 @@
 
 #include "global.h"
 
-class Window_find_audio : public SmallWindow
+class Window_find_audio : public Window_small
 {
     Q_OBJECT
 

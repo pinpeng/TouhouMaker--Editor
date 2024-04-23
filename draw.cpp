@@ -3,6 +3,13 @@
 
 #include <QFontDatabase>
 
+#include <qt_windows.h>
+#include <QDesktopWidget>
+#include <QFontDatabase>
+
+
+#include <QApplication>
+
 float Draw::font_scale = 1.0;
 int Draw::font_id = 0;
 
@@ -210,9 +217,9 @@ void Draw::setBrushColor(bool _isOpen) {
 void Draw::setTextDefault()
 {
 //    font.setFamily("微软雅黑");
-//    auto tmp = QFontDatabase::applicationFontFamilies(font_id);
+    auto tmp = QFontDatabase::applicationFontFamilies(font_id);
 //    font.setFamily(tmp[0]);
-//    font.setPointSize(20 / font_scale);
+    font.setPointSize(20 / font_scale);
 }
 
 void Draw::setTextFont(QString _fontName) {

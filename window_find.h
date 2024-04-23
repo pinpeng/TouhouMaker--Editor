@@ -1,7 +1,7 @@
 #ifndef WINDOW_FIND_IMAGE_H
 #define WINDOW_FIND_IMAGE_H
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 #include "widget_button.h"
 #include "widget_lineEdit.h"
 #include "widget_itemlist.h"
@@ -9,7 +9,7 @@
 
 #include "global.h"
 
-class Window_find : public SmallWindow
+class Window_find : public Window_small
 {
     Q_OBJECT
 

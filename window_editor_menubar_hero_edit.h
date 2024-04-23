@@ -1,7 +1,7 @@
 #ifndef WINDOW_EDITOR_MENUBAR_HERO_EDIT_H
 #define WINDOW_EDITOR_MENUBAR_HERO_EDIT_H
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 
 #include "widget_lineEdit.h"
 #include "widget_button.h"
@@ -10,7 +10,7 @@
 
 #include "global.h"
 
-class Window_editor_menubar_hero_edit0 : public SmallWindow
+class Window_editor_menubar_hero_edit0 : public Window_small
 {
 
     Q_OBJECT
@@ -45,7 +45,7 @@ public slots:
 
 };
 
-class Window_editor_menubar_hero_edit1 : public SmallWindow
+class Window_editor_menubar_hero_edit1 : public Window_small
 {
 
     Q_OBJECT
@@ -79,7 +79,7 @@ public slots:
 
 };
 
-class Window_editor_menubar_hero_edit2 : public SmallWindow
+class Window_editor_menubar_hero_edit2 : public Window_small
 {
 
     Q_OBJECT

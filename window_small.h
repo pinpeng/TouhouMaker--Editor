@@ -1,7 +1,9 @@
-#ifndef SMALL_WINDOW_H
-#define SMALL_WINDOW_H
+#ifndef WINDOW_SMALL_H
+#define WINDOW_SMALL_H
 
 #include <QWidget>
+#include <QTimer>
+
 #include <QMouseEvent>
 #include <QPaintEvent>
 
@@ -9,15 +11,39 @@
 #include "message_box.h"
 
 #include "draw.h"
-#include "basethread.h"
 
-class SmallWindow : public QWidget
+#include <QThread>
+#include <QLabel>
+
+class BaseThread : public QThread
 {
     Q_OBJECT
 
 public:
-    explicit SmallWindow(QWidget *parent = nullptr);
-    ~SmallWindow();
+    BaseThread();
+    ~BaseThread();
+
+protected:
+    void run();
+
+private:
+    QTimer *timer;
+
+public slots:
+    void timeoutRequest();
+
+signals:
+    void timeout();
+
+};
+
+class Window_small : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit Window_small(QWidget *parent = nullptr);
+    ~Window_small();
 
     virtual void paintEvent(QPaintEvent *) override;
 
@@ -55,4 +81,4 @@ signals:
 };
 
 
-#endif // SMALL_WINDOW_H
+#endif // WINDOW_SMALL_H

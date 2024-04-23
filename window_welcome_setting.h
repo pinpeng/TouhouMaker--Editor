@@ -1,7 +1,7 @@
 #ifndef WINDOW_WELCOME_SETTING_H
 #define WINDOW_WELCOME_SETTING_H
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 
 #include "widget_button.h"
 #include "widget_roundbutton.h"
@@ -11,7 +11,7 @@
 
 #include "global.h"
 
-class Window_welcome_setting : public SmallWindow
+class Window_welcome_setting : public Window_small
 {
     Q_OBJECT
 

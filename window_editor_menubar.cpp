@@ -17,7 +17,6 @@
 Window_editor_menubar::Window_editor_menubar(QWidget *parent) : QWidget(parent)
 {
 
-
     setAttribute(Qt::WA_TranslucentBackground);
     setFixedHeight(80.0 * Global::setting.editor_scale);
     setMouseTracking(true);

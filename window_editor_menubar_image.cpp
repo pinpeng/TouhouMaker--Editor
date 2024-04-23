@@ -1,22 +1,53 @@
 #include "window_editor_menubar_image.h"
 
 #include "qdesktopservices.h"
-#include <QLabel>
 
-Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : SmallWindow(parent)
+
+#include "global.h"
+#include <QApplication>
+#include <qt_windows.h>
+#include <QDesktopWidget>
+
+//判断屏幕分辨率是否足够
+bool flag__ = false;
+Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Window_small(parent)
 {
-    setFixedSize(1600, 900);
+    QRect rect = QApplication::desktop()->screenGeometry();
+    //setFixedSize(1600, 900);
+    if(rect.width() >= 1900 && rect.height() >= 1000)
+    {
+        flag__ = true;
+        setFixedSize(1600, 900);
+    }
+    else
+    {
+        setFixedSize(960, rect.height() - 150);
+    }
     setWindowTitle("编辑图像");
 
     db = Global::database();
 
     button_accept = new Widget_Button(this);
-    button_accept->setGeometry(1120 - 28, 900 - 96, 240, 80);
+    if(flag__ == false)
+    {
+        button_accept->setGeometry(960 - 480 - 28, rect.height() - 150 - 96, 240, 80);
+    }
+    else
+    {
+        button_accept->setGeometry(1120 - 28, 900 - 96, 240, 80);
+    }
     button_accept->setText("确定");
     button_accept->setTimer(timer);
 
     button_cancel = new Widget_Button(this);
-    button_cancel->setGeometry(1360 - 20, 900 - 96, 240, 80);
+    if(flag__ == false)
+    {
+        button_cancel->setGeometry(960 - 240 - 20, rect.height() - 150 - 96, 240, 80);
+    }
+    else
+    {
+        button_cancel->setGeometry(1360 - 20, 900 - 96, 240, 80);
+    }
     button_cancel->setText("取消");
     button_cancel->setTimer(timer);
 
@@ -43,14 +74,38 @@ Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Smal
     connect(button_openFolder, SIGNAL(pressed()), this, SLOT(openFolder()));
 
     itemList = new Widget_ItemList(this);
-    itemList->setGeometry(16, 64 + 80, 1000 - 36 - 60, 580);
+    if(flag__ == false)
+    {
+        itemList->setGeometry(16, 64 + 80, 1000 - 36 - 60, rect.height() - 150 - 320);
+    }
+    else
+    {
+        itemList->setGeometry(16, 64 + 80, 1000 - 36 - 60, 580);
+    }
+    //itemList->setGeometry(16, 64 + 80, 1000 - 36 - 60, rect.height() - 150 - 320);
 
     button_add = new Widget_Button(this);
     button_del = new Widget_Button(this);
-    button_add->setGeometry(12, 724, 450, 80);
+    if(flag__ == false)
+    {
+        button_add->setGeometry(12, rect.height() - 150 - 176, 450, 80);
+    }
+    else
+    {
+        button_add->setGeometry(12, 724, 450, 80);
+    }
+    //button_add->setGeometry(12, rect.height() - 150 - 176, 450, 80);
     button_add->setText("新建");
     button_add->setTimer(timer);
-    button_del->setGeometry(500 - 30, 724, 450, 80);
+    if(flag__ == false)
+    {
+        button_del->setGeometry(500 - 30, rect.height() - 150 - 176, 450, 80);
+    }
+    else
+    {
+        button_del->setGeometry(500 - 30, 724, 450, 80);
+    }
+    //button_del->setGeometry(500 - 30, rect.height() - 150 - 176, 450, 80);
     button_del->setText("删除");
     button_del->setTimer(timer);
 
@@ -62,46 +117,52 @@ Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Smal
 
     connect(itemList, SIGNAL(doubleClicked(int)), this, SLOT(editAudio(int)));
     connect(itemList, SIGNAL(select(int)), this, SLOT(repaint()));
-
-    label = new QLabel(this);
-    label->setScaledContents(true);
-    label->setGeometry(932, 72, 640, 724);
-
+    if(flag__ == true)
+    {
+        label = new QLabel(this);
+        label->setScaledContents(true);
+        label->setGeometry(932, 72, 640, 724);
+    }
     roundButton[0]->setChecked(true);
     updateList();
 }
 
 void Window_editor_menubar_image::paintEvent(QPaintEvent *)
 {
+
     Draw::smallWindow(this, this);
-
-    label->setPixmap(QPixmap());
-    label->setMovie(nullptr);
-
+    if(flag__ == true)
+    {
+        label->setPixmap(QPixmap());
+        label->setMovie(nullptr);
+    }
     Draw::begin(this);
-    Draw::painter->drawTiledPixmap(932, 72, 640, 724, Sprite(ui_background));
-
+    if(flag__ == true)
+    {
+        Draw::painter->drawTiledPixmap(932, 72, 640, 724, Sprite(ui_background));
+    }
     //bool flag = false;
     //QPixmap *pixmap_s;
     QString _spr_key;
-    if(itemList->index() != -1 && itemList->index() < itemList->getItemSize()) {
-        int tmp = itemList->getItem(itemList->index()).text[0].toInt();
-        for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) {
-            DB_image *file = &db.image[i][tmp];
-            _spr_key = QString::number(file->__id) + "_" + QString::number(file->editTimer);
-            auto j = Global::sprite_buffer.find(_spr_key);
-            if(j != Global::sprite_buffer.end()) {
-                //flag = true;
-                if(file->state == 1) label->setPixmap(j.value().png);
-                if(file->state == 2) {
-                    label->setMovie(j.value().gif);
-                    j.value().gif->start();
+    if(flag__ == true) {
+        if(itemList->index() != -1 && itemList->index() < itemList->getItemSize()) {
+            int tmp = itemList->getItem(itemList->index()).text[0].toInt();
+            for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) {
+                DB_image *file = &db.image[i][tmp];
+                _spr_key = QString::number(file->__id) + "_" + QString::number(file->editTimer);
+                auto j = Global::sprite_buffer.find(_spr_key);
+                if(j != Global::sprite_buffer.end()) {
+                    //flag = true;
+                    if(file->state == 1) label->setPixmap(j.value().png);
+                    if(file->state == 2) {
+                        label->setMovie(j.value().gif);
+                        j.value().gif->start();
+                    }
+                    break;
                 }
-                break;
             }
         }
     }
-
     /*if(flag) {
         float _w = pixmap_s->width();
         float _h = pixmap_s->height();
@@ -113,11 +174,12 @@ void Window_editor_menubar_image::paintEvent(QPaintEvent *)
 
         Draw::sprite(pixmap_f, 932 + 320 - _w / 2, 72 + 362 - _h / 2);
     }*/
-
     setPenColor_c(c_theme);
     setBrushColor_false();
-    Draw::rect(932, 72, 932 + 640, 72 + 724, 2);
-
+    if(flag__ == true)
+    {
+        Draw::rect(932, 72, 932 + 640, 72 + 724, 2);
+    }
     Draw::end();
 }
 

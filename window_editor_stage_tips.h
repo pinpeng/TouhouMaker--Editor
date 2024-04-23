@@ -3,11 +3,10 @@
 
 #include <QWidget>
 #include <QTimer>
+#include "window_small.h"
 #include "draw.h"
 
 #include <QEvent>
-
-#include "basethread.h"
 
 class Window_editor_stage_tips : public QWidget
 {

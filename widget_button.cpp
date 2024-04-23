@@ -23,21 +23,12 @@ void Widget_Button::setTimer(BaseThread *thread)
 
 void Widget_Button::timeoutRepaint()
 {
-    if(underMouse()) {
-        alpha = qMin(double(alpha + speed), 1.0);
-    }
-    else {
-        alpha = qMax(double(alpha - speed), 0.0);
-    }
+    if(underMouse()) alpha = qMin(double(alpha + speed), 1.0);
+    else alpha = qMax(double(alpha - speed), 0.0);
 
-    if(alpha != 0 && alpha != 1) {
-        refreshed = true;
-    }
+    if(alpha != 0 && alpha != 1) refreshed = true;
 
-    if(!isActiveWindow()) {
-        return;
-    }
-
+    if(!isActiveWindow()) return;
     if(alpha == 0 || alpha == 1) {
         if(!refreshed) return;
         refreshed = false;

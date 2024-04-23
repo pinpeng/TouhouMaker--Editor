@@ -1,14 +1,13 @@
 #ifndef DATABASE_DEFINE_H
 #define DATABASE_DEFINE_H
 
-#include <QObject>
-#include <QMap>
 #include <QList>
 #include <QString>
-#include <QRectF>
+
 #include <QJsonDocument>
 #include <QJsonArray>
-
+#include <QRectF>
+#include <QMap>
 
 ////////////////////////////////
 

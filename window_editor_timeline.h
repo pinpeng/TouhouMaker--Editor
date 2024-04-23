@@ -13,11 +13,11 @@
 #include "database.h"
 #include "draw.h"
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 #include "widget_button.h"
 #include "widget_roundbutton.h"
 
-class Window_editor_timeline_insert : public SmallWindow
+class Window_editor_timeline_insert : public Window_small
 {
     Q_OBJECT
 public:

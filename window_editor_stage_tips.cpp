@@ -6,7 +6,6 @@
 
 #include <QFile>
 #include <QTextStream>
-#include <QMouseEvent>
 
 
 int Window_editor_stage_tips::important = -1;

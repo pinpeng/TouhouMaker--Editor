@@ -1,7 +1,7 @@
 #ifndef WINDOW_EDITOR_MENUBAR_IMAGE_EDIT_H
 #define WINDOW_EDITOR_MENUBAR_IMAGE_EDIT_H
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 
 #include "widget_lineEdit.h"
 #include "widget_button.h"
@@ -9,7 +9,7 @@
 
 #include "global.h"
 
-class Window_editor_menubar_image_edit : public SmallWindow
+class Window_editor_menubar_image_edit : public Window_small
 {
 
     Q_OBJECT

@@ -1,7 +1,11 @@
 #include "window_editor_menubar_text.h"
 
+#include "global.h"
+#include <QApplication>
+#include <qt_windows.h>
+#include <QDesktopWidget>
 
-Window_editor_menubar_text_edit::Window_editor_menubar_text_edit(Database *_db, DB_text *_file, QWidget *parent) : SmallWindow(parent)
+Window_editor_menubar_text_edit::Window_editor_menubar_text_edit(Database *_db, DB_text *_file, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(960, 600);
 
@@ -53,20 +57,29 @@ void Window_editor_menubar_text_edit::end()
 }
 
 
-Window_editor_menubar_text::Window_editor_menubar_text(QWidget *parent) : SmallWindow(parent)
+Window_editor_menubar_text::Window_editor_menubar_text(QWidget *parent) : Window_small(parent)
 {
-    setFixedSize(1200, 900);
+    QRect rect = QApplication::desktop()->screenGeometry();
+
+    if(rect.height() > 150)
+    {
+        setFixedSize(1200, rect.height() - 150);
+    }
+    else
+    {
+        setFixedSize(1200, 900);
+    }
     setWindowTitle("编辑文本");
 
     db = Global::database();
 
     button_accept = new Widget_Button(this);
-    button_accept->setGeometry(720 - 28, 900 - 96, 240, 80);
+    button_accept->setGeometry(720 - 28, rect.height() - 150 - 96, 240, 80);
     button_accept->setText("确定");
     button_accept->setTimer(timer);
 
     button_cancel = new Widget_Button(this);
-    button_cancel->setGeometry(960 - 20, 900 - 96, 240, 80);
+    button_cancel->setGeometry(960 - 20, rect.height() - 150 - 96, 240, 80);
     button_cancel->setText("取消");
     button_cancel->setTimer(timer);
 
@@ -80,7 +93,7 @@ Window_editor_menubar_text::Window_editor_menubar_text(QWidget *parent) : SmallW
     connect(chooseButton, SIGNAL(indexChanged(int)), this, SLOT(updateList()));
 
     itemList = new Widget_ItemList(this);
-    itemList->setGeometry(16, 64 + 80, 1200 - 36, 660);
+    itemList->setGeometry(16, 64 + 80, 1200 - 36, rect.height() - 150 - 240);
 
     connect(button_accept, SIGNAL(pressed()), this, SLOT(accept()));
     connect(button_cancel, SIGNAL(pressed()), this, SLOT(end()));

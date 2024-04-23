@@ -8,7 +8,7 @@
 
 #include "global.h"
 
-Window_welcome_newProject::Window_welcome_newProject(QWidget *parent) : SmallWindow(parent)
+Window_welcome_newProject::Window_welcome_newProject(QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1200, 480);
     setWindowTitle("新建项目");

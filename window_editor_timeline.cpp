@@ -14,7 +14,7 @@ float Window_editor_timeline::view_max = 18000;
 float Window_editor_timeline::view_left = 18000;
 float Window_editor_timeline::view_right = 18000;
 
-Window_editor_timeline_insert::Window_editor_timeline_insert(Database *_db, int _time, int _stage_type, int _stage_id, QWidget *parent) : SmallWindow(parent)
+Window_editor_timeline_insert::Window_editor_timeline_insert(Database *_db, int _time, int _stage_type, int _stage_id, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1200, 400);
     setWindowTitle("选择一种事件");

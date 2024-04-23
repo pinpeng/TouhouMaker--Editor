@@ -1,7 +1,7 @@
 #ifndef WINDOW_EDITOR_MENUBAR_TEXT_H
 #define WINDOW_EDITOR_MENUBAR_TEXT_H
 
-#include "window/smallWindow.h"
+#include "window_small.h"
 #include "widget_button.h"
 #include "widget_roundbutton.h"
 #include "widget_lineEdit.h"
@@ -13,7 +13,7 @@
 
 #include "global.h"
 
-class Window_editor_menubar_text_edit : public SmallWindow
+class Window_editor_menubar_text_edit : public Window_small
 {
 
     Q_OBJECT
@@ -39,7 +39,7 @@ public slots:
 
 };
 
-class Window_editor_menubar_text : public SmallWindow
+class Window_editor_menubar_text : public Window_small
 {
     Q_OBJECT
 

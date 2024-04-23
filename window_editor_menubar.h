@@ -5,8 +5,10 @@
 
 #include <QTimer>
 
+#include "window_small.h"
+
 #include "window_ask.h"
-#include "basethread.h"
+
 #include "window_editor_menubar_setting.h"
 #include "window_editor_menubar_hero.h"
 #include "window_editor_menubar_bullet.h"
