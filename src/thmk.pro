@@ -15,6 +15,11 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    # globalSource
+    globalSource/sourceAgent.cpp \
+    globalSource/fontManager.cpp \
+    globalSource/imageManager.cpp \
+    globalSource/timerManager.cpp \
     # logModule
     logModule/logmodule.cpp \
     # toolkit
@@ -67,6 +72,11 @@ SOURCES += \
     window_welcome_setting.cpp
 
 HEADERS += \
+    # globalSource
+    globalSource/sourceAgent.h \
+    globalSource/fontManager.h \
+    globalSource/imageManager.h \
+    globalSource/timerManager.h \
     # logmodule
     logModule/logmodule.h \
     # toolkit

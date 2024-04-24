@@ -24,9 +24,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    #ifndef QT_DEBUG
     qInstallMessageHandler(LogModule::StaticLogHandler);
+    #endif
+
     qDebug() << "THMK--Editor initialized!";
-    
+
     QRect rect = QApplication::desktop()->screenGeometry();
     if(rect.width() < 1200 || rect.height() < 750) {
         QMessageBox::critical(nullptr, "警告", "屏幕分辨率不足1200x768，程序可能会出现显示不全的问题。");
