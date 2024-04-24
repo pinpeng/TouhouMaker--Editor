@@ -22,11 +22,11 @@ float getWindowsScale() {
 
 int main(int argc, char *argv[])
 {
-    qInstallMessageHandler(LogModule::StaticLogHandler);
-
-    qDebug() << "THMK--Editor initialized!";
-
     QApplication a(argc, argv);
+
+    qInstallMessageHandler(LogModule::StaticLogHandler);
+    qDebug() << "THMK--Editor initialized!";
+    
     QRect rect = QApplication::desktop()->screenGeometry();
     if(rect.width() < 1200 || rect.height() < 750) {
         QMessageBox::critical(nullptr, "警告", "屏幕分辨率不足1200x768，程序可能会出现显示不全的问题。");
