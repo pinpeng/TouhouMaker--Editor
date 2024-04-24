@@ -6,11 +6,20 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
 
+VERSION = 0.0.1
+
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    # logModule
+    logModule/logmodule.cpp \
+    # toolkit
+    toolkit/fileoperator.cpp \
+    toolkit/timeoperator.cpp \
     database.cpp \
     database_define.cpp \
     database_define_edit.cpp \
@@ -58,6 +67,11 @@ SOURCES += \
     window_welcome_setting.cpp
 
 HEADERS += \
+    # logmodule
+    logModule/logmodule.h \
+    # toolkit
+    toolkit/fileoperator.h \
+    toolkit/timeoperator.h \
     database.h \
     database_define.h \
     database_info.h \

@@ -6,10 +6,11 @@
 #include "draw.h"
 
 #include "window_welcome_main.h"
-
+#include "logModule/logmodule.h"
 #include <qt_windows.h>
 #include <QDesktopWidget>
 #include <QFontDatabase>
+#include <QDebug>
 
 float getWindowsScale() {
     HDC screen = GetDC(0);
@@ -21,6 +22,10 @@ float getWindowsScale() {
 
 int main(int argc, char *argv[])
 {
+    qInstallMessageHandler(LogModule::StaticLogHandler);
+
+    qDebug() << "THMK--Editor initialized!";
+
     QApplication a(argc, argv);
     QRect rect = QApplication::desktop()->screenGeometry();
     if(rect.width() < 1200 || rect.height() < 750) {
