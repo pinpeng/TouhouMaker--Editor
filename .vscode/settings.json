@@ -3,6 +3,7 @@
         "map": "cpp",
         "xstring": "cpp",
         "xtree": "cpp",
-        "xlocale": "cpp"
+        "xlocale": "cpp",
+        "xiosbase": "cpp"
     }
 }
