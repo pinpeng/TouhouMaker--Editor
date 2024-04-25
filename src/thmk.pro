@@ -15,6 +15,21 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    # memoryCache
+        # interface
+    memoryCache/interface/IMemoryData.cpp \
+        # globalEntity
+    memoryCache/globalEntity/editorSetting.cpp \
+    memoryCache/globalEntity/projectInfo.cpp \
+        # projectEntity
+    memoryCache/projectEntity/audioInfo.cpp \
+    memoryCache/projectEntity/bulletInfo.cpp \
+    memoryCache/projectEntity/characterInfo.cpp \
+    memoryCache/projectEntity/enemyInfo.cpp \
+    memoryCache/projectEntity/imageInfo.cpp \
+    memoryCache/projectEntity/playerInfo.cpp \
+    memoryCache/projectEntity/projectData.cpp \
+    memoryCache/projectEntity/textInfo.cpp \
     # globalSource
     globalSource/sourceAgent.cpp \
     globalSource/fontManager.cpp \
@@ -72,6 +87,21 @@ SOURCES += \
     window_welcome_setting.cpp
 
 HEADERS += \
+    # memoryCache
+        # interface
+    memoryCache/interface/IMemoryData.h \
+        # globalEntity
+    memoryCache/globalEntity/editorSetting.h \
+    memoryCache/globalEntity/projectInfo.h \
+        # projectEntity
+    memoryCache/projectEntity/audioInfo.h \
+    memoryCache/projectEntity/bulletInfo.h \
+    memoryCache/projectEntity/characterInfo.h \
+    memoryCache/projectEntity/enemyInfo.h \
+    memoryCache/projectEntity/imageInfo.h \
+    memoryCache/projectEntity/playerInfo.h \
+    memoryCache/projectEntity/projectData.h \
+    memoryCache/projectEntity/textInfo.h \
     # globalSource
     globalSource/sourceAgent.h \
     globalSource/fontManager.h \
