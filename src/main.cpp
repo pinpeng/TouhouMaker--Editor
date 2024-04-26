@@ -7,10 +7,14 @@
 
 #include "window_welcome_main.h"
 #include "logModule/logmodule.h"
+#include "QBreakpadHandler.h"
+#include "toolkit/fileoperator.h"
+#include "logModule/logmodule.h"
 #include <qt_windows.h>
 #include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QDebug>
+#include <QLabel>
 
 float getWindowsScale() {
     HDC screen = GetDC(0);
@@ -23,6 +27,8 @@ float getWindowsScale() {
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    QBreakpadInstance.setDumpPath(ToolKit::FileOperator::GetSubModulePath(ToolKit::FileModule::CRASH));
 
     #ifndef QT_DEBUG
     qInstallMessageHandler(LogModule::StaticLogHandler);

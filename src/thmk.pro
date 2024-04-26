@@ -1,10 +1,27 @@
 QT       += core gui
 QT       += gui-private
 QT       += opengl
+QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
+CONFIG += thread exceptions rtti stl
+macx: LIBS += -framework AppKit
+
+win32:CONFIG(release, debug|release): {
+LIBS += -L$$PWD/thirdParty/qBreakPad/lib/release/ -lqBreakpad
+DEPENDPATH += $$PWD/thirdParty/qBreakPad/lib/release
+}
+else:win32:CONFIG(debug, debug|release): {
+LIBS += -L$$PWD/thirdParty/qBreakPad/lib/debug/ -lqBreakpad
+DEPENDPATH += $$PWD/thirdParty/qBreakPad/lib/debug
+}
+
+INCLUDEPATH += $$PWD/thirdParty/qBreakPad/include
+
+QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
+QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
 
 VERSION = 0.0.1
 

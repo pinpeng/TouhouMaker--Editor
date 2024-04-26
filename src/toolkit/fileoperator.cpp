@@ -16,6 +16,10 @@ QString FileOperator::GetSubModulePath(FileModule module){
             subPath = projectPath + "/log/";
         }
         break;
+        case FileModule::CRASH:{
+            subPath = projectPath + "/crash/";
+        }
+        break;
         case FileModule::SETTING:{
             subPath = projectPath + "/setting/";
         }

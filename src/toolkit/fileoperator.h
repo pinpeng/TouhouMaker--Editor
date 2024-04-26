@@ -6,6 +6,7 @@
 namespace ToolKit {
     enum FileModule{
         LOG,                    // 日志
+        CRASH,                  // 崩溃文件
         SETTING,                // 编辑器配置
         SAVE,                   // 项目数据
         SOURCE_FONT             // 资源文件
