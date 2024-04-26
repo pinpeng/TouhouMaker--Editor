@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
     Draw::font_id = QFontDatabase::addApplicationFont(QStringLiteral("jcyt500W.ttf"));
 
     auto tmp = QFontDatabase::applicationFontFamilies(Draw::font_id);
-//    a.setFont(QFont(tmp[0]));
+    a.setFont(QFont(tmp[0]));
     Window_welcome_main w;
     w.show();
     int ret = a.exec();
