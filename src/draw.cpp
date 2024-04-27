@@ -218,7 +218,7 @@ void Draw::setTextDefault()
 {
 //    font.setFamily("微软雅黑");
     auto tmp = QFontDatabase::applicationFontFamilies(font_id);
-//    font.setFamily(tmp[0]);
+    // font.setFamily(tmp[0]);
     font.setPointSize(20 / font_scale);
 }
 

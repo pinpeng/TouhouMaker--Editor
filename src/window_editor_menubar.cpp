@@ -296,14 +296,12 @@ void Window_editor_menubar::func3()
 
 void Window_editor_menubar::func4()
 {
-    Message("功能开发中");
-    /*
+    //Message("功能开发中");
     window_func4 = new Window_editor_menubar_effect();
     window_func4->setWindowModality(Qt::ApplicationModal);
     window_func4->setAttribute(Qt::WA_DeleteOnClose);
     connect(window_func4, SIGNAL(closed()), this, SLOT(stageUpdateListCall()));
     window_func4->show();
-    */
 }
 
 void Window_editor_menubar::func5()

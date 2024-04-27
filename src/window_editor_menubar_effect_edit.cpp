@@ -9,7 +9,7 @@
 
 Window_editor_menubar_effect_edit0::Window_editor_menubar_effect_edit0(Database *_db, DB_effect *_file, QWidget *parent) : Window_small(parent)
 {
-    setFixedSize(1400, 640);
+    setFixedSize(1200, 640);
     setWindowTitle("编辑子弹特效");
 
     db = _db;

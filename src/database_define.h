@@ -6,8 +6,9 @@
 
 #include <QJsonDocument>
 #include <QJsonArray>
-#include <QRectF>
 #include <QMap>
+#include <QString>
+#include <QRectF>
 
 ////////////////////////////////
 
