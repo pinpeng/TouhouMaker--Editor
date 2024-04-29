@@ -2,7 +2,7 @@
 
 #include "message_box.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 #include <QFileDialog>
 #include <QDesktopServices>
@@ -33,7 +33,7 @@ Window_editor_menubar_image_edit::Window_editor_menubar_image_edit(Database *_db
     connect(button_preview, SIGNAL(pressed()), this, SLOT(preview()));
 
     if(file->state != 0) {
-        QString basePath = Global::database().info.projectPosition;
+        QString basePath = CacheAgent::getInstance().database().info.projectPosition;
         if(file->state == 1) basePath = basePath + "/image/" + QString::number(file->__id) + ".png";
         if(file->state == 2) basePath = basePath + "/image/" + QString::number(file->__id) + ".gif";
         if(!QFile::exists(basePath)) {
@@ -60,7 +60,7 @@ void Window_editor_menubar_image_edit::paintEvent(QPaintEvent *)
 
 void Window_editor_menubar_image_edit::open()
 {
-    QString basePath = Global::database().info.projectPosition;
+    QString basePath = CacheAgent::getInstance().database().info.projectPosition;
     QString str = QFileDialog::getOpenFileName(this, "打开图像", basePath, "(*.png *.gif)");
     if(!str.isEmpty()) {
         QFile fin(str);
@@ -70,10 +70,10 @@ void Window_editor_menubar_image_edit::open()
         } else {
             QString _spr_key = QString::number(file->__id) + "_" + QString::number(file->editTimer);
 
-            if(Global::sprite_buffer.find(_spr_key) != Global::sprite_buffer.end()) {
-                auto tmp = &Global::sprite_buffer[_spr_key];
+            if(CacheAgent::getInstance().sprite_buffer.find(_spr_key) != CacheAgent::getInstance().sprite_buffer.end()) {
+                auto tmp = &CacheAgent::getInstance().sprite_buffer[_spr_key];
                 if(tmp->gif != nullptr) delete tmp->gif;
-                Global::sprite_buffer.remove(_spr_key);
+                CacheAgent::getInstance().sprite_buffer.remove(_spr_key);
             }
 
             QString suffix = QFileInfo(fin).suffix();
@@ -93,7 +93,7 @@ void Window_editor_menubar_image_edit::open()
             if(file->state == 2) {
                 _tmp_buff.gif = new QMovie(basePath);
             }
-            Global::sprite_buffer.insert(QString::number(file->__id) + "_" + QString::number(file->editTimer), _tmp_buff);
+            CacheAgent::getInstance().sprite_buffer.insert(QString::number(file->__id) + "_" + QString::number(file->editTimer), _tmp_buff);
 
             repaint();
         }
@@ -107,7 +107,7 @@ void Window_editor_menubar_image_edit::preview()
         return;
     }
 
-    QString basePath = Global::database().info.projectPosition;
+    QString basePath = CacheAgent::getInstance().database().info.projectPosition;
     if(file->state == 1) basePath = basePath + "/image/" + QString::number(file->__id) + ".png";
     if(file->state == 2) basePath = basePath + "/image/" + QString::number(file->__id) + ".gif";
     if(!QFile::exists(basePath)) {

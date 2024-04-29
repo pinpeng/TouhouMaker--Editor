@@ -2,7 +2,7 @@
 
 #include <QDir>
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 #include "database.h"
 
 #include "window_editor_stage.h"
@@ -266,8 +266,8 @@ void DB_STAGE_EVENT::renderCode(Window_editor_stage *window, Database *db, QRect
             } else {
                 auto _file = &db->image[0][_index];
                 _text[0] += "背景为<" + _file->name + ">";
-                auto j = Global::sprite_buffer.find(QString::number(_file->__id) + "_" + QString::number(_file->editTimer));
-                if(j != Global::sprite_buffer.end()) {
+                auto j = CacheAgent::getInstance().sprite_buffer.find(QString::number(_file->__id) + "_" + QString::number(_file->editTimer));
+                if(j != CacheAgent::getInstance().sprite_buffer.end()) {
                     window->label[i]->setGeometry(_r - 60 * ss - 48 * ss, _t + 60 * ss - 48 * ss, 96 * ss, 96 * ss);
                     if(_file->state == 1) {
                         window->label[i]->setPixmap(j.value().png);

@@ -1,7 +1,7 @@
 #include "window_editor_menubar.h"
 
 #include "draw.h"
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 #include "message_box.h"
 
 #include <QDesktopServices>
@@ -18,7 +18,7 @@ Window_editor_menubar::Window_editor_menubar(QWidget *parent) : QWidget(parent)
 {
 
     setAttribute(Qt::WA_TranslucentBackground);
-    setFixedHeight(80.0 * Global::setting.editor_scale);
+    setFixedHeight(80.0 * CacheAgent::getInstance().setting.editor_scale);
     setMouseTracking(true);
 
     memset(items_alpha, 0, sizeof(items_alpha));
@@ -33,7 +33,7 @@ void Window_editor_menubar::drawItems(float left, float top)
 {
     static QString text_arr[12] = {"保存", "导出", "撤销", "重做", "设置", "角色", "子弹", "图像", "特效", "音频", "文本", "帮助"};
 
-    float ss = Global::setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editor_scale;
 
     setPenColor_c(c_symbol);
     Draw::line(left + 80 * ss * 4 - 4 * ss, top + 12 * ss, left + 80 * ss * 4 - 4 * ss, top + 64 * ss, 2 * ss);
@@ -63,7 +63,7 @@ void Window_editor_menubar::drawItems(float left, float top)
 
 void Window_editor_menubar::paintEvent(QPaintEvent *)
 {
-    float ss = Global::setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editor_scale;
 
     if(!underMouse()) {
         mouse_x = 0;
@@ -93,7 +93,7 @@ void Window_editor_menubar::paintEvent(QPaintEvent *)
 
 void Window_editor_menubar::mousePressEvent(QMouseEvent *event)
 {
-    float ss = Global::setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editor_scale;
     mouse_x = event->pos().x();
     mouse_y = event->pos().y();
     float w_l = rect().left() + 4 + 160 * ss;
@@ -148,10 +148,10 @@ void Window_editor_menubar::pack_final()
     if(!path.exists()) {
         path.mkdir(path.path());
     }
-    QString pack_path = Global::databaseInfo().projectPosition + "/output/";
+    QString pack_path = CacheAgent::getInstance().databaseInfo().projectPosition + "/output/";
     QString runner_path = QApplication::applicationDirPath() + "/runner/";
 
-    QString file_path = path.path() + "/" + Global::databaseInfo().projectName + ".zip";
+    QString file_path = path.path() + "/" + CacheAgent::getInstance().databaseInfo().projectName + ".zip";
     if(QFile::exists(file_path)) {
         QFile test(file_path);
         if(!test.open(QIODevice::ReadWrite)) {
@@ -230,7 +230,7 @@ void Window_editor_menubar::backToHome()
 
 void Window_editor_menubar::save()
 {
-    if(Global::database().save()) {
+    if(CacheAgent::getInstance().database().save()) {
         Message("保存失败");
         send_tips(2);
     } else {
@@ -241,11 +241,11 @@ void Window_editor_menubar::save()
 
 void Window_editor_menubar::pack()
 {
-    if(Global::database().save()) {
+    if(CacheAgent::getInstance().database().save()) {
         Message("保存失败");
         send_tips(4);
     } else {
-        if(Global::database().pack()) {
+        if(CacheAgent::getInstance().database().pack()) {
             Message("导出失败");
             send_tips(4);
         } else {

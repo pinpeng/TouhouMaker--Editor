@@ -5,7 +5,7 @@ Window_editor_menubar_setting::Window_editor_menubar_setting(QWidget *parent) : 
     setFixedSize(1200, 800);
     setWindowTitle("游戏设置（请参照帮助文档）");
 
-    db = Global::database();
+    db = CacheAgent::getInstance().database();
 
     button_accept = new Widget_Button(this);
     button_accept->setGeometry(580, 704, 240, 80);
@@ -163,7 +163,7 @@ void Window_editor_menubar_setting::accept()
 
     db.info.projectName = lineEdit_name->text();
 
-    Global::databaseUpdate(db);
+    CacheAgent::getInstance().databaseUpdate(db);
     end();
 }
 

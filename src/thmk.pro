@@ -33,6 +33,7 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 SOURCES += \
     # memoryCache
+    memoryCache/cacheAgent.cpp \
         # interface
     memoryCache/interface/IMemoryData.cpp \
         # globalEntity
@@ -65,7 +66,6 @@ SOURCES += \
     database_main_edit.cpp \
     database_save.cpp \
     draw.cpp \
-    global.cpp \
     main.cpp \
     message_box.cpp \
     sprite.cpp \
@@ -105,6 +105,7 @@ SOURCES += \
 
 HEADERS += \
     # memoryCache
+    memoryCache/cacheAgent.h \
         # interface
     memoryCache/interface/IMemoryData.h \
         # globalEntity
@@ -134,7 +135,6 @@ HEADERS += \
     database_info.h \
     database_main.h \
     draw.h \
-    global.h \
     message_box.h \
     qzipreader_p.h \
     qzipwriter_p.h \

@@ -4,6 +4,8 @@
         "xstring": "cpp",
         "xtree": "cpp",
         "xlocale": "cpp",
-        "xiosbase": "cpp"
+        "xiosbase": "cpp",
+        "cmath": "cpp",
+        "system_error": "cpp"
     }
 }

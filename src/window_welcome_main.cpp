@@ -1,7 +1,7 @@
 #include "window_welcome_main.h"
 
 #include <QFileDialog>
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 #include "sprite.h"
 
 #include <QMouseEvent>
@@ -18,10 +18,10 @@ Window_welcome_main::Window_welcome_main(QWidget *parent) : Window_small(parent)
     setWindowTitle("欢迎使用THMK");
     setWindowIcon(QIcon(":/logo/mscb_icon.ico"));
 
-    QDir dir(Global::setting.global_last_path);
-    if(dir.exists() && !Global::setting.global_last_path.isEmpty()) {
+    QDir dir(CacheAgent::getInstance().setting.global_last_path);
+    if(dir.exists() && !CacheAgent::getInstance().setting.global_last_path.isEmpty()) {
         show_last = true;
-        show_last_name = Global::setting.global_last_name;
+        show_last_name = CacheAgent::getInstance().setting.global_last_name;
     }
 
     buttonNewProj   = new Widget_Button(this);
@@ -69,17 +69,17 @@ void Window_welcome_main::paintEvent(QPaintEvent *) {
 
     Draw::smallWindow(this, this);
 
-    QDir dir(Global::setting.global_last_path);
-    if(dir.exists() && !Global::setting.global_last_path.isEmpty()) {
+    QDir dir(CacheAgent::getInstance().setting.global_last_path);
+    if(dir.exists() && !CacheAgent::getInstance().setting.global_last_path.isEmpty()) {
         show_last = true;
-        show_last_name = Global::setting.global_last_name;
+        show_last_name = CacheAgent::getInstance().setting.global_last_name;
     }
 
-    if(Global::setting.isScaleFirstTimeSet != 1)
+    if(CacheAgent::getInstance().setting.isScaleFirstTimeSet != 1)
     {
         QRect rectSCR = QApplication::desktop()->screenGeometry();
-        Global::setting.editor_scale = rectSCR.height() / 1080.0;
-        Global::setting.isScaleFirstTimeSet = 1;
+        CacheAgent::getInstance().setting.editor_scale = rectSCR.height() / 1080.0;
+        CacheAgent::getInstance().setting.isScaleFirstTimeSet = 1;
     }
 
     float w_l = rect().x() + 8;
@@ -130,18 +130,18 @@ void Window_welcome_main::mousePressEvent(QMouseEvent *event)
         }
         if(show_last) {
             if(w_l + 490 < mx && mx < w_l + 690 && w_t + 280 - 50 < my && my < w_t + 280 + 30) {
-                QString str = Global::setting.global_last_path;
+                QString str = CacheAgent::getInstance().setting.global_last_path;
                 Database db;
                 if(db.read(str)) {
                     Message("无法打开文件");
                 } else {
                     Message("打开成功");
                     db.info.projectPosition = str;
-                    Global::databaseClean();
-                    Global::databaseUpdate(db);
-                    Global::setting.global_last_name = Global::databaseInfo().projectName;
-                    Global::setting.global_last_path = Global::databaseInfo().projectPosition;
-                    Global::setting.save();
+                    CacheAgent::getInstance().databaseClean();
+                    CacheAgent::getInstance().databaseUpdate(db);
+                    CacheAgent::getInstance().setting.global_last_name = CacheAgent::getInstance().databaseInfo().projectName;
+                    CacheAgent::getInstance().setting.global_last_path = CacheAgent::getInstance().databaseInfo().projectPosition;
+                    CacheAgent::getInstance().setting.save();
                     openStart();
                 }
             }
@@ -170,11 +170,11 @@ void Window_welcome_main::openProj()
         } else {
             Message("打开成功");
             db.info.projectPosition = str;
-            Global::databaseClean();
-            Global::databaseUpdate(db);
-            Global::setting.global_last_name = Global::databaseInfo().projectName;
-            Global::setting.global_last_path = Global::databaseInfo().projectPosition;
-            Global::setting.save();
+            CacheAgent::getInstance().databaseClean();
+            CacheAgent::getInstance().databaseUpdate(db);
+            CacheAgent::getInstance().setting.global_last_name = CacheAgent::getInstance().databaseInfo().projectName;
+            CacheAgent::getInstance().setting.global_last_path = CacheAgent::getInstance().databaseInfo().projectPosition;
+            CacheAgent::getInstance().setting.save();
             openStart();
         }
     }

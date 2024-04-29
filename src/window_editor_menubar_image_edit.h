@@ -7,7 +7,7 @@
 #include "widget_button.h"
 #include "widget_roundbutton.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 class Window_editor_menubar_image_edit : public Window_small
 {

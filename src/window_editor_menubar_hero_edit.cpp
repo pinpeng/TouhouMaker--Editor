@@ -1,6 +1,6 @@
 #include "window_editor_menubar_hero_edit.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 #include "message_box.h"
 
@@ -229,8 +229,8 @@ Window_editor_menubar_hero_edit1::Window_editor_menubar_hero_edit1(Database *_db
 
         QString _spr_key = QString::number(file->image_id) + "_" +
                 QString::number(db->image[4][file->image_id].editTimer);
-        auto j = Global::sprite_buffer.find(_spr_key);
-        if(j != Global::sprite_buffer.end()) {
+        auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
+        if(j != CacheAgent::getInstance().sprite_buffer.end()) {
             if(db->image[4][file->image_id].state == 1) label->setPixmap(j.value().png);
             if(db->image[4][file->image_id].state == 2) {
                 label->setMovie(j.value().gif);
@@ -327,12 +327,12 @@ void Window_editor_menubar_hero_edit1::mousePressEvent(QMouseEvent *event)
     if(1382 - 400 < mx && mx < 1382 - 400 + 192 &&
        72 < my && my < 72 + 144) {
         if(file->image_id == -1) {
-            int tmp = ++Global::image_id_top;
+            int tmp = ++CacheAgent::getInstance().image_id_top;
             db->image[4].insert(tmp, DB_image(tmp, ""));
             file->image_id = tmp;
         }
 
-        QString basePath = Global::database().info.projectPosition;
+        QString basePath = CacheAgent::getInstance().database().info.projectPosition;
         QString str = QFileDialog::getOpenFileName(this, "打开图像", basePath, "(*.png *.gif)");
         if(!str.isEmpty()) {
             QFile fin(str);
@@ -354,7 +354,7 @@ void Window_editor_menubar_hero_edit1::mousePressEvent(QMouseEvent *event)
                 if(db->image[4][file->image_id].state) {
                     flag = true;
                     sprite_buff _tmp_buff;
-                    QString basePath = Global::database().info.projectPosition;
+                    QString basePath = CacheAgent::getInstance().database().info.projectPosition;
                     if(db->image[4][file->image_id].state == 1) _tmp_buff.png = QPixmap(basePath + "/image/" + QString::number(file->image_id) + ".png");
                     if(db->image[4][file->image_id].state == 2) {
                         _tmp_buff.gif = new QMovie(basePath + "/image/" + QString::number(file->image_id) + ".gif");
@@ -362,10 +362,10 @@ void Window_editor_menubar_hero_edit1::mousePressEvent(QMouseEvent *event)
                     QString _spr_key = QString::number(file->image_id) + "_" +
                             QString::number(db->image[4][file->image_id].editTimer);
 
-                    Global::sprite_buffer.insert(_spr_key, _tmp_buff);
+                    CacheAgent::getInstance().sprite_buffer.insert(_spr_key, _tmp_buff);
 
-                    auto j = Global::sprite_buffer.find(_spr_key);
-                    if(j != Global::sprite_buffer.end()) {
+                    auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
+                    if(j != CacheAgent::getInstance().sprite_buffer.end()) {
                         if(db->image[4][file->image_id].state == 1) label->setPixmap(j.value().png);
                         if(db->image[4][file->image_id].state == 2) {
                             label->setMovie(j.value().gif);
@@ -459,8 +459,8 @@ Window_editor_menubar_hero_edit2::Window_editor_menubar_hero_edit2(Database *_db
 
             QString _spr_key = QString::number(file->image_id[i]) + "_" +
                     QString::number(db->image[4][file->image_id[i]].editTimer);
-            auto j = Global::sprite_buffer.find(_spr_key);
-            if(j != Global::sprite_buffer.end()) {
+            auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
+            if(j != CacheAgent::getInstance().sprite_buffer.end()) {
                 if(db->image[4][file->image_id[i]].state == 1) label[i]->setPixmap(j.value().png);
                 if(db->image[4][file->image_id[i]].state == 2) {
                     label[i]->setMovie(j.value().gif);
@@ -527,12 +527,12 @@ void Window_editor_menubar_hero_edit2::mousePressEvent(QMouseEvent *event)
 
     if(ind != -1) {
         if(file->image_id[ind] == -1) {
-            int tmp = ++Global::image_id_top;
+            int tmp = ++CacheAgent::getInstance().image_id_top;
             db->image[4].insert(tmp, DB_image(tmp, ""));
             file->image_id[ind] = tmp;
         }
 
-        QString basePath = Global::database().info.projectPosition;
+        QString basePath = CacheAgent::getInstance().database().info.projectPosition;
         QString str = QFileDialog::getOpenFileName(this, "打开图像", basePath, "(*.png *.gif)");
 
         if(!str.isEmpty()) {
@@ -555,7 +555,7 @@ void Window_editor_menubar_hero_edit2::mousePressEvent(QMouseEvent *event)
                 if(db->image[4][file->image_id[ind]].state) {
 
                     sprite_buff _tmp_buff;
-                    QString basePath = Global::database().info.projectPosition;
+                    QString basePath = CacheAgent::getInstance().database().info.projectPosition;
                     if(db->image[4][file->image_id[ind]].state == 1) _tmp_buff.png = QPixmap(basePath + "/image/" + QString::number(file->image_id[ind]) + ".png");
                     if(db->image[4][file->image_id[ind]].state == 2) {
                         _tmp_buff.gif = new QMovie(basePath + "/image/" + QString::number(file->image_id[ind]) + ".gif");
@@ -563,10 +563,10 @@ void Window_editor_menubar_hero_edit2::mousePressEvent(QMouseEvent *event)
                     QString _spr_key = QString::number(file->image_id[ind]) + "_" +
                             QString::number(db->image[4][file->image_id[ind]].editTimer);
 
-                    Global::sprite_buffer.insert(_spr_key, _tmp_buff);
+                    CacheAgent::getInstance().sprite_buffer.insert(_spr_key, _tmp_buff);
 
-                    auto j = Global::sprite_buffer.find(_spr_key);
-                    if(j != Global::sprite_buffer.end()) {
+                    auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
+                    if(j != CacheAgent::getInstance().sprite_buffer.end()) {
                         if(db->image[4][file->image_id[ind]].state == 1) label[ind]->setPixmap(j.value().png);
                         if(db->image[4][file->image_id[ind]].state == 2) {
                             label[ind]->setMovie(j.value().gif);

@@ -6,7 +6,7 @@
 #include "widget_lineEdit.h"
 #include "widget_itemlist.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 class Window_find_dictionary : public Window_small
 {

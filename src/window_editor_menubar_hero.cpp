@@ -1,6 +1,6 @@
 #include "window_editor_menubar_hero.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 #include <QApplication>
 #include <qt_windows.h>
 #include <QDesktopWidget>
@@ -20,7 +20,7 @@ Window_editor_menubar_hero::Window_editor_menubar_hero(QWidget *parent) : Window
     }
     setWindowTitle("编辑角色");
 
-    db = Global::database();
+    db = CacheAgent::getInstance().database();
 
     button_accept = new Widget_Button(this);
     //button_accept->setGeometry(720 - 28, 900 - 96, 240, 80);
@@ -123,7 +123,7 @@ void Window_editor_menubar_hero::updateList()
 
 void Window_editor_menubar_hero::accept()
 {
-    Global::databaseUpdate(db);
+    CacheAgent::getInstance().databaseUpdate(db);
     end();
 }
 

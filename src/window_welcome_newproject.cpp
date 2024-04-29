@@ -6,7 +6,7 @@
 
 #include "draw.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 Window_welcome_newProject::Window_welcome_newProject(QWidget *parent) : Window_small(parent)
 {
@@ -101,32 +101,32 @@ void Window_welcome_newProject::createProject()
         return;
     }
 
-    Global::databaseInit(lineEdit_projectName->text(), dir.path());
-    Database db = Global::database();
+    CacheAgent::getInstance().databaseInit(lineEdit_projectName->text(), dir.path());
+    Database db = CacheAgent::getInstance().database();
 
     if(round_base->isChecked()) {
         db.projectInitBase();
-        Global::databaseClean();
-        Global::databaseUpdate(db);
+        CacheAgent::getInstance().databaseClean();
+        CacheAgent::getInstance().databaseUpdate(db);
         db.save();
     }
     if(round_empty->isChecked()) {
         db.projectInitEmpty();
-        Global::databaseClean();
-        Global::databaseUpdate(db);
+        CacheAgent::getInstance().databaseClean();
+        CacheAgent::getInstance().databaseUpdate(db);
         db.save();
     }
     if(round_example->isChecked()) {
         Message("功能开发中");
         return;
         db.projectInitExample();
-        Global::databaseClean();
-        Global::databaseUpdate(db);
+        CacheAgent::getInstance().databaseClean();
+        CacheAgent::getInstance().databaseUpdate(db);
         db.save();
     }
-    Global::setting.global_last_name = Global::databaseInfo().projectName;
-    Global::setting.global_last_path = Global::databaseInfo().projectPosition;
-    Global::setting.save();
+    CacheAgent::getInstance().setting.global_last_name = CacheAgent::getInstance().databaseInfo().projectName;
+    CacheAgent::getInstance().setting.global_last_path = CacheAgent::getInstance().databaseInfo().projectPosition;
+    CacheAgent::getInstance().setting.save();
     emit requestClose();
     close();
 }

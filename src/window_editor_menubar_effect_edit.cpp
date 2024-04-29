@@ -2,7 +2,7 @@
 
 #include "message_box.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 #include <QFileDialog>
 #include <QDesktopServices>

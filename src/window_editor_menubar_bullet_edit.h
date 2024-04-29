@@ -8,7 +8,7 @@
 #include "widget_roundbutton.h"
 #include "widget_choosebutton.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 class Window_editor_menubar_bullet_edit : public Window_small
 {

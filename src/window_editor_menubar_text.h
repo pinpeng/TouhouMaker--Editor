@@ -11,7 +11,7 @@
 #include "widget_choosebutton.h"
 #include "window_ask.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 class Window_editor_menubar_text_edit : public Window_small
 {

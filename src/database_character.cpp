@@ -1,6 +1,6 @@
 #include "database_character.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 DB_Character_Face_File::DB_Character_Face_File(int _fa, int _id, float _x, float _y, QString _name)
 {
@@ -24,7 +24,7 @@ DB_Character_Voice_File::DB_Character_Voice_File(int _fa, int _id, QString _name
 
 int DB_Character_Voice_File::state(int _lan)
 {
-    int tmp = Global::databaseInfo().language.size();
+    int tmp = CacheAgent::getInstance().databaseInfo().language.size();
     while(__state.size() < tmp) __state.append(0);
     while(__state.size() > tmp) __state.pop_back();
     return __state[_lan];
@@ -32,7 +32,7 @@ int DB_Character_Voice_File::state(int _lan)
 
 void DB_Character_Voice_File::setState(int _lan, int _state)
 {
-    int tmp = Global::databaseInfo().language.size();
+    int tmp = CacheAgent::getInstance().databaseInfo().language.size();
     while(__state.size() < tmp) __state.append(0);
     while(__state.size() > tmp) __state.pop_back();
     __state[_lan] = _state;
@@ -55,7 +55,7 @@ DB_Character_File::DB_Character_File(int _fa, int _id, QString _name)
 
 QString DB_Character_File::name(int _lan)
 {
-    int tmp = Global::databaseInfo().language.size();
+    int tmp = CacheAgent::getInstance().databaseInfo().language.size();
     while(__name.size() < tmp) __name.append("");
     while(__name.size() > tmp) __name.pop_back();
     return __name[_lan];
@@ -63,7 +63,7 @@ QString DB_Character_File::name(int _lan)
 
 QString DB_Character_File::text(int _lan)
 {
-    int tmp = Global::databaseInfo().language.size();
+    int tmp = CacheAgent::getInstance().databaseInfo().language.size();
     while(__text.size() < tmp) __text.append("");
     while(__text.size() > tmp) __text.pop_back();
     return __text[_lan];
@@ -71,7 +71,7 @@ QString DB_Character_File::text(int _lan)
 
 void DB_Character_File::setName(int _lan, QString _name)
 {
-    int tmp = Global::databaseInfo().language.size();
+    int tmp = CacheAgent::getInstance().databaseInfo().language.size();
     while(__name.size() < tmp) __name.append("");
     while(__name.size() > tmp) __name.pop_back();
     __name[_lan] = _name;
@@ -79,7 +79,7 @@ void DB_Character_File::setName(int _lan, QString _name)
 
 void DB_Character_File::setText(int _lan, QString _text)
 {
-    int tmp = Global::databaseInfo().language.size();
+    int tmp = CacheAgent::getInstance().databaseInfo().language.size();
     while(__text.size() < tmp) __text.append("");
     while(__text.size() > tmp) __text.pop_back();
     __text[_lan] = _text;
@@ -110,7 +110,7 @@ bool DB_Character_File::read(QFile &file, QTextStream &fin, QString _fileName, i
 
 bool DB_Character_File::save(QFile &file, QTextStream &fout, QString _fileName)
 {
-    int tmp = Global::databaseInfo().language.size();
+    int tmp = CacheAgent::getInstance().databaseInfo().language.size();
     file.setFileName(_fileName + "/index.txt");
     if(!file.open(QIODevice::WriteOnly)) return 1; fout.setDevice(&file);
     fout << QString::number( id ) << "\n" <<
@@ -130,7 +130,7 @@ bool DB_Character_File::save(QFile &file, QTextStream &fout, QString _fileName)
 
 int DB_Character_File::voiceState(int _lan)
 {
-    int tmp = Global::databaseInfo().language.size();
+    int tmp = CacheAgent::getInstance().databaseInfo().language.size();
     while(__voiceState.size() < tmp) __voiceState.append(0);
     while(__voiceState.size() > tmp) __voiceState.pop_back();
     for(int i = 0; i < tmp; i ++) __voiceState[i] = qMax(0, qMin(__voiceState[i], tmp - 1));
@@ -140,7 +140,7 @@ int DB_Character_File::voiceState(int _lan)
 void DB_Character_File::setVoiceState(int _lan, int _state)
 {
 
-    int tmp = Global::databaseInfo().language.size();
+    int tmp = CacheAgent::getInstance().databaseInfo().language.size();
     while(__voiceState.size() < tmp) __voiceState.append(0);
     while(__voiceState.size() > tmp) __voiceState.pop_back();
     for(int i = 0; i < tmp; i ++) __voiceState[i] = qMax(0, qMin(__voiceState[i], tmp - 1));

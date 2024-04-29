@@ -1,5 +1,5 @@
 #include "draw.h"
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 #include <QFontDatabase>
 
@@ -25,8 +25,8 @@ void Col::init()
     list.insert(c_theme,            QColor(0, 128, 255));
     list.insert(c_itemEdge,         QColor(128, 128, 128));
     list.insert(c_inactive,         QColor(32, 32, 32));
-    if(Global::setting.global_color_group == 3) read();
-    switch (Global::setting.global_color_group) {
+    if(CacheAgent::getInstance().setting.global_color_group == 3) read();
+    switch (CacheAgent::getInstance().setting.global_color_group) {
     case 1:
         Col::list[Col::c_backgroundMain] =    QColor(236, 236, 236);
         Col::list[Col::c_backgroundSub] =     QColor(212, 212, 212);

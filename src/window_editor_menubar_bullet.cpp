@@ -1,6 +1,6 @@
 #include "window_editor_menubar_bullet.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 #include <QApplication>
 #include <qt_windows.h>
 #include <QDesktopWidget>
@@ -19,7 +19,7 @@ Window_editor_menubar_bullet::Window_editor_menubar_bullet(QWidget *parent) : Wi
     }
     setWindowTitle("编辑子弹");
 
-    db = Global::database();
+    db = CacheAgent::getInstance().database();
 
     button_accept = new Widget_Button(this);
     button_accept->setGeometry(720 - 28, rect.height() - 150 - 96, 240, 80);
@@ -97,7 +97,7 @@ void Window_editor_menubar_bullet::updateList()
 
 void Window_editor_menubar_bullet::accept()
 {
-    Global::databaseUpdate(db);
+    CacheAgent::getInstance().databaseUpdate(db);
     end();
 }
 

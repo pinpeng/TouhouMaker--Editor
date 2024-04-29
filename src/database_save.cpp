@@ -8,7 +8,7 @@
 
 #include "draw.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 #include "qzipwriter_p.h"
 
@@ -26,17 +26,17 @@ bool Database::read(QString basePath) {
     if(!file.open(QIODevice::ReadOnly)) return 1; fin.setDevice(&file);
 
     info.projectName = fin.readLine();
-    Global::stage_id_top = fin.readLine().toInt();
-    Global::stage_event_id_top = fin.readLine().toInt();
+    CacheAgent::getInstance().stage_id_top = fin.readLine().toInt();
+    CacheAgent::getInstance().stage_event_id_top = fin.readLine().toInt();
 
-    Global::text_id_top = fin.readLine().toInt();
-    Global::hero_id_top = fin.readLine().toInt();
-    Global::enemy_id_top = fin.readLine().toInt();
-    Global::boss_id_top = fin.readLine().toInt();
-    Global::bullet_id_top = fin.readLine().toInt();
-    Global::effect_id_top = fin.readLine().toInt();
-    Global::audio_id_top = fin.readLine().toInt();
-    Global::image_id_top = fin.readLine().toInt();
+    CacheAgent::getInstance().text_id_top = fin.readLine().toInt();
+    CacheAgent::getInstance().hero_id_top = fin.readLine().toInt();
+    CacheAgent::getInstance().enemy_id_top = fin.readLine().toInt();
+    CacheAgent::getInstance().boss_id_top = fin.readLine().toInt();
+    CacheAgent::getInstance().bullet_id_top = fin.readLine().toInt();
+    CacheAgent::getInstance().effect_id_top = fin.readLine().toInt();
+    CacheAgent::getInstance().audio_id_top = fin.readLine().toInt();
+    CacheAgent::getInstance().image_id_top = fin.readLine().toInt();
 
     int tmp_text_size = fin.readLine().toInt();
     int tmp_stage_size[2];
@@ -258,7 +258,7 @@ bool Database::read(QString basePath) {
     file.close();
 
 
-    Global::sprite_buffer.clear();
+    CacheAgent::getInstance().sprite_buffer.clear();
     file.setFileName(basePath + "/image/index.txt");
     if(!file.open(QIODevice::ReadOnly)) return 1; fin.setDevice(&file);
     for(int _t = 0; _t < 5; _t ++) {
@@ -275,14 +275,14 @@ bool Database::read(QString basePath) {
                     if(!QFile::exists(_file_path + ".png")) _image.state = 0;
                     else {
                         _tmp_buff.png = QPixmap(_file_path + ".png");
-                        Global::sprite_buffer.insert(QString::number(_tmp_id) + "_0", _tmp_buff);
+                        CacheAgent::getInstance().sprite_buffer.insert(QString::number(_tmp_id) + "_0", _tmp_buff);
                     }
                 }
                 if(_image.state == 2) {
                     if(!QFile::exists(_file_path + ".gif")) _image.state = 0;
                     else {
                         _tmp_buff.gif = new QMovie(_file_path + ".gif");
-                        Global::sprite_buffer.insert(QString::number(_tmp_id) + "_0", _tmp_buff);
+                        CacheAgent::getInstance().sprite_buffer.insert(QString::number(_tmp_id) + "_0", _tmp_buff);
                     }
                 }
             }
@@ -335,9 +335,9 @@ bool Database::save() {
     dir.setPath(basePath + "/image");
     if(!dir.exists()) dir.mkdir(dir.path());
 
-    Global::setting.global_last_name = Global::databaseInfo().projectName;
-    Global::setting.global_last_path = Global::databaseInfo().projectPosition;
-    Global::setting.save();
+    CacheAgent::getInstance().setting.global_last_name = CacheAgent::getInstance().databaseInfo().projectName;
+    CacheAgent::getInstance().setting.global_last_path = CacheAgent::getInstance().databaseInfo().projectPosition;
+    CacheAgent::getInstance().setting.save();
 
     QFile file;
     QTextStream fout;
@@ -346,16 +346,16 @@ bool Database::save() {
     if(!file.open(QIODevice::WriteOnly)) return 1; fout.setDevice(&file);
 
     fout << info.projectName << "\n" <<
-            QString::number( Global::stage_id_top ) << "\n" <<
-            QString::number( Global::stage_event_id_top ) << "\n" <<
-            QString::number( Global::text_id_top ) << "\n" <<
-            QString::number( Global::hero_id_top ) << "\n" <<
-            QString::number( Global::enemy_id_top ) << "\n" <<
-            QString::number( Global::boss_id_top ) << "\n" <<
-            QString::number( Global::bullet_id_top ) << "\n" <<
-            QString::number( Global::effect_id_top ) << "\n" <<
-            QString::number( Global::audio_id_top ) << "\n" <<
-            QString::number( Global::image_id_top ) << "\n" <<
+            QString::number( CacheAgent::getInstance().stage_id_top ) << "\n" <<
+            QString::number( CacheAgent::getInstance().stage_event_id_top ) << "\n" <<
+            QString::number( CacheAgent::getInstance().text_id_top ) << "\n" <<
+            QString::number( CacheAgent::getInstance().hero_id_top ) << "\n" <<
+            QString::number( CacheAgent::getInstance().enemy_id_top ) << "\n" <<
+            QString::number( CacheAgent::getInstance().boss_id_top ) << "\n" <<
+            QString::number( CacheAgent::getInstance().bullet_id_top ) << "\n" <<
+            QString::number( CacheAgent::getInstance().effect_id_top ) << "\n" <<
+            QString::number( CacheAgent::getInstance().audio_id_top ) << "\n" <<
+            QString::number( CacheAgent::getInstance().image_id_top ) << "\n" <<
 
             QString::number( text.size() ) << "\n" <<
             QString::number( stage[0].size() ) << "\n" <<

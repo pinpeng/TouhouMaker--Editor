@@ -9,7 +9,7 @@
 #include "widget_lineEdit.h"
 #include "widget_dragstick.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 class Window_welcome_setting : public Window_small
 {

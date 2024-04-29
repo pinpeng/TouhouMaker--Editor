@@ -3,7 +3,7 @@
 #include "qdesktopservices.h"
 
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 #include <QApplication>
 #include <qt_windows.h>
 #include <QDesktopWidget>
@@ -25,7 +25,7 @@ Window_editor_menubar_image::Window_editor_menubar_image(QWidget *parent) : Wind
     }
     setWindowTitle("编辑图像");
 
-    db = Global::database();
+    db = CacheAgent::getInstance().database();
 
     button_accept = new Widget_Button(this);
     if(flag__ == false)
@@ -150,8 +150,8 @@ void Window_editor_menubar_image::paintEvent(QPaintEvent *)
             for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) {
                 DB_image *file = &db.image[i][tmp];
                 _spr_key = QString::number(file->__id) + "_" + QString::number(file->editTimer);
-                auto j = Global::sprite_buffer.find(_spr_key);
-                if(j != Global::sprite_buffer.end()) {
+                auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
+                if(j != CacheAgent::getInstance().sprite_buffer.end()) {
                     //flag = true;
                     if(file->state == 1) label->setPixmap(j.value().png);
                     if(file->state == 2) {
@@ -207,7 +207,7 @@ void Window_editor_menubar_image::updateList()
 
 void Window_editor_menubar_image::accept()
 {
-    Global::databaseUpdate(db);
+    CacheAgent::getInstance().databaseUpdate(db);
     end();
 }
 
@@ -221,7 +221,7 @@ void Window_editor_menubar_image::editAudio(int _index)
 
 void Window_editor_menubar_image::openFolder()
 {
-    if(!QDesktopServices::openUrl(QUrl::fromLocalFile(Global::databaseInfo().projectPosition + "/image"))) {
+    if(!QDesktopServices::openUrl(QUrl::fromLocalFile(CacheAgent::getInstance().databaseInfo().projectPosition + "/image"))) {
         Message("无法打开文件夹");
     }
 }

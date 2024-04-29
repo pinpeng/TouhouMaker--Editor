@@ -1,6 +1,6 @@
 #include "window_editor_menubar_setting_language.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 Window_editor_menubar_setting_language::Window_editor_menubar_setting_language(QString *_str, QWidget *parent) : Window_small(parent)
 {

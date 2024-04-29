@@ -7,7 +7,7 @@
 #include "widget_lineEdit.h"
 #include "widget_itemlist.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 #include "window_editor_menubar_setting_language.h"
 

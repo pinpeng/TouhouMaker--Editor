@@ -1,6 +1,6 @@
 #include "database_define.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 #include <QDir>
 
 
@@ -11,22 +11,22 @@ DB_text::DB_text()
 DB_text::DB_text(int _id, QString _text)
 {
     __id = _id;
-    while(__text.length() < Global::databaseLanSize()) __text.append("<undefined>");
+    while(__text.length() < CacheAgent::getInstance().databaseLanSize()) __text.append("<undefined>");
     __text[0] = _text;
 }
 
 QString DB_text::getText(int _lan)
 {
-    while(__text.length() < Global::databaseLanSize()) __text.append("");
-    while(__text.length() > Global::databaseLanSize()) __text.pop_back();
+    while(__text.length() < CacheAgent::getInstance().databaseLanSize()) __text.append("");
+    while(__text.length() > CacheAgent::getInstance().databaseLanSize()) __text.pop_back();
 
     return __text[_lan];
 }
 
 void DB_text::setText(int _lan, QString _text)
 {
-    while(__text.length() < Global::databaseLanSize()) __text.append("");
-    while(__text.length() > Global::databaseLanSize()) __text.pop_back();
+    while(__text.length() < CacheAgent::getInstance().databaseLanSize()) __text.append("");
+    while(__text.length() > CacheAgent::getInstance().databaseLanSize()) __text.pop_back();
 
     __text[_lan] = _text;
 }

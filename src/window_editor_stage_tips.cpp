@@ -1,7 +1,7 @@
 #include "window_editor_stage_tips.h"
 
 #include <complex>
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 #include <QApplication>
 
 #include <QFile>
@@ -111,9 +111,9 @@ void Window_editor_stage_tips::paintEvent(QPaintEvent *)
 {
     Draw::smallWindow(this, this);
 
-    float ss = Global::setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editor_scale;
 
-    if(Global::setting.tips_action == 2) return;
+    if(CacheAgent::getInstance().setting.tips_action == 2) return;
     Draw::begin(this);
     Draw::setAntialising(true);
 
@@ -163,10 +163,10 @@ void Window_editor_stage_tips::paintEvent(QPaintEvent *)
 
 void Window_editor_stage_tips::mousePressEvent(QMouseEvent *event)
 {
-    float ss = Global::setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editor_scale;
 
     if(event->button() != Qt::LeftButton) { event->ignore(); return; }
-    if(Global::setting.tips_action != 0) { event->ignore(); return; }
+    if(CacheAgent::getInstance().setting.tips_action != 0) { event->ignore(); return; }
     if(event->pos().x() > rect().left() + 416 * ss &&
        event->pos().y() > rect().top() + 46 * ss) {
         if(speakTimer >= 30 && speakTimer <= 270) speakTimer = 30;
@@ -185,7 +185,7 @@ void Window_editor_stage_tips::mousePressEvent(QMouseEvent *event)
 void Window_editor_stage_tips::timeoutRepaint()
 {
     if(!isActiveWindow()) return;
-    if(Global::setting.tips_action == 2) return;
+    if(CacheAgent::getInstance().setting.tips_action == 2) return;
 
     if(important != -1) {
         action = 3;
@@ -209,7 +209,7 @@ void Window_editor_stage_tips::timeoutRepaint()
 
     default: case 0: {
         action_timer += rand() % 2;
-        if(Global::setting.tips_action == 0) {
+        if(CacheAgent::getInstance().setting.tips_action == 0) {
             if(action_timer >= 1200) {
                 action = 1;
                 text = tips_auto[rand() % tips_auto.size()];

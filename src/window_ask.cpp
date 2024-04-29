@@ -3,7 +3,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 #include <QApplication>
 #include <qt_windows.h>
 #include <QDesktopWidget>

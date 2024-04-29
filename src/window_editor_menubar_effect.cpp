@@ -1,6 +1,6 @@
 #include "window_editor_menubar_effect.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 #include <QApplication>
 #include <qt_windows.h>
 #include <QDesktopWidget>
@@ -19,7 +19,7 @@ Window_editor_menubar_effect::Window_editor_menubar_effect(QWidget *parent) : Wi
     }
     setWindowTitle("编辑特效");
 
-    db = Global::database();
+    db = CacheAgent::getInstance().database();
 
     button_accept = new Widget_Button(this);
     button_accept->setGeometry(720 - 28, rect.height() - 150 - 96, 240, 80);
@@ -97,7 +97,7 @@ void Window_editor_menubar_effect::updateList()
 
 void Window_editor_menubar_effect::accept()
 {
-    Global::databaseUpdate(db);
+    CacheAgent::getInstance().databaseUpdate(db);
     end();
 }
 

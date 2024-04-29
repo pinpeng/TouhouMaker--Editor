@@ -2,7 +2,7 @@
 
 #include "qdesktopservices.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 #include <QApplication>
 #include <qt_windows.h>
 #include <QDesktopWidget>
@@ -21,7 +21,7 @@ Window_editor_menubar_audio::Window_editor_menubar_audio(QWidget *parent) : Wind
     }
     setWindowTitle("编辑音频");
 
-    db = Global::database();
+    db = CacheAgent::getInstance().database();
 
     button_accept = new Widget_Button(this);
     button_accept->setGeometry(720 - 28, rect.height() - 150 - 96, 240, 80);
@@ -107,7 +107,7 @@ void Window_editor_menubar_audio::updateList()
 
 void Window_editor_menubar_audio::accept()
 {
-    Global::databaseUpdate(db);
+    CacheAgent::getInstance().databaseUpdate(db);
     end();
 }
 
@@ -121,7 +121,7 @@ void Window_editor_menubar_audio::editAudio(int _index)
 
 void Window_editor_menubar_audio::openFolder()
 {
-    if(!QDesktopServices::openUrl(QUrl::fromLocalFile(Global::databaseInfo().projectPosition + "/audio"))) {
+    if(!QDesktopServices::openUrl(QUrl::fromLocalFile(CacheAgent::getInstance().databaseInfo().projectPosition + "/audio"))) {
         Message("无法打开文件夹");
     }
 }

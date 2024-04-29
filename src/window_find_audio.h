@@ -7,7 +7,7 @@
 #include "widget_itemlist.h"
 #include "widget_roundbutton.h"
 
-#include "global.h"
+#include "memoryCache/cacheAgent.h"
 
 class Window_find_audio : public Window_small
 {
