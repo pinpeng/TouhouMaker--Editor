@@ -7,15 +7,15 @@
 #include <QFile>
 #include <QDir>
 #include <QtMath>
+#include <QPixmap>
+#include <QMovie>
 
-#include "database.h"
+#include "memoryCache/projectEntity/projectData.h"
 #include "memoryCache/globalEntity/editorSetting.h"
 #include "sprite.h"
 #include "draw.h"
 
-#include <QPixmap>
-#include <QMovie>
-#include "memoryCache/globalEntity/editorSetting.h"
+
 
 struct sprite_buff {
     QPixmap png;
@@ -27,11 +27,24 @@ struct sprite_buff {
 class CacheAgent
 {
     public:
+    int stage_id_top = 100;
+    int stage_event_id_top = 100;
+
+    int text_id_top = 100;
+    int hero_id_top = 100;
+    int enemy_id_top = 100;
+    int boss_id_top = 100;
+    int bullet_id_top = 100;
+
+    int effect_id_top = 100;
+    int audio_id_top = 100;
+    int image_id_top = 100;
+    public:
     CacheAgent();
     static CacheAgent& getInstance();
 
     void databaseInit(const QString& projectName,const QString& projectDir);
-    void databaseUpdate(Database db);
+    void databaseUpdate(ProjectData db);
     void databaseClean();
 
     bool databaseUndo();
@@ -45,25 +58,10 @@ class CacheAgent
     public:
     MemoryCache::EditorSetting setting;
 
-    int stage_id_top;
-    int stage_event_id_top;
-
-    int text_id_top;
-
-    int hero_id_top;
-    int enemy_id_top;
-    int boss_id_top;
-
-    int bullet_id_top;
-    int effect_id_top;
-
-    int audio_id_top;
-    int image_id_top;
-
-    QList<Database> _databaseList;              // 数据库列表，用于进行撤销/还原操作
+    QList<ProjectData> _databaseList;              // 数据库列表，用于进行撤销/还原操作
     int _curDbIndex;                            // 当前数据库指针
     
-    Database         database();
+    ProjectData         database();
     Database_info    databaseInfo();
     QMap<QString, sprite_buff> sprite_buffer;
 

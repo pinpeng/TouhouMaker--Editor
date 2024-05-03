@@ -58,7 +58,6 @@ SOURCES += \
     # toolkit
     toolkit/fileoperator.cpp \
     toolkit/timeoperator.cpp \
-    database.cpp \
     database_define.cpp \
     database_define_edit.cpp \
     database_info.cpp \
@@ -130,7 +129,6 @@ HEADERS += \
     # toolkit
     toolkit/fileoperator.h \
     toolkit/timeoperator.h \
-    database.h \
     database_define.h \
     database_info.h \
     database_main.h \

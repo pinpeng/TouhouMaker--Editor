@@ -1,6 +1,6 @@
 #include "window_find_video.h"
 
-Window_find_video::Window_find_video(Database *_db, QWidget *parent) : Window_small(parent)
+Window_find_video::Window_find_video(ProjectData *_db, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1200, 848);
     setWindowTitle("搜索视频");

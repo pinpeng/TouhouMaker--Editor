@@ -1,6 +1,6 @@
 #include "window_find_audio.h"
 
-Window_find_audio::Window_find_audio(Database *_db, QWidget *parent) : Window_small(parent)
+Window_find_audio::Window_find_audio(ProjectData *_db, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1200, 848);
     setWindowTitle("搜索音频");

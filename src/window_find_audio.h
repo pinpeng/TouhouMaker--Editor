@@ -15,12 +15,12 @@ class Window_find_audio : public Window_small
 
 public:
 
-    explicit Window_find_audio(Database *_db, QWidget *parent = nullptr);
+    explicit Window_find_audio(ProjectData *_db, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *);
 
 private:
-    Database *db;
+    ProjectData *db;
 
     QString type_arr[6] = {"音乐", "音乐文件夹", "音效", "音效文件夹", "配音", "配音文件夹"};
     QButtonGroup *buttonBox_type;

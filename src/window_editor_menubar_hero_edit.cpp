@@ -11,7 +11,7 @@
 #include <qt_windows.h>
 #include <QDesktopWidget>
 
-Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(Database *_db, DB_hero *_file, QWidget *parent) : Window_small(parent)
+Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(ProjectData *_db, DB_hero *_file, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1400, 640);
     setWindowTitle("编辑主角");
@@ -148,7 +148,7 @@ void Window_editor_menubar_hero_edit0::languageChanged(int _index)
 }
 
 
-Window_editor_menubar_hero_edit1::Window_editor_menubar_hero_edit1(Database *_db, DB_enemy *_file, QWidget *parent) : Window_small(parent)
+Window_editor_menubar_hero_edit1::Window_editor_menubar_hero_edit1(ProjectData *_db, DB_enemy *_file, QWidget *parent) : Window_small(parent)
 {
     QRect rect = QApplication::desktop()->screenGeometry();
     if(rect.width() >= 1900 && rect.height() >= 1000)
@@ -430,7 +430,7 @@ void Window_editor_menubar_hero_edit1::updateData()
     repaint();
 }
 
-Window_editor_menubar_hero_edit2::Window_editor_menubar_hero_edit2(Database *_db, DB_boss *_file, QWidget *parent) : Window_small(parent)
+Window_editor_menubar_hero_edit2::Window_editor_menubar_hero_edit2(ProjectData *_db, DB_boss *_file, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(800, 640);
     setWindowTitle("编辑BOSS");

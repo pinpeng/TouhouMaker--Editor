@@ -4,13 +4,13 @@
 #include <QWidget>
 #include <QTimer>
 
-#include "database.h"
+#include "memoryCache/projectEntity/projectData.h"
 #include "draw.h"
 
 #include <QWidget>
 #include <QTimer>
 
-#include "database.h"
+#include "memoryCache/projectEntity/projectData.h"
 #include "draw.h"
 
 #include "window_small.h"
@@ -21,7 +21,7 @@ class Window_editor_timeline_insert : public Window_small
 {
     Q_OBJECT
 public:
-    explicit Window_editor_timeline_insert(Database *_db, int _time, int _stage_type, int _stage_id, QWidget *parent = nullptr);
+    explicit Window_editor_timeline_insert(ProjectData *_db, int _time, int _stage_type, int _stage_id, QWidget *parent = nullptr);
 
 private:
 
@@ -29,7 +29,7 @@ private:
 
     void mousePressEvent(QMouseEvent *event);
 
-    Database *db;
+    ProjectData *db;
     int time;
     int stage_type;
     int stage_id;
@@ -66,7 +66,7 @@ public:
 private:
     BaseThread *timer;
 
-    Database db;
+    ProjectData db;
 
     float mx, my;
     float rbx, rby, rbt, rbi;

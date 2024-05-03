@@ -1,6 +1,6 @@
 #include "window_find.h"
 
-Window_find::Window_find(Database *_db, int _type, int _group, int *_index, QWidget *parent) : Window_small(parent)
+Window_find::Window_find(ProjectData *_db, int _type, int _group, int *_index, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(960, 900);
 
@@ -49,7 +49,7 @@ Window_find::Window_find(Database *_db, int _type, int _group, int *_index, QWid
     find();
 }
 
-Window_find::Window_find(Database *_db, int _type, int _group, float *_index, QWidget *parent) : Window_small(parent)
+Window_find::Window_find(ProjectData *_db, int _type, int _group, float *_index, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(960, 900);
 

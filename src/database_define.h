@@ -12,7 +12,7 @@
 
 ////////////////////////////////
 
-struct Database;
+struct ProjectData;
 
 class Window_editor_menubar_bullet_edit;
 
@@ -44,7 +44,7 @@ struct DB_hero_skill {
     QMap<QString, float> data;
 
     DB_hero_skill();
-    DB_hero_skill(Database *db, QString _name);
+    DB_hero_skill(ProjectData *db, QString _name);
 };
 
 struct DB_hero {
@@ -60,7 +60,7 @@ struct DB_hero {
     // idle, lmove, rmove, deco, slowdown, preview
 
     DB_hero();
-    DB_hero(Database *db, int _id, QString _name);
+    DB_hero(ProjectData *db, int _id, QString _name);
 };
 
 struct DB_enemy {
@@ -87,9 +87,9 @@ struct DB_enemy {
     void init();
     void updateData();
 
-    void renderCode(Window_editor_menubar_hero_edit1 *window, Database *db, QRectF _rect, float *_line);
-    bool editCode(Window_editor_menubar_hero_edit1 *window, Database *db, QRectF _rect, float *_line, float mx, float my);
-    void wheelEvent(Window_editor_menubar_hero_edit1 *window, Database *db, QRectF _rect, float *_line);
+    void renderCode(Window_editor_menubar_hero_edit1 *window, ProjectData *db, QRectF _rect, float *_line);
+    bool editCode(Window_editor_menubar_hero_edit1 *window, ProjectData *db, QRectF _rect, float *_line, float mx, float my);
+    void wheelEvent(Window_editor_menubar_hero_edit1 *window, ProjectData *db, QRectF _rect, float *_line);
 };
 
 struct DB_boss {
@@ -98,7 +98,7 @@ struct DB_boss {
     int image_id[3];
 
     DB_boss();
-    DB_boss(Database *db, int _id, QString _name);
+    DB_boss(ProjectData *db, int _id, QString _name);
 };
 
 struct DB_bullet {
@@ -126,9 +126,9 @@ struct DB_bullet {
     void init();
     void updateData();
 
-    void renderCode(Window_editor_menubar_bullet_edit *window, Database *db, QRectF _rect, float *_line, int _group);
-    bool editCode(Window_editor_menubar_bullet_edit *window, Database *db, QRectF _rect, float *_line, float mx, float my, int _group);
-    void wheelEvent(Window_editor_menubar_bullet_edit *window, Database *db, QRectF _rect, float *_line);
+    void renderCode(Window_editor_menubar_bullet_edit *window, ProjectData *db, QRectF _rect, float *_line, int _group);
+    bool editCode(Window_editor_menubar_bullet_edit *window, ProjectData *db, QRectF _rect, float *_line, float mx, float my, int _group);
+    void wheelEvent(Window_editor_menubar_bullet_edit *window, ProjectData *db, QRectF _rect, float *_line);
 };
 
 struct DB_effect {
@@ -141,9 +141,9 @@ struct DB_effect {
 
     void init();
 
-    void renderCode(Window_editor_menubar_effect_edit *window, Database *db, QRectF _rect, float *_line);
-    bool editCode(Window_editor_menubar_effect_edit *window, Database *db, QRectF _rect, float *_line, float mx, float my);
-    void wheelEvent(Window_editor_menubar_effect_edit *window, Database *db, QRectF _rect, float *_line);
+    void renderCode(Window_editor_menubar_effect_edit *window, ProjectData *db, QRectF _rect, float *_line);
+    bool editCode(Window_editor_menubar_effect_edit *window, ProjectData *db, QRectF _rect, float *_line, float mx, float my);
+    void wheelEvent(Window_editor_menubar_effect_edit *window, ProjectData *db, QRectF _rect, float *_line);
 };
 
 struct DB_audio { // bgm or se, .ogg

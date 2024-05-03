@@ -11,7 +11,7 @@
 
 
 
-#include "database.h"
+#include "memoryCache/projectEntity/projectData.h"
 
 class Window_editor_main;
 
@@ -44,7 +44,7 @@ public:
 private:
     BaseThread *timer;
 
-    Database db;
+    ProjectData db;
 
     float item_top = 0.0;
     int item_checked = -1;

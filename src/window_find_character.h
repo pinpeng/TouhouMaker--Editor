@@ -14,12 +14,12 @@ class Window_find_character : public Window_small
 
 public:
 
-    explicit Window_find_character(Database *_db, QWidget *parent = nullptr);
+    explicit Window_find_character(ProjectData *_db, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *);
 
 private:
-    Database *db;
+    ProjectData *db;
 
     Widget_LineEdit *lineEdit;
     Widget_Button *button_find;

@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QTimer>
 
-#include "database.h"
+#include "memoryCache/projectEntity/projectData.h"
 #include "draw.h"
 
 #include "window_editor_stage_tips.h"
@@ -52,7 +52,7 @@ private:
 
     int buff_id3 = -1;
 
-    Database db;
+    ProjectData db;
     int file_id;
 
     float mouse_x = 0.0;

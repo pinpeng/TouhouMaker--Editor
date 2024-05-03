@@ -15,12 +15,12 @@ class Window_editor_menubar_image_edit : public Window_small
     Q_OBJECT
 
 public:
-    explicit Window_editor_menubar_image_edit(Database *_db, DB_image *_file, QWidget *parent = nullptr);
+    explicit Window_editor_menubar_image_edit(ProjectData *_db, DB_image *_file, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
 
 private:
-    Database *db;
+    ProjectData *db;
     DB_image *file;
 
     Widget_LineEdit *lineEdit;

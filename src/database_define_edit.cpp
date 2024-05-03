@@ -77,7 +77,7 @@ void DB_bullet::updateData()
 
 }
 
-void DB_bullet::renderCode(Window_editor_menubar_bullet_edit *window, Database *db, QRectF _rect, float *_line, int _group)
+void DB_bullet::renderCode(Window_editor_menubar_bullet_edit *window, ProjectData *db, QRectF _rect, float *_line, int _group)
 {
 
     int line_show_max = floor(_rect.height() / 40) - 2;
@@ -169,7 +169,7 @@ void DB_bullet::renderCode(Window_editor_menubar_bullet_edit *window, Database *
 
 }
 
-bool DB_bullet::editCode(Window_editor_menubar_bullet_edit *window, Database *db, QRectF _rect, float *_line, float mx, float my, int _group)
+bool DB_bullet::editCode(Window_editor_menubar_bullet_edit *window, ProjectData *db, QRectF _rect, float *_line, float mx, float my, int _group)
 {
     static QStringList _type = {"无限持续", "有限时间"};
 
@@ -262,7 +262,7 @@ bool DB_bullet::editCode(Window_editor_menubar_bullet_edit *window, Database *db
     return false;
 }
 
-void DB_bullet::wheelEvent(Window_editor_menubar_bullet_edit *window, Database *db, QRectF _rect, float *_line)
+void DB_bullet::wheelEvent(Window_editor_menubar_bullet_edit *window, ProjectData *db, QRectF _rect, float *_line)
 {
     int line_show_max = floor(_rect.height() / 40) - 2;
     int line_max = 0;
@@ -387,7 +387,7 @@ void DB_enemy::updateData()
 
 }
 
-void DB_enemy::renderCode(Window_editor_menubar_hero_edit1 *window, Database *db, QRectF _rect, float *_line)
+void DB_enemy::renderCode(Window_editor_menubar_hero_edit1 *window, ProjectData *db, QRectF _rect, float *_line)
 {
 
     int line_show_max = floor(_rect.height() / 40) - 2;
@@ -480,7 +480,7 @@ void DB_enemy::renderCode(Window_editor_menubar_hero_edit1 *window, Database *db
 
 }
 
-bool DB_enemy::editCode(Window_editor_menubar_hero_edit1 *window, Database *db, QRectF _rect, float *_line, float mx, float my)
+bool DB_enemy::editCode(Window_editor_menubar_hero_edit1 *window, ProjectData *db, QRectF _rect, float *_line, float mx, float my)
 {
     static QStringList _type = {"无限持续", "有限时间"};
 
@@ -573,7 +573,7 @@ bool DB_enemy::editCode(Window_editor_menubar_hero_edit1 *window, Database *db, 
     return false;
 }
 
-void DB_enemy::wheelEvent(Window_editor_menubar_hero_edit1 *window, Database *db, QRectF _rect, float *_line)
+void DB_enemy::wheelEvent(Window_editor_menubar_hero_edit1 *window, ProjectData *db, QRectF _rect, float *_line)
 {
     int line_show_max = floor(_rect.height() / 40) - 2;
     int line_max = 0;
@@ -634,17 +634,17 @@ void DB_effect::init()
 
 }
 
-void DB_effect::renderCode(Window_editor_menubar_effect_edit *window, Database *db, QRectF _rect, float *_line)
+void DB_effect::renderCode(Window_editor_menubar_effect_edit *window, ProjectData *db, QRectF _rect, float *_line)
 {
 
 }
 
-bool DB_effect::editCode(Window_editor_menubar_effect_edit *window, Database *db, QRectF _rect, float *_line, float mx, float my)
+bool DB_effect::editCode(Window_editor_menubar_effect_edit *window, ProjectData *db, QRectF _rect, float *_line, float mx, float my)
 {
 
 }
 
-void DB_effect::wheelEvent(Window_editor_menubar_effect_edit *window, Database *db, QRectF _rect, float *_line)
+void DB_effect::wheelEvent(Window_editor_menubar_effect_edit *window, ProjectData *db, QRectF _rect, float *_line)
 {
 
 }

@@ -12,7 +12,7 @@ namespace GlobalSource{
     class ImageManager{
         public:
         ImageManager();
-        // InitFromDatabase(const Database& db);
+        // InitFromDatabase(const ProjectData& db);
         bool getImage(const QString& key,QSharedPointer<QPixmap> pngImage);
         bool getImage(const QString& key,QSharedPointer<QMovie> gifImage);
         bool setImage(const QString& key,QSharedPointer<QPixmap> pngImage);

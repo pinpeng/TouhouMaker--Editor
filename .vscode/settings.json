@@ -7,6 +7,7 @@
         "xiosbase": "cpp",
         "cmath": "cpp",
         "system_error": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "xmemory": "cpp"
     }
 }

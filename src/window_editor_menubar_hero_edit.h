@@ -16,13 +16,13 @@ class Window_editor_menubar_hero_edit0 : public Window_small
     Q_OBJECT
 
 public:
-    explicit Window_editor_menubar_hero_edit0(Database *_db, DB_hero *_file, QWidget *parent = nullptr);
+    explicit Window_editor_menubar_hero_edit0(ProjectData *_db, DB_hero *_file, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    Database *db;
+    ProjectData *db;
     DB_hero *file;
 
     int language_last = 0;
@@ -51,14 +51,14 @@ class Window_editor_menubar_hero_edit1 : public Window_small
     Q_OBJECT
 
 public:
-    explicit Window_editor_menubar_hero_edit1(Database *_db, DB_enemy *_file, QWidget *parent = nullptr);
+    explicit Window_editor_menubar_hero_edit1(ProjectData *_db, DB_enemy *_file, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
 
 private:
-    Database *db;
+    ProjectData *db;
     DB_enemy *file;
 
     QLabel *label;
@@ -85,13 +85,13 @@ class Window_editor_menubar_hero_edit2 : public Window_small
     Q_OBJECT
 
 public:
-    explicit Window_editor_menubar_hero_edit2(Database *_db, DB_boss *_file, QWidget *parent = nullptr);
+    explicit Window_editor_menubar_hero_edit2(ProjectData *_db, DB_boss *_file, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    Database *db;
+    ProjectData *db;
     DB_boss *file;
 
     QLabel *label[3];

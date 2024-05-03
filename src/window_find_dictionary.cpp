@@ -1,6 +1,6 @@
 #include "window_find_dictionary.h"
 
-Window_find_dictionary::Window_find_dictionary(Database *_db, QWidget *parent) : Window_small(parent)
+Window_find_dictionary::Window_find_dictionary(ProjectData *_db, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1200, 800);
     setWindowTitle("搜索文本");

@@ -23,7 +23,7 @@ public:
 
 private:
 
-    Database db;
+    ProjectData db;
 
     /*QButtonGroup *buttonBox_start_with_logo;
     Widget_RoundButton *roundButton_swl_yes;

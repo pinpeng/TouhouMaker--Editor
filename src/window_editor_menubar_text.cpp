@@ -5,7 +5,7 @@
 #include <qt_windows.h>
 #include <QDesktopWidget>
 
-Window_editor_menubar_text_edit::Window_editor_menubar_text_edit(Database *_db, DB_text *_file, QWidget *parent) : Window_small(parent)
+Window_editor_menubar_text_edit::Window_editor_menubar_text_edit(ProjectData *_db, DB_text *_file, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(960, 600);
 

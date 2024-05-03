@@ -11,7 +11,7 @@
 
 #include "window_find.h"
 
-#include "database.h"
+#include "memoryCache/projectEntity/projectData.h"
 
 class Window_ask : public Window_small
 {
@@ -59,7 +59,7 @@ class Window_ask_ex : public Window_small
     };
 
 public:
-    explicit Window_ask_ex(QString _title, Database *_db = nullptr, QWidget *parent = nullptr);
+    explicit Window_ask_ex(QString _title, ProjectData *_db = nullptr, QWidget *parent = nullptr);
 
 #define ask_create(_title) Window_ask_ex *window_ask_ex = new Window_ask_ex(_title); \
     window_ask_ex->setWindowModality(Qt::ApplicationModal); \
@@ -112,7 +112,7 @@ public:
     window_ask_ex->addFindButton(_text, _type, _group, _index)
 
 private:
-    Database *db;
+    ProjectData *db;
 
     Widget_Button *button_accept;
     Widget_Button *button_cancel;

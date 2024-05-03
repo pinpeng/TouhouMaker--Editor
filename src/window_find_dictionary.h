@@ -14,12 +14,12 @@ class Window_find_dictionary : public Window_small
 
 public:
 
-    explicit Window_find_dictionary(Database *_db, QWidget *parent = nullptr);
+    explicit Window_find_dictionary(ProjectData *_db, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *);
 
 private:
-    Database *db;
+    ProjectData *db;
 
     Widget_LineEdit *lineEdit;
     Widget_Button *button_find;

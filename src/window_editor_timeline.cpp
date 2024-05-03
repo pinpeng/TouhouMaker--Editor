@@ -16,7 +16,7 @@ float Window_editor_timeline::view_max = 18000;
 float Window_editor_timeline::view_left = 18000;
 float Window_editor_timeline::view_right = 18000;
 
-Window_editor_timeline_insert::Window_editor_timeline_insert(Database *_db, int _time, int _stage_type, int _stage_id, QWidget *parent) : Window_small(parent)
+Window_editor_timeline_insert::Window_editor_timeline_insert(ProjectData *_db, int _time, int _stage_type, int _stage_id, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1200, 400);
     setWindowTitle("选择一种事件");
@@ -120,7 +120,7 @@ void Window_editor_timeline_insert::createEvent(int _index)
         Window_editor_timeline::view_right = 100;
     }
     db->stage[stage_type][stage_id].events.append(_event);
-    CacheAgent::getInstance().databaseUpdate(Database(*db));
+    CacheAgent::getInstance().databaseUpdate(ProjectData(*db));
     end();
 }
 

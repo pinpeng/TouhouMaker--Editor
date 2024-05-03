@@ -14,7 +14,7 @@
 
 class Window_editor_stage;
 
-struct Database;
+struct ProjectData;
 
 struct DB_UI_TITLE {
     DB_UI_TITLE();
@@ -61,12 +61,12 @@ struct DB_STAGE_EVENT {
                 QMap<int, int> map_image[5],
                 QJsonObject *jObj);
 
-    void init(Database *db = nullptr);
+    void init(ProjectData *db = nullptr);
 
-    QStringList getDescribe(Database *db);
-    void renderCode(Window_editor_stage *window, Database *db, QRectF _rect, float *_line, float ss);
-    bool editCode(Window_editor_stage *window, Database *db, QRectF _rect, float *_line, float ss, float mx, float my);
-    void wheelEvent(Window_editor_stage *window, Database *db, QRectF _rect, float *_line, float ss);
+    QStringList getDescribe(ProjectData *db);
+    void renderCode(Window_editor_stage *window, ProjectData *db, QRectF _rect, float *_line, float ss);
+    bool editCode(Window_editor_stage *window, ProjectData *db, QRectF _rect, float *_line, float ss, float mx, float my);
+    void wheelEvent(Window_editor_stage *window, ProjectData *db, QRectF _rect, float *_line, float ss);
 };
 
 struct DB_STAGE {

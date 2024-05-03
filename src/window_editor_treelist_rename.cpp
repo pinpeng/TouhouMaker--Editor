@@ -36,7 +36,7 @@ void Window_editor_treelist_rename::paintEvent(QPaintEvent *)
 void Window_editor_treelist_rename::accept()
 {
     if(name != lineEdit->text()) {
-        Database db = CacheAgent::getInstance().database();
+        ProjectData db = CacheAgent::getInstance().database();
         if(id >= 0) db.dialog_folder[id].name = lineEdit->text();
         else db.dialog_file[id].name = lineEdit->text();
         CacheAgent::getInstance().databaseUpdate(db);

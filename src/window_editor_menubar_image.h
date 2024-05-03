@@ -25,7 +25,7 @@ public:
 
 private:
 
-    Database db;
+    ProjectData db;
 
     QButtonGroup *select_group;
     Widget_RoundButton *roundButton[4];

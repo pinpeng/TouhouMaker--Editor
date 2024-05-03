@@ -7,7 +7,7 @@
 #include <QFileDialog>
 #include <QDesktopServices>
 
-Window_editor_menubar_audio_edit::Window_editor_menubar_audio_edit(Database *_db, DB_audio *_file, QWidget *parent) : Window_small(parent)
+Window_editor_menubar_audio_edit::Window_editor_menubar_audio_edit(ProjectData *_db, DB_audio *_file, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(800, 240);
     setWindowTitle("编辑音频");

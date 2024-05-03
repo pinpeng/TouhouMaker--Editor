@@ -102,7 +102,7 @@ void Window_welcome_newProject::createProject()
     }
 
     CacheAgent::getInstance().databaseInit(lineEdit_projectName->text(), dir.path());
-    Database db = CacheAgent::getInstance().database();
+    ProjectData db = CacheAgent::getInstance().database();
 
     if(round_base->isChecked()) {
         db.projectInitBase();

@@ -42,7 +42,7 @@ DB_hero_skill::DB_hero_skill()
 
 }
 
-DB_hero_skill::DB_hero_skill(Database *db, QString _name)
+DB_hero_skill::DB_hero_skill(ProjectData *db, QString _name)
 {
     name = db->text_append(_name);
 }
@@ -51,7 +51,7 @@ DB_hero::DB_hero() {
 
 }
 
-DB_hero::DB_hero(Database *db, int _id, QString _name)
+DB_hero::DB_hero(ProjectData *db, int _id, QString _name)
 {
     __id = _id;
     name = db->text_append(_name);
@@ -95,7 +95,7 @@ DB_boss::DB_boss()
     image_id[2] = -1;
 }
 
-DB_boss::DB_boss(Database *db, int _id, QString _name)
+DB_boss::DB_boss(ProjectData *db, int _id, QString _name)
 {
     __id = _id;
     name = db->text_append(_name);

@@ -54,7 +54,7 @@ void Window_ask::accept_slot()
     end();
 }
 
-Window_ask_ex::Window_ask_ex(QString _title, Database *_db, QWidget *parent) : Window_small(parent)
+Window_ask_ex::Window_ask_ex(QString _title, ProjectData *_db, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(800, 160);
     setWindowTitle(_title);

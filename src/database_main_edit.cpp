@@ -3,7 +3,7 @@
 #include <QDir>
 
 #include "memoryCache/cacheAgent.h"
-#include "database.h"
+#include "memoryCache/projectEntity/projectData.h"
 
 #include "window_editor_stage.h"
 #include "window_editor_main.h"
@@ -11,7 +11,7 @@
 
 #include "window_editor_menubar_text.h"
 
-void DB_STAGE_EVENT::init(Database *db)
+void DB_STAGE_EVENT::init(ProjectData *db)
 {
     data["enable"] = 1;
 
@@ -115,7 +115,7 @@ void DB_STAGE_EVENT::init(Database *db)
 
 }
 
-QStringList DB_STAGE_EVENT::getDescribe(Database *db)
+QStringList DB_STAGE_EVENT::getDescribe(ProjectData *db)
 {
     QStringList _text;
     _text << QString::number(floor(time / 60)) + ":" + QString::number(time % 60);
@@ -197,7 +197,7 @@ QStringList DB_STAGE_EVENT::getDescribe(Database *db)
 
 }
 
-void DB_STAGE_EVENT::renderCode(Window_editor_stage *window, Database *db, QRectF _rect, float *_line, float ss)
+void DB_STAGE_EVENT::renderCode(Window_editor_stage *window, ProjectData *db, QRectF _rect, float *_line, float ss)
 {
     setPenColor_c(c_theme);
     Draw::text(_rect.left() + 24 * ss, _rect.top() - 4 * ss,
@@ -899,7 +899,7 @@ void DB_STAGE_EVENT::renderCode(Window_editor_stage *window, Database *db, QRect
 
 }
 
-bool DB_STAGE_EVENT::editCode(Window_editor_stage *window, Database *db, QRectF _rect, float *_line, float ss, float mx, float my)
+bool DB_STAGE_EVENT::editCode(Window_editor_stage *window, ProjectData *db, QRectF _rect, float *_line, float ss, float mx, float my)
 {
     switch (type) {
     case THMK_EVENT_TYPE::SET_BACKGROUND: {// 设置背景图像为
@@ -1381,7 +1381,7 @@ bool DB_STAGE_EVENT::editCode(Window_editor_stage *window, Database *db, QRectF 
     return false;
 }
 
-void DB_STAGE_EVENT::wheelEvent(Window_editor_stage *window, Database *db, QRectF _rect, float *_line, float ss)
+void DB_STAGE_EVENT::wheelEvent(Window_editor_stage *window, ProjectData *db, QRectF _rect, float *_line, float ss)
 {
     *_line = qMax(0.0f, *_line);
     switch (type) {

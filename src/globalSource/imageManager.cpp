@@ -5,7 +5,7 @@ namespace GlobalSource{
 
     }
 
-    // ImageManager::InitFromDatabase(const Database& db){
+    // ImageManager::InitFromDatabase(const ProjectData& db){
     //     throw "把database_save中read对图片缓存的处理移动到这里(263行)";
     // }
 

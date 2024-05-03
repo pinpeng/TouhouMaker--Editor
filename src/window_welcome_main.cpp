@@ -131,7 +131,7 @@ void Window_welcome_main::mousePressEvent(QMouseEvent *event)
         if(show_last) {
             if(w_l + 490 < mx && mx < w_l + 690 && w_t + 280 - 50 < my && my < w_t + 280 + 30) {
                 QString str = CacheAgent::getInstance().setting.lastProjectPath();
-                Database db;
+                ProjectData db;
                 if(db.read(str)) {
                     Message("无法打开文件");
                 } else {
@@ -163,7 +163,7 @@ void Window_welcome_main::openProj()
     if(!str.isEmpty())
     {
         str = QFileInfo(str).absoluteDir().absolutePath();
-        Database db;
+        ProjectData db;
         if(db.read(str)) {
             Message("无法打开文件");
         } else {

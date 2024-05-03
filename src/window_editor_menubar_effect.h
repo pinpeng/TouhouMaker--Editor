@@ -25,7 +25,7 @@ public:
 
 private:
 
-    Database db;
+    ProjectData db;
 
     Widget_ItemList *itemList;
 

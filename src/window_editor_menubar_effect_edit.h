@@ -16,13 +16,13 @@ class Window_editor_menubar_effect_edit0 : public Window_small
     Q_OBJECT
 
 public:
-    explicit Window_editor_menubar_effect_edit0(Database *_db, DB_effect *_file, QWidget *parent = nullptr);
+    explicit Window_editor_menubar_effect_edit0(ProjectData *_db, DB_effect *_file, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    Database *db;
+    ProjectData *db;
     DB_effect *file;
 
     Widget_LineEdit *lineEdit;
@@ -38,13 +38,13 @@ class Window_editor_menubar_effect_edit1 : public Window_small
     Q_OBJECT
 
 public:
-    explicit Window_editor_menubar_effect_edit1(Database *_db, DB_effect *_file, QWidget *parent = nullptr);
+    explicit Window_editor_menubar_effect_edit1(ProjectData *_db, DB_effect *_file, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    Database *db;
+    ProjectData *db;
     DB_effect *file;
 
     Widget_LineEdit *lineEdit;
@@ -60,13 +60,13 @@ class Window_editor_menubar_effect_edit2 : public Window_small
     Q_OBJECT
 
 public:
-    explicit Window_editor_menubar_effect_edit2(Database *_db, DB_effect *_file, QWidget *parent = nullptr);
+    explicit Window_editor_menubar_effect_edit2(ProjectData *_db, DB_effect *_file, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    Database *db;
+    ProjectData *db;
     DB_effect *file;
 
     Widget_LineEdit *lineEdit;

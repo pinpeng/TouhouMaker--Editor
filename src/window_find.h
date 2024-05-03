@@ -25,8 +25,8 @@ public:
         type_audio
     };
 
-    explicit Window_find(Database *_db, int _type, int _group, int *_index, QWidget *parent = nullptr);
-    explicit Window_find(Database *_db, int _type, int _group, float *_index, QWidget *parent = nullptr);
+    explicit Window_find(ProjectData *_db, int _type, int _group, int *_index, QWidget *parent = nullptr);
+    explicit Window_find(ProjectData *_db, int _type, int _group, float *_index, QWidget *parent = nullptr);
 #define find_create(_db,_type,_group,_index) \
     Window_find *window_find = new Window_find(_db, _type, _group, _index);\
     window_find->setWindowModality(Qt::ApplicationModal);\
@@ -34,7 +34,7 @@ public:
     window_find->show()
 
 private:
-    Database *db;
+    ProjectData *db;
     int type;
     int group;
     int *index_i;

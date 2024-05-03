@@ -1,4 +1,4 @@
-#include "database.h"
+#include "memoryCache/projectEntity/projectData.h"
 
 #include <QDir>
 #include <QTextStream>
@@ -15,7 +15,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 
-bool Database::read(QString basePath) {
+bool ProjectData::read(QString basePath) {
     clear();
 
     if(!QDir(basePath).exists()) return 1;
@@ -310,7 +310,7 @@ bool Database::read(QString basePath) {
     return false;
 }
 
-bool Database::save() {
+bool ProjectData::save() {
 
     QString basePath = info.projectPosition;
     QDir dir(basePath);
@@ -537,7 +537,7 @@ bool Database::save() {
     return false;
 }
 
-bool Database::pack() {
+bool ProjectData::pack() {
 
     QString basePath = info.projectPosition;
     QDir dir(basePath);

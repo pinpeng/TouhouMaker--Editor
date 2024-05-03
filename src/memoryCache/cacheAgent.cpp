@@ -25,7 +25,7 @@ CacheAgent& CacheAgent::getInstance(){
     return agent;
 }
 
-Database CacheAgent::database(){
+ProjectData CacheAgent::database(){
     return _databaseList[_curDbIndex];
 }
 
@@ -47,12 +47,12 @@ void CacheAgent::databaseInit(const QString& projectName,const QString& projectD
     image_id_top = 100;
 
     _databaseList.clear();
-    _databaseList.push_back(Database(projectName, projectDir));
+    _databaseList.push_back(ProjectData(projectName, projectDir));
     _curDbIndex = 0;
 }
 
 // 更新缓存操作步骤
-void CacheAgent::databaseUpdate(Database db){
+void CacheAgent::databaseUpdate(ProjectData db){
     if(_curDbIndex < _databaseList.size() - 1){
         _databaseList.erase(_databaseList.begin()+_curDbIndex + 1,_databaseList.end());
     }

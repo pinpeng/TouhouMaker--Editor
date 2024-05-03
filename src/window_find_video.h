@@ -15,12 +15,12 @@ class Window_find_video : public Window_small
 
 public:
 
-    explicit Window_find_video(Database *_db, QWidget *parent = nullptr);
+    explicit Window_find_video(ProjectData *_db, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *);
 
 private:
-    Database *db;
+    ProjectData *db;
 
     QString type_arr[6] = {"长视频", "长视频文件夹", "短视频", "短视频文件夹", "脚本", "脚本文件夹"};
     QButtonGroup *buttonBox_type;

@@ -12,7 +12,7 @@
 #include <qt_windows.h>
 #include <QDesktopWidget>
 
-Window_editor_menubar_bullet_edit::Window_editor_menubar_bullet_edit(Database *_db, DB_bullet *_file, int _group, QWidget *parent) : Window_small(parent)
+Window_editor_menubar_bullet_edit::Window_editor_menubar_bullet_edit(ProjectData *_db, DB_bullet *_file, int _group, QWidget *parent) : Window_small(parent)
 {
     QRect rect = QApplication::desktop()->screenGeometry();
     if(rect.width() >= 1900 && rect.height() >= 1000)

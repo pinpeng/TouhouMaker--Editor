@@ -1,6 +1,6 @@
 #include "window_find_character.h"
 
-Window_find_character::Window_find_character(Database *_db, QWidget *parent) : Window_small(parent)
+Window_find_character::Window_find_character(ProjectData *_db, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(1200, 800);
     setWindowTitle("搜索角色");

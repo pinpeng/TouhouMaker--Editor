@@ -19,12 +19,12 @@ class Window_editor_menubar_text_edit : public Window_small
     Q_OBJECT
 
 public:
-    explicit Window_editor_menubar_text_edit(Database *_db, DB_text *_file, QWidget *parent = nullptr);
+    explicit Window_editor_menubar_text_edit(ProjectData *_db, DB_text *_file, QWidget *parent = nullptr);
 
     void paintEvent(QPaintEvent *) override;
 
 private:
-    Database *db;
+    ProjectData *db;
     DB_text *file;
 
     int language_last = 0;
@@ -51,7 +51,7 @@ public:
 
 private:
 
-    Database db;
+    ProjectData db;
 
     Widget_ChooseButton *chooseButton;
 
