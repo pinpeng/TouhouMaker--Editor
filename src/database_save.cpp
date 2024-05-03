@@ -334,10 +334,8 @@ bool Database::save() {
     if(!dir.exists()) dir.mkdir(dir.path());
     dir.setPath(basePath + "/image");
     if(!dir.exists()) dir.mkdir(dir.path());
-
-    CacheAgent::getInstance().setting.global_last_name = CacheAgent::getInstance().databaseInfo().projectName;
-    CacheAgent::getInstance().setting.global_last_path = CacheAgent::getInstance().databaseInfo().projectPosition;
-    CacheAgent::getInstance().setting.save();
+    CacheAgent::getInstance().setting.setLastProject(CacheAgent::getInstance().databaseInfo().projectPosition,CacheAgent::getInstance().databaseInfo().projectName);
+    CacheAgent::getInstance().setting.SaveToFile();
 
     QFile file;
     QTextStream fout;

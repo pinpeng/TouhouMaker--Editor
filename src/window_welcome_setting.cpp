@@ -41,7 +41,7 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : Window_small(p
     chooseButton_color->addText("自定义");
     chooseButton_color->setTimer(timer);
 
-    chooseButton_color->setIndex(CacheAgent::getInstance().setting.global_color_group);
+    chooseButton_color->setIndex(CacheAgent::getInstance().setting.themeStyle());
 
     button_custom = new Widget_Button(this);
     button_custom->setGeometry(960 - 32, 64, 240, 80);
@@ -55,13 +55,13 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : Window_small(p
     dragStick_scale_editor->setGeometry(640 - 32, 144, 560, 80);
     dragStick_scale_editor->setTimer(timer);
     dragStick_scale_editor->setRange(25, 200);
-    dragStick_scale_editor->setValue(CacheAgent::getInstance().setting.editor_scale * 100.0);
+    dragStick_scale_editor->setValue(CacheAgent::getInstance().setting.editorScale() * 100.0);
 
     dragStick_scale_timeline = new Widget_DragStick(this);
     dragStick_scale_timeline->setGeometry(640 - 32, 224, 560, 80);
     dragStick_scale_timeline->setTimer(timer);
     dragStick_scale_timeline->setRange(25, 200);
-    dragStick_scale_timeline->setValue(CacheAgent::getInstance().setting.timeline_scale * 100.0);
+    dragStick_scale_timeline->setValue(CacheAgent::getInstance().setting.timelineScale() * 100.0);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -70,8 +70,8 @@ Window_welcome_setting::Window_welcome_setting(QWidget *parent) : Window_small(p
     chooseButton_antialising->addText("开启（较慢）");
     chooseButton_antialising->addText("关闭（较快）");
     chooseButton_antialising->setTimer(timer);
-    if(CacheAgent::getInstance().setting.stage_antialising == true)  chooseButton_antialising->setIndex(0);
-    if(CacheAgent::getInstance().setting.stage_antialising == false) chooseButton_antialising->setIndex(1);
+    if(CacheAgent::getInstance().setting.isAntialising() == true)  chooseButton_antialising->setIndex(0);
+    if(CacheAgent::getInstance().setting.isAntialising() == false) chooseButton_antialising->setIndex(1);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -111,7 +111,7 @@ void Window_welcome_setting::color_custom()
 void Window_welcome_setting::save()
 {
     if(chooseButton_color->getIndex() == 0) {
-        CacheAgent::getInstance().setting.global_color_group = 0;
+        CacheAgent::getInstance().setting.SetThemeStyle(MemoryCache::ThemeStyle::DEFAULT);
         Col::list[Col::c_backgroundMain] = QColor(255, 255, 255);
         Col::list[Col::c_backgroundSub] =  QColor(236, 236, 236);
         Col::list[Col::c_textMain] =       QColor(32, 32, 32);
@@ -121,7 +121,7 @@ void Window_welcome_setting::save()
         Col::list[Col::c_itemEdge] =       QColor(128, 128, 128);
         Col::list[Col::c_inactive] =       QColor(32, 32, 32);
     } else if(chooseButton_color->getIndex() == 1) {
-        CacheAgent::getInstance().setting.global_color_group = 1;
+        CacheAgent::getInstance().setting.SetThemeStyle(MemoryCache::ThemeStyle::GRAY);
         Col::list[Col::c_backgroundMain] =    QColor(236, 236, 236);
         Col::list[Col::c_backgroundSub] =     QColor(212, 212, 212);
         Col::list[Col::c_textMain] =          QColor(0, 0, 0);
@@ -132,7 +132,7 @@ void Window_welcome_setting::save()
         Col::list[Col::c_itemEdge] =          QColor(108, 108, 108);
         Col::list[Col::c_inactive] =          QColor(16, 16, 16);
     } else if(chooseButton_color->getIndex() == 2) {
-        CacheAgent::getInstance().setting.global_color_group = 2;
+        CacheAgent::getInstance().setting.SetThemeStyle(MemoryCache::ThemeStyle::DARK);
         Col::list[Col::c_backgroundMain] =    QColor(45, 45, 45);
         Col::list[Col::c_backgroundSub] =     QColor(32, 32, 32);
         Col::list[Col::c_textMain] =          QColor(224, 224, 224);
@@ -143,16 +143,16 @@ void Window_welcome_setting::save()
         Col::list[Col::c_itemEdge] =          QColor(160, 160, 160);
         Col::list[Col::c_inactive] =          QColor(128, 128, 128);
     } else { // custom
-        CacheAgent::getInstance().setting.global_color_group = 3;
+        CacheAgent::getInstance().setting.SetThemeStyle(MemoryCache::ThemeStyle::CUSTOM);
         Col::read();
     }
 
-    CacheAgent::getInstance().setting.editor_scale = dragStick_scale_editor->getValue() / 100.0;
-    CacheAgent::getInstance().setting.timeline_scale = dragStick_scale_timeline->getValue() / 100.0;
+    CacheAgent::getInstance().setting.setEditorScale(dragStick_scale_editor->getValue() / 100.0);
+    CacheAgent::getInstance().setting.setTimelineScale(dragStick_scale_timeline->getValue() / 100.0);
 
-    CacheAgent::getInstance().setting.stage_antialising = chooseButton_antialising->getIndex() == 0? true: false;
-    CacheAgent::getInstance().setting.tips_action = 0;//chooseButton_tips->getIndex();
+    CacheAgent::getInstance().setting.setAntialising(chooseButton_antialising->getIndex() == 0? true: false);
+    CacheAgent::getInstance().setting.setTipsShow(0);//chooseButton_tips->getIndex();
 
-    CacheAgent::getInstance().setting.save();
+    CacheAgent::getInstance().setting.SaveToFile();
     end();
 }

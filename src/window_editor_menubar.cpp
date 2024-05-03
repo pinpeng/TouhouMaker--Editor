@@ -18,7 +18,7 @@ Window_editor_menubar::Window_editor_menubar(QWidget *parent) : QWidget(parent)
 {
 
     setAttribute(Qt::WA_TranslucentBackground);
-    setFixedHeight(80.0 * CacheAgent::getInstance().setting.editor_scale);
+    setFixedHeight(80.0 * CacheAgent::getInstance().setting.editorScale());
     setMouseTracking(true);
 
     memset(items_alpha, 0, sizeof(items_alpha));
@@ -33,7 +33,7 @@ void Window_editor_menubar::drawItems(float left, float top)
 {
     static QString text_arr[12] = {"保存", "导出", "撤销", "重做", "设置", "角色", "子弹", "图像", "特效", "音频", "文本", "帮助"};
 
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     setPenColor_c(c_symbol);
     Draw::line(left + 80 * ss * 4 - 4 * ss, top + 12 * ss, left + 80 * ss * 4 - 4 * ss, top + 64 * ss, 2 * ss);
@@ -63,7 +63,7 @@ void Window_editor_menubar::drawItems(float left, float top)
 
 void Window_editor_menubar::paintEvent(QPaintEvent *)
 {
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     if(!underMouse()) {
         mouse_x = 0;
@@ -93,7 +93,7 @@ void Window_editor_menubar::paintEvent(QPaintEvent *)
 
 void Window_editor_menubar::mousePressEvent(QMouseEvent *event)
 {
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
     mouse_x = event->pos().x();
     mouse_y = event->pos().y();
     float w_l = rect().left() + 4 + 160 * ss;
@@ -232,10 +232,10 @@ void Window_editor_menubar::save()
 {
     if(CacheAgent::getInstance().database().save()) {
         Message("保存失败");
-        send_tips(2);
+        // send_tips(2);
     } else {
         Message("保存成功");
-        send_tips(1);
+        // send_tips(1);
     }
 }
 
@@ -243,13 +243,13 @@ void Window_editor_menubar::pack()
 {
     if(CacheAgent::getInstance().database().save()) {
         Message("保存失败");
-        send_tips(4);
+        // send_tips(4);
     } else {
         if(CacheAgent::getInstance().database().pack()) {
             Message("导出失败");
-            send_tips(4);
+            // send_tips(4);
         } else {
-            send_tips(3);
+            // send_tips(3);
             pack_final();
         }
     }
@@ -327,7 +327,7 @@ void Window_editor_menubar::func7()
 {
     if(!QDesktopServices::openUrl(QUrl::fromLocalFile(QApplication::applicationDirPath() + "/help.pdf"))) {
         Message_Box::play(this, "帮不了你了");
-        send_tips(0);
+        // send_tips(0);
     }
 }
 

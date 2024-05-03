@@ -15,7 +15,7 @@
 
 #include <QPixmap>
 #include <QMovie>
-#include "setting.h"
+#include "memoryCache/globalEntity/editorSetting.h"
 
 struct sprite_buff {
     QPixmap png;
@@ -43,7 +43,7 @@ class CacheAgent
     bool initFromDatabase();
 
     public:
-    Setting setting;
+    MemoryCache::EditorSetting setting;
 
     int stage_id_top;
     int stage_event_id_top;

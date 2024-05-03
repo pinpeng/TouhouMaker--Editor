@@ -18,10 +18,10 @@ Window_welcome_main::Window_welcome_main(QWidget *parent) : Window_small(parent)
     setWindowTitle("欢迎使用THMK");
     setWindowIcon(QIcon(":/logo/mscb_icon.ico"));
 
-    QDir dir(CacheAgent::getInstance().setting.global_last_path);
-    if(dir.exists() && !CacheAgent::getInstance().setting.global_last_path.isEmpty()) {
+    QDir dir(CacheAgent::getInstance().setting.lastProjectPath());
+    if(dir.exists() && !CacheAgent::getInstance().setting.lastProjectPath().isEmpty()) {
         show_last = true;
-        show_last_name = CacheAgent::getInstance().setting.global_last_name;
+        show_last_name = CacheAgent::getInstance().setting.lastProjectName();
     }
 
     buttonNewProj   = new Widget_Button(this);
@@ -69,17 +69,17 @@ void Window_welcome_main::paintEvent(QPaintEvent *) {
 
     Draw::smallWindow(this, this);
 
-    QDir dir(CacheAgent::getInstance().setting.global_last_path);
-    if(dir.exists() && !CacheAgent::getInstance().setting.global_last_path.isEmpty()) {
+    QDir dir(CacheAgent::getInstance().setting.lastProjectPath());
+    if(dir.exists() && !CacheAgent::getInstance().setting.lastProjectPath().isEmpty()) {
         show_last = true;
-        show_last_name = CacheAgent::getInstance().setting.global_last_name;
+        show_last_name = CacheAgent::getInstance().setting.lastProjectName();
     }
 
-    if(CacheAgent::getInstance().setting.isScaleFirstTimeSet != 1)
+    if(!CacheAgent::getInstance().setting.isScaleSet())
     {
         QRect rectSCR = QApplication::desktop()->screenGeometry();
-        CacheAgent::getInstance().setting.editor_scale = rectSCR.height() / 1080.0;
-        CacheAgent::getInstance().setting.isScaleFirstTimeSet = 1;
+        CacheAgent::getInstance().setting.setEditorScale(rectSCR.height() / 1080.0);
+        CacheAgent::getInstance().setting.setScaleSet(true);
     }
 
     float w_l = rect().x() + 8;
@@ -130,7 +130,7 @@ void Window_welcome_main::mousePressEvent(QMouseEvent *event)
         }
         if(show_last) {
             if(w_l + 490 < mx && mx < w_l + 690 && w_t + 280 - 50 < my && my < w_t + 280 + 30) {
-                QString str = CacheAgent::getInstance().setting.global_last_path;
+                QString str = CacheAgent::getInstance().setting.lastProjectPath();
                 Database db;
                 if(db.read(str)) {
                     Message("无法打开文件");
@@ -139,9 +139,8 @@ void Window_welcome_main::mousePressEvent(QMouseEvent *event)
                     db.info.projectPosition = str;
                     CacheAgent::getInstance().databaseClean();
                     CacheAgent::getInstance().databaseUpdate(db);
-                    CacheAgent::getInstance().setting.global_last_name = CacheAgent::getInstance().databaseInfo().projectName;
-                    CacheAgent::getInstance().setting.global_last_path = CacheAgent::getInstance().databaseInfo().projectPosition;
-                    CacheAgent::getInstance().setting.save();
+                    CacheAgent::getInstance().setting.setLastProject(CacheAgent::getInstance().databaseInfo().projectPosition,CacheAgent::getInstance().databaseInfo().projectName);
+                    CacheAgent::getInstance().setting.SaveToFile();
                     openStart();
                 }
             }
@@ -172,9 +171,8 @@ void Window_welcome_main::openProj()
             db.info.projectPosition = str;
             CacheAgent::getInstance().databaseClean();
             CacheAgent::getInstance().databaseUpdate(db);
-            CacheAgent::getInstance().setting.global_last_name = CacheAgent::getInstance().databaseInfo().projectName;
-            CacheAgent::getInstance().setting.global_last_path = CacheAgent::getInstance().databaseInfo().projectPosition;
-            CacheAgent::getInstance().setting.save();
+            CacheAgent::getInstance().setting.setLastProject(CacheAgent::getInstance().databaseInfo().projectPosition,CacheAgent::getInstance().databaseInfo().projectName);
+            CacheAgent::getInstance().setting.SaveToFile();
             openStart();
         }
     }

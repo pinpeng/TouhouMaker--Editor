@@ -3,7 +3,9 @@
 
 #define DATABASE_LIST_MAX_LENGTH 20
 
-CacheAgent::CacheAgent(){
+CacheAgent::CacheAgent()
+:setting(ToolKit::FileOperator::GetSubModulePath(ToolKit::FileModule::SETTING)+"editorSetting.ini")
+{
     stage_id_top = 100;
     stage_event_id_top = 100;
 

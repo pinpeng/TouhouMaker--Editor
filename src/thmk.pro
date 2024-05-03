@@ -138,7 +138,6 @@ HEADERS += \
     message_box.h \
     qzipreader_p.h \
     qzipwriter_p.h \
-    setting.h \
     sprite.h \
     widget_button.h \
     widget_buttonClose.h \

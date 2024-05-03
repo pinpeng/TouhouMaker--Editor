@@ -129,7 +129,7 @@ Window_editor_timeline::Window_editor_timeline(QWidget *parent) : QWidget(parent
 {
     setAttribute(Qt::WA_TranslucentBackground);
 
-    setFixedHeight(192.0 * CacheAgent::getInstance().setting.editor_scale);
+    setFixedHeight(192.0 * CacheAgent::getInstance().setting.editorScale());
 
     setMouseTracking(true);
 
@@ -275,7 +275,7 @@ void Window_editor_timeline::timeoutRepaint()
             }
         }
     } else {
-        float ss = CacheAgent::getInstance().setting.editor_scale;
+        float ss = CacheAgent::getInstance().setting.editorScale();
         for(int i = 0; i < 4; i ++) {
             if(abs(rect().left() + 96 * ss - mx) < 18 * ss &&
                abs(rect().top() + i * 42 * ss + 36 * ss - my) < 18 * ss) {
@@ -313,7 +313,7 @@ void Window_editor_timeline::mousePressEvent(QMouseEvent *event)
     my = event->y();
 
     if(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1) return;
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     mx = event->x();
     my = event->y();
@@ -337,7 +337,7 @@ void Window_editor_timeline::mousePressEvent(QMouseEvent *event)
 
 void Window_editor_timeline::lb_main(float mx, float my)
 {
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
     if(mouse_down == 0) {
 
         float _l = rect().left() + 128 * ss;
@@ -381,7 +381,7 @@ void Window_editor_timeline::lb_main(float mx, float my)
 
 void Window_editor_timeline::rb_main(float mx, float my)
 {
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
     if(mouse_down == 0 || mouse_down == 4) {
         if(rect().left() + 128 * ss + 64 < mx && mx < rect().right() - 64) {
 
@@ -420,7 +420,7 @@ void Window_editor_timeline::rb_main(float mx, float my)
 
 void Window_editor_timeline::lb_toolBox(float mx, float my)
 {
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     for(int i = 0; i < 4; i ++) {
         if(abs(rect().left() + 96 * ss - mx) < 18 * ss &&
@@ -433,7 +433,7 @@ void Window_editor_timeline::lb_toolBox(float mx, float my)
 
 void Window_editor_timeline::lb_scale(float mx, float my)
 {
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
     float _l = rect().left() + 152 * ss;
     float _r = rect().right() - 24 * ss;
     float _w = _r - _l;
@@ -463,7 +463,7 @@ void Window_editor_timeline::mouseMoveEvent(QMouseEvent *event)
     my = event->y();
 
     if(Window_editor_main::id1 < 1 || Window_editor_main::id2 == -1) return;
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
 
     switch(mouse_down) {
@@ -567,7 +567,7 @@ float drawSmooth(float _x1, float _y1, float _x2, float _y2, float _t1) {
     _t1 = (_t1 + _t2) / 2.0;
     float _tx = _x1;
     float _ty = _y1;
-    if(CacheAgent::getInstance().setting.stage_antialising) {
+    if(CacheAgent::getInstance().setting.isAntialising()) {
         for(int i = 1; i <= 4; i ++) {
             float _pos = float(i) / 4.0;
             Draw::line(_tx, _ty, _x1 + _pos * _w, _y1 + _pos * _w * lerp(_t1, _t2, _pos), 2.0);
@@ -585,13 +585,13 @@ float drawSmooth(float _x1, float _y1, float _x2, float _y2, float _t1) {
 
 void Window_editor_timeline::paintEvent(QPaintEvent *)
 {
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     drawMain(QRectF(rect().left() + 128 * ss, rect().top() - 2, rect().width() - 128 * ss, rect().height() - 48 * ss));
 
     Draw::begin(this);
     setPenColor_false();
-    Draw::setAntialising(CacheAgent::getInstance().setting.stage_antialising);
+    Draw::setAntialising(CacheAgent::getInstance().setting.isAntialising());
 
     drawToolBox(QRectF(rect().left(), rect().top(), 128 * ss, rect().height()));
     drawScale(QRectF(rect().left() + 128 * ss, rect().height() - 48 * ss + 2, rect().width() - 128 * ss, 48 * ss));
@@ -690,7 +690,7 @@ void drawEvent(QList<DB_STAGE_EVENT>::iterator _event, float _scale, float buff_
 
 void Window_editor_timeline::drawMain(QRectF _rect)
 {
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     if(pixmap_timeline_final.width() != int(_rect.width() + 128 * ss) ||
        pixmap_timeline_final.height() != int(_rect.height())) {
@@ -721,7 +721,7 @@ void Window_editor_timeline::drawMain(QRectF _rect)
 
         pixmap_timeline.fill(Color(c_backgroundMain));
         Draw::begin(&pixmap_timeline);
-        Draw::setAntialising(CacheAgent::getInstance().setting.stage_antialising);
+        Draw::setAntialising(CacheAgent::getInstance().setting.isAntialising());
 
         if(Window_editor_main::id1 >= 1 && Window_editor_main::id2 != -1) {
 
@@ -793,7 +793,7 @@ void Window_editor_timeline::drawMain(QRectF _rect)
 
     pixmap_timeline_final.fill(Color(c_backgroundMain));
     Draw::begin(&pixmap_timeline_final);
-    Draw::setAntialising(CacheAgent::getInstance().setting.stage_antialising);
+    Draw::setAntialising(CacheAgent::getInstance().setting.isAntialising());
 
 
     if(Window_editor_main::id1 < 1) {
@@ -848,7 +848,7 @@ void Window_editor_timeline::drawMain(QRectF _rect)
     Draw::end();
 
     Draw::begin(this);
-    Draw::setAntialising(CacheAgent::getInstance().setting.stage_antialising);
+    Draw::setAntialising(CacheAgent::getInstance().setting.isAntialising());
 
     setPenColor_false();
     Draw::painter->setBrush(pixmap_timeline_final);
@@ -860,7 +860,7 @@ void Window_editor_timeline::drawMain(QRectF _rect)
 void Window_editor_timeline::drawToolBox(QRectF _rect)
 {
 
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     setPenColor_false();
     setBrushColor_c(c_backgroundMain);
@@ -963,7 +963,7 @@ void Window_editor_timeline::drawScale(QRectF _rect)
     setBrushColor_c(c_backgroundMain);
     Draw::roundRect(_rect.left() + 4, _rect.top() + 2, _rect.right() - 4, _rect.bottom() - 2, 6);
 
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
     float _l = _rect.left() + 24 * ss;
     float _r = _rect.right() - 24 * ss;
     float _mid_y = _rect.bottom() - 24 * ss;
@@ -999,7 +999,7 @@ void Window_editor_timeline::drawScale(QRectF _rect)
 
 void Window_editor_timeline::drawMenu()
 {
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
     setPenColor_c(c_theme);
     setBrushColor_c(c_backgroundMain);
     Draw::roundRect(rbx - 8 * ss, rby, rbx + 168 * ss, rby + 64 * ss, 4, 2 * ss);

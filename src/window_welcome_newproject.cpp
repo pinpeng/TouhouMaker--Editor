@@ -124,9 +124,8 @@ void Window_welcome_newProject::createProject()
         CacheAgent::getInstance().databaseUpdate(db);
         db.save();
     }
-    CacheAgent::getInstance().setting.global_last_name = CacheAgent::getInstance().databaseInfo().projectName;
-    CacheAgent::getInstance().setting.global_last_path = CacheAgent::getInstance().databaseInfo().projectPosition;
-    CacheAgent::getInstance().setting.save();
+    CacheAgent::getInstance().setting.setLastProject(CacheAgent::getInstance().databaseInfo().projectPosition,CacheAgent::getInstance().databaseInfo().projectName);
+    CacheAgent::getInstance().setting.SaveToFile();
     emit requestClose();
     close();
 }

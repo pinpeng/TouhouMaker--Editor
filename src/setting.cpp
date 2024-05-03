@@ -1,6 +1,6 @@
-#include "setting.h"
+// #include "setting.h"
 
-Setting::Setting()
-{
+// Setting::Setting()
+// {
 
-}
+// }

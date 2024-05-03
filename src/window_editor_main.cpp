@@ -133,10 +133,10 @@ void Window_editor_main::save()
 {
     if(CacheAgent::getInstance().database().save()) {
         Message("保存失败");
-        send_tips(2);
+        // send_tips(2);
     } else {
         Message("保存成功");
-        send_tips(1);
+        // send_tips(1);
     }
 }
 
@@ -144,13 +144,13 @@ void Window_editor_main::pack()
 {
     if(CacheAgent::getInstance().database().save()) {
         Message("保存失败");
-        send_tips(4);
+        // send_tips(4);
     } else {
         if(CacheAgent::getInstance().database().pack()) {
             Message("导出失败");
-            send_tips(4);
+            // send_tips(4);
         } else {
-            send_tips(3);
+            // send_tips(3);
             if(!QDesktopServices::openUrl(QUrl::fromLocalFile(CacheAgent::getInstance().databaseInfo().projectPosition + "/output"))) {
                 Message("无法打开文件夹");
             }

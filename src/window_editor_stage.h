@@ -48,7 +48,7 @@ private:
 
     int repaintTimer = 1;
 
-    Window_editor_stage_tips *tips;
+    // Window_editor_stage_tips *tips;
 
     int buff_id3 = -1;
 

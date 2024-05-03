@@ -29,9 +29,9 @@ Window_editor_stage::Window_editor_stage(QWidget *parent) : QWidget(parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(timeoutRepaint()));
     timer->start(1000 / 60);
 
-    if(CacheAgent::getInstance().setting.tips_action != 2) {
+    // if(CacheAgent::getInstance().setting.tips_action != 2) {
         //tips = new Window_editor_stage_tips(this);
-    }
+    // }
 
     file_id = 0;
 
@@ -258,7 +258,7 @@ void Window_editor_stage::timeoutRepaint()
             for(int i = 0; i < event_list.size(); i ++) {
                 auto *_event = &_stage->events[event_list[i]];
                 if(_event->id == buff_id3) {
-                    float ss = CacheAgent::getInstance().setting.editor_scale;
+                    float ss = CacheAgent::getInstance().setting.editorScale();
                     int scroll_num = int(event_scroll_top) + int((rect().bottom() - 4 - rect().top() - 116 * ss) / 40 / ss);
                     if(i < event_scroll_top || i > event_scroll_top + scroll_num) {
                         event_scroll_top = qMin(i, event_list.size() - scroll_num);
@@ -292,7 +292,7 @@ void Window_editor_stage::mousePressEvent(QMouseEvent *event)
     float _h = rect().height();
     float _gwindow_w = _h * 5.0 / 6.0;
 
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
     if(event->button() == Qt::LeftButton) {
         lb_game(QRectF(rect().left() + (_w - _gwindow_w) / 2, rect().top(), _gwindow_w, _h), mx, my, ss);
     }
@@ -481,7 +481,7 @@ void Window_editor_stage::lb_game(QRectF _rect, float mx, float my, float ss)
                 float _h = rect().height();
                 float _gwindow_w = _h * 5.0 / 6.0;
 
-                float ss = CacheAgent::getInstance().setting.editor_scale;
+                float ss = CacheAgent::getInstance().setting.editorScale();
 
                 QRect _rect(rect().left() + (_w - _gwindow_w) / 2, rect().top(), _gwindow_w, _h);
 
@@ -601,7 +601,7 @@ void Window_editor_stage::wheelEvent(QWheelEvent *event)
         float _h = rect().height();
         float _gwindow_w = _h * 5.0 / 6.0;
 
-        float ss = CacheAgent::getInstance().setting.editor_scale;
+        float ss = CacheAgent::getInstance().setting.editorScale();
 
         if(mouse_x < (_w - _gwindow_w) / 2) {
             int _pre = event_scroll_top;
@@ -640,7 +640,7 @@ void Window_editor_stage::resizeEvent(QResizeEvent *event)
     float _h = rect().height();
     float _gwindow_w = _h * 5.0 / 6.0;
 
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     QRect _rect(rect().left() + (_w - _gwindow_w) / 2, rect().top(), _gwindow_w, _h);
 
@@ -667,7 +667,7 @@ void Window_editor_stage::paintEvent(QPaintEvent *)
     Draw::begin(this);
     Draw::setTextDefault();
 
-    Draw::setAntialising(CacheAgent::getInstance().setting.stage_antialising);
+    Draw::setAntialising(CacheAgent::getInstance().setting.isAntialising());
 
     float _w = rect().width();
     float _h = rect().height();
@@ -681,7 +681,7 @@ void Window_editor_stage::paintEvent(QPaintEvent *)
 
 void Window_editor_stage::draw_event(QRectF _rect)
 {
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     setPenColor_false();
     setBrushColor_c(c_backgroundMain);
@@ -761,7 +761,7 @@ void Window_editor_stage::draw_event(QRectF _rect)
 
 void Window_editor_stage::draw_game(QRectF _rect)
 {
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     setPenColor_false();
     setBrushColor_c(c_backgroundMain);
@@ -817,7 +817,7 @@ void Window_editor_stage::draw_game(QRectF _rect)
 
 void Window_editor_stage::draw_code(QRectF _rect)
 {
-    float ss = CacheAgent::getInstance().setting.editor_scale;
+    float ss = CacheAgent::getInstance().setting.editorScale();
 
     Draw::setTextSize(16 * ss);
 
