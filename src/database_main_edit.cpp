@@ -4,7 +4,7 @@
 
 #include "memoryCache/cacheAgent.h"
 #include "memoryCache/projectEntity/projectData.h"
-
+#include "globalSource/sourceAgent.h"
 #include "window_editor_stage.h"
 #include "window_editor_main.h"
 #include "window_find.h"
@@ -253,7 +253,7 @@ void DB_STAGE_EVENT::renderCode(Window_editor_stage *window, ProjectData *db, QR
             _text[2] = /*"坡度" + QString::number(data[tmp + "slope"]) +
                     "度，" + */ (data[tmp + "repeat"]? "重复": "不重复");
             int _index = data[tmp];
-            if(db->image[0].find(_index) == db->image[0].end()) {
+            if(nullptr == db->getImage(ImageType::BACKGROUND,_index)){
                 _text[0] += "未选择图片";
                 setPenColor_c(c_theme);
                 Draw::line(_r - 60 * ss - 48 * ss, _t + 60 * ss - 48 * ss,
@@ -264,24 +264,31 @@ void DB_STAGE_EVENT::renderCode(Window_editor_stage *window, ProjectData *db, QR
                 window->label[i]->setMovie(nullptr);
                 window->label[i]->setGeometry(10000, 10000, 1, 1);
             } else {
-                auto _file = &db->image[0][_index];
-                _text[0] += "背景为<" + _file->name + ">";
-                auto j = CacheAgent::getInstance().sprite_buffer.find(QString::number(_file->__id) + "_" + QString::number(_file->editTimer));
-                if(j != CacheAgent::getInstance().sprite_buffer.end()) {
-                    window->label[i]->setGeometry(_r - 60 * ss - 48 * ss, _t + 60 * ss - 48 * ss, 96 * ss, 96 * ss);
-                    if(_file->state == 1) {
-                        window->label[i]->setPixmap(j.value().png);
+                bool isSetted = false;
+                auto _file = db->getImage(ImageType::BACKGROUND,_index);
+                _text[0] += "背景为<" + _file->_imageName + ">";
+                
+                if(_file->_imageType == MemoryCache::ImageType::PNG){
+                    QSharedPointer<QPixmap> pngPtr = nullptr;
+                    SourceAgent::getInstance().getImage(QString::number(_file->_imageId),pngPtr);
+                    if(pngPtr != nullptr){
+                        window->label[i]->setGeometry(_r - 60 * ss - 48 * ss, _t + 60 * ss - 48 * ss, 96 * ss, 96 * ss);
+                        window->label[i]->setPixmap(*pngPtr);
+                        isSetted = true;
                     }
-                    if(_file->state == 2) {
-                        window->label[i]->setMovie(j.value().gif);
-                        j.value().gif->start();
+                }
+                else if(_file->_imageType == MemoryCache::ImageType::GIF){
+                    QSharedPointer<QMovie> gifPtr = nullptr;
+                    SourceAgent::getInstance().getImage(QString::number(_file->_imageId),gifPtr);
+                    if(gifPtr != nullptr){
+                        window->label[i]->setGeometry(_r - 60 * ss - 48 * ss, _t + 60 * ss - 48 * ss, 96 * ss, 96 * ss);
+                        window->label[i]->setMovie(gifPtr.data());
+                        gifPtr->start();
+                        isSetted = true;
                     }
-                    /*
-                    if(pixmap[i].isNull()) {
-                        pixmap[i] = QPixmap(basePath).scaled(96 * ss, 96 * ss);
-                    }
-                    Draw::sprite(pixmap[i], _r - 60 * ss - 48 * ss, _t + 60 * ss - 48 * ss);*/
-                } else {
+                }
+
+                if(!isSetted){
                     setPenColor_c(c_theme);
                     Draw::line(_r - 60 * ss - 48 * ss, _t + 60 * ss - 48 * ss,
                                _r - 60 * ss + 48 * ss, _t + 60 * ss + 48 * ss, 2 * ss);
@@ -518,22 +525,28 @@ void DB_STAGE_EVENT::renderCode(Window_editor_stage *window, ProjectData *db, QR
             QString _text[3], _list[3] = {"无显示", "非活跃", "活跃"};
             _text[0] = QString::number(i + 1) + "> " + db->getText(data[QString::number(i) + "text"], 0).replace("\n", "\\n");
 
-            int tmp;
+            int imageId = data[QString::number(i) + "image0"];
+            auto tempImage = db->getImage(ImageType::CHARACTER,imageId);
 
-            tmp = data[QString::number(i) + "image0"];
-            if(db->image[2].find(tmp) != db->image[2].end()) {
-                _text[1] = "左边立绘为<" + db->image[2][tmp].name + ">，状态为";
-            } else {
+            if(tempImage != nullptr){
+                _text[1] = "左边立绘为<" + tempImage->_imageName + ">，状态为";
+            }
+            else{
                 _text[1] = "左边无立绘，状态为";
             }
+
             _text[1] += _list[int(data[QString::number(i) + "state0"])];
 
-            tmp = data[QString::number(i) + "image1"];
-            if(db->image[2].find(tmp) != db->image[2].end()) {
-                _text[2] = "右边立绘为<" + db->image[2][tmp].name + ">，状态为";
-            } else {
+            imageId = data[QString::number(i) + "image1"];
+            tempImage = db->getImage(ImageType::CHARACTER,imageId);
+
+            if(tempImage != nullptr){
+                _text[2] = "右边立绘为<" + tempImage->_imageName + ">，状态为";
+            }
+            else{
                 _text[2] = "右边无立绘，状态为";
             }
+
             _text[2] += _list[int(data[QString::number(i) + "state1"])];
 
             setPenColor_c(c_textMain);
@@ -613,22 +626,28 @@ void DB_STAGE_EVENT::renderCode(Window_editor_stage *window, ProjectData *db, QR
             QString _text[4], _list[3] = {"无显示", "非活跃", "活跃"};
             _text[0] = QString::number(i + 1) + "> " + db->getText(data[QString::number(i) + "text"], 0).replace("\n", "\\n");
 
-            int tmp;
+                        int imageId = data[QString::number(i) + "image0"];
+            auto tempImage = db->getImage(ImageType::CHARACTER,imageId);
 
-            tmp = data[QString::number(i) + "image0"];
-            if(db->image[2].find(tmp) != db->image[2].end()) {
-                _text[1] = "左边立绘为<" + db->image[2][tmp].name + ">，状态为";
-            } else {
+            if(tempImage != nullptr){
+                _text[1] = "左边立绘为<" + tempImage->_imageName + ">，状态为";
+            }
+            else{
                 _text[1] = "左边无立绘，状态为";
             }
+
             _text[1] += _list[int(data[QString::number(i) + "state0"])];
 
-            tmp = data[QString::number(i) + "image1"];
-            if(db->image[2].find(tmp) != db->image[2].end()) {
-                _text[2] = "右边立绘为<" + db->image[2][tmp].name + ">，状态为";
-            } else {
+            imageId = data[QString::number(i) + "image1"];
+            tempImage = db->getImage(ImageType::CHARACTER,imageId);
+
+            if(tempImage != nullptr){
+                _text[2] = "右边立绘为<" + tempImage->_imageName + ">，状态为";
+            }
+            else{
                 _text[2] = "右边无立绘，状态为";
             }
+
             _text[2] += _list[int(data[QString::number(i) + "state1"])];
 
             _text[3] += "持续时间为" + QString::number(data[QString::number(i) + "time0"]) +

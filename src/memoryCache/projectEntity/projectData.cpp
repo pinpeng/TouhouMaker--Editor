@@ -1,4 +1,4 @@
-#include "memoryCache/projectEntity/projectData.h""
+#include "memoryCache/projectEntity/projectData.h"
 
 #include <QDir>
 #include <QTextStream>
@@ -46,10 +46,11 @@ void ProjectData::clear()
     audio[1].clear();
     audio[2].clear();
 
-    image[0].clear();
-    image[1].clear();
-    image[2].clear();
-    image[3].clear();
+    _imageMap.clear();
+    // image[0].clear();
+    // image[1].clear();
+    // image[2].clear();
+    // image[3].clear();
 
 }
 
@@ -104,11 +105,6 @@ void ProjectData::stage_delete_id(int _type, int _id)
     }
 }
 
-void ProjectData::stage_delete_pos(int _type, int _pos)
-{
-    stage[_type].removeAt(_pos);
-}
-
 void ProjectData::hero_append(QString _name)
 {
     int tmp = ++CacheAgent::getInstance().hero_id_top;
@@ -131,7 +127,7 @@ void ProjectData::enemy_delete(int _id)
 {
     auto tmp = enemy.find(_id);
     if(tmp != enemy.end()) {
-        image_delete(4, tmp.value().image_id);
+        deleteImage(ImageType::OTHER, tmp.value().image_id);
         enemy.remove(tmp.key());
     }
 }
@@ -184,16 +180,42 @@ void ProjectData::audio_delete(int _type, int _id)
     if(tmp != audio[_type].end()) audio[_type].remove(tmp.key());
 }
 
-void ProjectData::image_append(int _type, QString _name)
+int ProjectData::addImage(ImageType type, QString name)
 {
-    int tmp = ++CacheAgent::getInstance().image_id_top;
-    image[_type].insert(tmp, DB_image(tmp, _name));
+    auto newImage = MemoryCache::ImageInfo::create();
+    _imageMap[type][newImage._imageId] = newImage;
+
+    return newImage._imageId;
 }
 
-void ProjectData::image_delete(int _type, int _id)
+MemoryCache::ImageInfo* ProjectData::getImage(ImageType type,int imageId){
+    auto tmpMap = _imageMap.find(type);
+    if(tmpMap == _imageMap.end()) return nullptr;
+    auto tmpImage = tmpMap->find(imageId);
+    if(tmpImage == tmpMap->end()) return nullptr;
+    return &tmpImage.value();
+}
+
+QMap<int,MemoryCache::ImageInfo>& ProjectData::getImageMap(ImageType type){
+    return _imageMap.find(type).value();
+}
+
+bool ProjectData::isImageValid(ImageType type,int imageId){
+    auto image = getImage(type,imageId);
+    if(image == nullptr) return false;
+    if(image->_imageType == MemoryCache::ImageType::UNKNOWN) return false;
+    return true;
+}
+
+void ProjectData::deleteImage(ImageType type, int imageId)
 {
-    auto tmp = image[_type].find(_id);
-    if(tmp != image[_type].end()) image[_type].remove(tmp.key());
+    auto tmpMap = _imageMap.find(type);
+    if(tmpMap != _imageMap.end()){
+        auto tmpImage = tmpMap->find(imageId);
+        if(tmpImage != tmpMap->end()){
+            tmpMap->erase(tmpImage);
+        }
+    }
 }
 
 

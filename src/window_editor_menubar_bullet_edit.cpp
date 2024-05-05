@@ -8,6 +8,7 @@
 #include "window_find.h"
 
 #include "memoryCache/cacheAgent.h"
+#include "globalSource/sourceAgent.h"
 #include <QApplication>
 #include <qt_windows.h>
 #include <QDesktopWidget>
@@ -95,23 +96,22 @@ Window_editor_menubar_bullet_edit::Window_editor_menubar_bullet_edit(ProjectData
         label->setGeometry(1382 - 400, 72, 192, 144);
     }
 
-    if(file->image_id != -1 &&
-            db->image[3].find(file->image_id) != db->image[3].end() &&
-            db->image[3][file->image_id].state) {
-
-        QString _spr_key = QString::number(file->image_id) + "_" +
-                QString::number(db->image[3][file->image_id].editTimer);
-        auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
-        if(j != CacheAgent::getInstance().sprite_buffer.end()) {
-            if(db->image[3][file->image_id].state == 1) label->setPixmap(j.value().png);
-            if(db->image[3][file->image_id].state == 2) {
-                label->setMovie(j.value().gif);
-                j.value().gif->start();
+    if(file->image_id != -1){
+        auto tempImage = db->getImage(ImageType::BULLET,file->image_id);
+        if(tempImage != nullptr && tempImage->_imageType != MemoryCache::ImageType::UNKNOWN){
+            if(tempImage->_imageType == MemoryCache::ImageType::PNG){
+                QSharedPointer<QPixmap> pngPtr = nullptr;
+                SourceAgent::getInstance().getImage(QString::number(tempImage->_imageId),pngPtr);
+                label->setPixmap(*pngPtr);
+            }
+            else if(tempImage->_imageType == MemoryCache::ImageType::GIF){
+                QSharedPointer<QMovie> gifPtr = nullptr;
+                SourceAgent::getInstance().getImage(QString::number(tempImage->_imageId),gifPtr);
+                label->setMovie(gifPtr.data());
+                gifPtr->start();
             }
         }
-
     }
-
 }
 
 void Window_editor_menubar_bullet_edit::paintEvent(QPaintEvent *)
@@ -321,28 +321,30 @@ void Window_editor_menubar_bullet_edit::updateData()
 
 void Window_editor_menubar_bullet_edit::updateImage()
 {
-    if(file->image_id == -1) {
-        label->setPixmap(QPixmap());
-        label->setMovie(nullptr);
-    } else {
-
-        if(db->image[3][file->image_id].state) {
-
-            QString _spr_key = QString::number(file->image_id) + "_" +
-                    QString::number(db->image[3][file->image_id].editTimer);
-
-            auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
-            if(j != CacheAgent::getInstance().sprite_buffer.end()) {
-                if(db->image[3][file->image_id].state == 1) label->setPixmap(j.value().png);
-                if(db->image[3][file->image_id].state == 2) {
-                    label->setMovie(j.value().gif);
-                    j.value().gif->start();
+    label->setPixmap(QPixmap());
+    label->setMovie(nullptr);
+    
+    if(file->image_id != -1){
+        auto tempImage = db->getImage(ImageType::BULLET,file->image_id);
+        if(tempImage == nullptr){
+            qDebug() << "image of type " << ImageType::BULLET <<", id " << file->image_id << "is nullptr!";
+        }
+        else if(tempImage->_imageType != MemoryCache::ImageType::UNKNOWN){
+            if(tempImage->_imageType == MemoryCache::ImageType::PNG){
+                QSharedPointer<QPixmap> pngPtr;
+                SourceAgent::getInstance().getImage(QString::number(tempImage->_imageId),pngPtr);
+                if(pngPtr != nullptr){
+                    label->setPixmap(*pngPtr);
                 }
             }
-        } else {
-
-            label->setPixmap(QPixmap());
-            label->setMovie(nullptr);
+            else if(tempImage->_imageType == MemoryCache::ImageType::GIF){
+                QSharedPointer<QMovie> gifPtr;
+                SourceAgent::getInstance().getImage(QString::number(tempImage->_imageId),gifPtr);
+                if(gifPtr != nullptr){
+                    label->setMovie(gifPtr.data());
+                    gifPtr->start();
+                }
+            }
         }
     }
 

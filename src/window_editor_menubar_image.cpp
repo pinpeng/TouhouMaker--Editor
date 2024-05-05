@@ -1,7 +1,7 @@
 #include "window_editor_menubar_image.h"
 
 #include "qdesktopservices.h"
-
+#include "globalSource/sourceAgent.h"
 
 #include "memoryCache/cacheAgent.h"
 #include <QApplication>
@@ -141,39 +141,29 @@ void Window_editor_menubar_image::paintEvent(QPaintEvent *)
     {
         Draw::painter->drawTiledPixmap(932, 72, 640, 724, Sprite(ui_background));
     }
-    //bool flag = false;
-    //QPixmap *pixmap_s;
-    QString _spr_key;
+
     if(flag__ == true) {
         if(itemList->index() != -1 && itemList->index() < itemList->getItemSize()) {
             int tmp = itemList->getItem(itemList->index()).text[0].toInt();
             for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) {
-                DB_image *file = &db.image[i][tmp];
-                _spr_key = QString::number(file->__id) + "_" + QString::number(file->editTimer);
-                auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
-                if(j != CacheAgent::getInstance().sprite_buffer.end()) {
-                    //flag = true;
-                    if(file->state == 1) label->setPixmap(j.value().png);
-                    if(file->state == 2) {
-                        label->setMovie(j.value().gif);
-                        j.value().gif->start();
-                    }
+                MemoryCache::ImageInfo *file = db.getImage(static_cast<ImageType>(i),tmp);
+                if(file->_imageType == MemoryCache::ImageType::PNG){
+                    QSharedPointer<QPixmap> pngPtr = nullptr;
+                    SourceAgent::getInstance().getImage(QString::number(file->_imageId),pngPtr);
+                    label->setPixmap(*pngPtr);
+                    break;
+                }
+                else if(file->_imageType == MemoryCache::ImageType::GIF){
+                    QSharedPointer<QMovie> gifPtr = nullptr;
+                    SourceAgent::getInstance().getImage(QString::number(file->_imageId),gifPtr);
+                    label->setMovie(gifPtr.data());
+                    gifPtr->start();
                     break;
                 }
             }
         }
     }
-    /*if(flag) {
-        float _w = pixmap_s->width();
-        float _h = pixmap_s->height();
-        float ss = qMin(640 /_w, 724 / _h);
-        QPixmap pixmap_f = pixmap_s->transformed(QMatrix().scale(ss, ss), Qt::SmoothTransformation);
 
-        _w = pixmap_f.width();
-        _h = pixmap_f.height();
-
-        Draw::sprite(pixmap_f, 932 + 320 - _w / 2, 72 + 362 - _h / 2);
-    }*/
     setPenColor_c(c_theme);
     setBrushColor_false();
     if(flag__ == true)
@@ -195,11 +185,12 @@ void Window_editor_menubar_image::updateList()
     int tmp = -1;
     for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) tmp = i;
 
-    for(auto i = db.image[tmp].begin(); i != db.image[tmp].end(); i ++) {
+    auto imageMap = db.getImageMap(static_cast<ImageType>(tmp));
+    for(auto i = imageMap.begin();i != imageMap.end(); ++i){
         itemSTR tmp_item;
-        tmp_item.text.append(QString::number(i.value().__id));
-        tmp_item.text.append(i.value().name);
-        tmp_item.text.append(state_arr[i.value().state]);
+        tmp_item.text.append(QString::number(i.value()._imageId));
+        tmp_item.text.append(i.value()._imageName);
+        tmp_item.text.append(state_arr[static_cast<int>(i.value()._imageType)]);
         tmpList.append(tmp_item);
     }
     itemList->setItemList(tmpList);
@@ -230,7 +221,7 @@ void Window_editor_menubar_image::editAudioStart(int _index)
 {
 
     for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) {
-        window_editor = new Window_editor_menubar_image_edit(&db, &db.image[i][_index]);
+        window_editor = new Window_editor_menubar_image_edit(&db, db.getImage(static_cast<ImageType>(i),_index));
         connect(window_editor, SIGNAL(closed()), this, SLOT(updateList()));
         window_editor->setWindowModality(Qt::ApplicationModal);
         window_editor->setAttribute(Qt::WA_DeleteOnClose);
@@ -241,7 +232,7 @@ void Window_editor_menubar_image::editAudioStart(int _index)
 
 void Window_editor_menubar_image::add()
 {
-    for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) db.image_append(i);
+    for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) db.addImage(static_cast<ImageType>(i));
 
     itemList->resetIndex();
     updateList();
@@ -252,7 +243,7 @@ void Window_editor_menubar_image::del()
     int index = itemList->index();
     if(index == -1) { Message_Box::play(this, "未选中项目"); return; }
 
-    for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) db.image_delete(i, itemList->getItem(index).text[0].toInt());
+    for(int i = 0; i < 4; i ++) if(roundButton[i]->isChecked()) db.deleteImage(static_cast<ImageType>(i), itemList->getItem(index).text[0].toInt());
 
     itemList->resetIndex();
     updateList();

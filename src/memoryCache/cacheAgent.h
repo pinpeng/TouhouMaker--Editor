@@ -38,7 +38,6 @@ class CacheAgent
 
     int effect_id_top = 100;
     int audio_id_top = 100;
-    int image_id_top = 100;
     public:
     CacheAgent();
     static CacheAgent& getInstance();
@@ -63,8 +62,6 @@ class CacheAgent
     
     ProjectData         database();
     Database_info    databaseInfo();
-    QMap<QString, sprite_buff> sprite_buffer;
-
 };
 
 #endif // CACHE_AGENT_H

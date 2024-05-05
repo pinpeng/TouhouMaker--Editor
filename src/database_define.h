@@ -155,18 +155,6 @@ struct DB_audio { // bgm or se, .ogg
     DB_audio(int _id, QString _name);
 };
 
-
-struct DB_image { // background, etc, .png
-    int __id;
-    QString name;
-    int state; // 0 = not saved, 1 = .png saved, 2 = .gif saved
-    int editTimer;
-
-    DB_image();
-    DB_image(int _id, QString _name);
-};
-
-
 #endif // DATABASE_DEFINE_H
 
 

@@ -21,7 +21,7 @@ namespace GlobalSource{
         return true;
     }
 
-    const QSharedPointer<QTimer>& TimerManager::GetTimer(const QString& timerName){\
+    const QSharedPointer<QTimer>& TimerManager::getTimer(const QString& timerName){\
         QMutexLocker lock(&_rwMutex);
         if(_timerMap.end() == _timerMap.find(timerName)){
             qWarning() << "Cannot find timer " << timerName;

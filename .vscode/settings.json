@@ -8,6 +8,14 @@
         "cmath": "cpp",
         "system_error": "cpp",
         "ios": "cpp",
-        "xmemory": "cpp"
+        "xmemory": "cpp",
+        "format": "cpp",
+        "atomic": "cpp",
+        "xutility": "cpp",
+        "type_traits": "cpp",
+        "iosfwd": "cpp",
+        "xlocbuf": "cpp",
+        "initializer_list": "cpp",
+        "tuple": "cpp"
     }
 }

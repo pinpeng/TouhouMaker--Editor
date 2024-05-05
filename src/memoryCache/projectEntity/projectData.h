@@ -49,34 +49,15 @@ enum ImageType{
 //     QMap<ImageType,QMap<int,MemoryCache::ImageInfo>> _imageMap;
 // };
 
-struct ProjectData
+// 需要考虑从磁盘中初始化时的数据状态
+class ProjectData
 {
-    Database_info info;
-
-    QMap<int, DB_text>              text;
-
-    QList<DB_UI_TITLE>              ui_title;
-
-    QList<DB_STAGE>                 stage[2]; // normal, ex
-
-    QMap<int, DB_hero>              hero;
-    QMap<int, DB_enemy>             enemy;
-    QMap<int, DB_boss>              boss;
-
-    QMap<int, DB_bullet>            bullet[3]; // boss, enemy, hero
-
-    QMap<int, DB_effect>            effect[3]; // bullet, background, character
-
-    QMap<int, DB_audio>             audio[3]; // bgm, se, voice
-
-    QMap<int, DB_image>             image[5]; // background, effect, story character, bullet, other
-
+    public:
     void clear();
     void init();
     bool read(QString basePath);
     bool save();
     bool pack();
-
 
     int text_append(QString _text);
     void text_delete(int _index);
@@ -86,8 +67,6 @@ struct ProjectData
 
     void stage_append(int _type, QString _name);
     void stage_delete_id(int _type, int _id);
-    void stage_delete_pos(int _type, int _pos);
-
 
     void hero_append(QString _name = "新建自机");
     void hero_delete(int _id);
@@ -107,8 +86,11 @@ struct ProjectData
     void audio_append(int _type, QString _name = "新建音频");
     void audio_delete(int _type, int _id);
 
-    void image_append(int _type, QString _name = "新建图像");
-    void image_delete(int _type, int _id);
+    int addImage(ImageType type, QString _name = "新建图像");
+    MemoryCache::ImageInfo* getImage(ImageType type,int imageId);
+    QMap<int,MemoryCache::ImageInfo>& getImageMap(ImageType type);
+    void deleteImage(ImageType type, int imageId);
+    bool isImageValid(ImageType type,int imageId);
 
     ProjectData();
     ProjectData(QString _name, QString _position);
@@ -118,6 +100,32 @@ struct ProjectData
     void projectInitExample();
 
     int lanSize();
+
+    public:
+    Database_info info;
+
+    QMap<int, DB_text>              text;
+
+    QList<DB_UI_TITLE>              ui_title;
+
+    QList<DB_STAGE>                 stage[2]; // normal, ex
+
+    QMap<int, DB_hero>              hero;
+    QMap<int, DB_enemy>             enemy;
+    QMap<int, DB_boss>              boss;
+
+    QMap<int, DB_bullet>            bullet[3]; // boss, enemy, hero
+
+    QMap<int, DB_effect>            effect[3]; // bullet, background, character
+
+    QMap<int, DB_audio>             audio[3]; // bgm, se, voice
+
+    /**
+     * @brief 图片存储结构，ImageType-图像类型，int-图片索引，ImageInfo-图片数据
+     * @brief 注意本结构体中并不真正存储图片，而是存储图片指向路径
+    */
+    QMap<ImageType,QMap<int,MemoryCache::ImageInfo>> _imageMap;
+    // QMap<int, MemoryCache::ImageInfo>             image[5]; // background, effect, story character, bullet, other
 };
 
 #endif

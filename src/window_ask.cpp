@@ -191,8 +191,9 @@ void Window_ask_ex::paintEvent(QPaintEvent *)
                     } break;
 
                     case Window_find::type_image: {
-                        if(db->image[w_findButton_group[_id]].find(_id_item) != db->image[w_findButton_group[_id]].end()) {
-                            _str = "<" + db->image[w_findButton_group[_id]][_id_item].name + ">";
+                        auto tempImage = db->getImage(static_cast<ImageType>(w_findButton_group[_id]),_id_item);
+                        if(tempImage != nullptr){
+                            _str = "<" + tempImage->_imageName + ">";
                         }
                     } break;
 
@@ -297,8 +298,9 @@ void Window_ask_ex::paintEvent(QPaintEvent *)
                     } break;
 
                     case Window_find::type_image: {
-                        if(db->image[w_findButton_group[_id]].find(_id_item) != db->image[w_findButton_group[_id]].end()) {
-                            _str = "<" + db->image[w_findButton_group[_id]][_id_item].name + ">";
+                        auto tempImage = db->getImage(static_cast<ImageType>(w_findButton_group[_id]),_id_item);
+                        if(tempImage != nullptr){
+                            _str = "<" + tempImage->_imageName + ">";
                         }
                     } break;
 

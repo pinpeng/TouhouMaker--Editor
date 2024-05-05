@@ -6,9 +6,13 @@
 #include <QPixmap>
 #include <QMovie>
 #include <QSharedPointer>
-// #include "dataSet/memoryCache/database.h"
 
 namespace GlobalSource{
+    /**
+     * 图片缓存管理
+     * TODO... 使用LRU算法避免内存爆炸
+     * TODO... 添加从磁盘中初始化的方法
+    */
     class ImageManager{
         public:
         ImageManager();

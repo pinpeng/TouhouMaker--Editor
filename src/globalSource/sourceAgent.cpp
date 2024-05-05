@@ -1,16 +1,16 @@
 #include "globalSource/sourceAgent.h"
 
-SourceAgent& SourceAgent::GetInstance(){
+SourceAgent& SourceAgent::getInstance(){
     static SourceAgent agent;
     return agent;
 }
 
-const QFont& SourceAgent::GetFont(const QString& fontName){
-    return _fontManager.GetFont(fontName);
+const QFont& SourceAgent::getFont(const QString& fontName){
+    return _fontManager.getFont(fontName);
 }
 
-const QSharedPointer<QTimer>& SourceAgent::GetTimer(const QString& timerName){
-    return _timerManager.GetTimer(timerName);
+const QSharedPointer<QTimer>& SourceAgent::getTimer(const QString& timerName){
+    return _timerManager.getTimer(timerName);
 }
 
 bool SourceAgent::getImage(const QString& key,QSharedPointer<QPixmap> pngImage){

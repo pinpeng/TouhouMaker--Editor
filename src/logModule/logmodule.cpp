@@ -58,7 +58,7 @@ void LogModule::LogHandler(QtMsgType type,const QMessageLogContext& context,cons
 }
 
 QString LogModule::getCurLogPath(QString date){
-    QString folderPath = ToolKit::FileOperator::GetSubModulePath(ToolKit::FileModule::LOG);
+    QString folderPath = ToolKit::FileOperator::getEditorSubModulePath(ToolKit::FileModule::LOG);
 
     return folderPath.append(date).append(".log");
 }

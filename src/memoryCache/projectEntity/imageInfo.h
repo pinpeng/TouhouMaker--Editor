@@ -15,11 +15,14 @@ namespace MemoryCache{
     {
         public:
         ImageInfo();
-        ImageInfo(int imageId,const QString& imageName,ImageType type);
+        ImageInfo(int imageId,const QString& imageName = "",ImageType type = ImageType::UNKNOWN);
         ~ImageInfo() = default;
         virtual QJsonObject serialize() override;
         virtual void deserialize(QJsonObject& obj) override;
-        private:
+        static ImageInfo create();
+
+        public:
+        static int globalImageId;
         int _imageId;
         // 既作为缓存名称，也作为磁盘文件名称
         QString _imageName;

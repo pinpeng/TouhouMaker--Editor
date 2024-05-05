@@ -27,7 +27,7 @@
 
 //     QMap<int, DB_audio>             audio[3]; // bgm, se, voice
 
-//     QMap<int, DB_image>             image[5]; // background, effect, story character, bullet, other
+//     QMap<int, MemoryCache::ImageInfo>             image[5]; // background, effect, story character, bullet, other
 
 //     void clear();
 //     void init();
@@ -65,8 +65,8 @@
 //     void audio_append(int _type, QString _name = "新建音频");
 //     void audio_delete(int _type, int _id);
 
-//     void image_append(int _type, QString _name = "新建图像");
-//     void image_delete(int _type, int _id);
+//     void addImage(int _type, QString _name = "新建图像");
+//     void deleteImage(int _type, int _id);
 
 //     ProjectData();
 //     ProjectData(QString _name, QString _position);

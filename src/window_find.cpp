@@ -141,11 +141,12 @@ void Window_find::find()
             tmpList.append(tmp_item);
         }
     } else if(type == type_image) {
-        for(auto i = db->image[group].begin(); i != db->image[group].end(); i ++) {
-            if(i.value().name.indexOf(_text) == -1) continue;
+        auto imageMap = db->getImageMap(static_cast<ImageType>(group));
+        for(auto i = imageMap.begin(); i != imageMap.end(); ++i){
+            if(i.value()._imageName.indexOf(_text) == -1) continue;
             itemSTR tmp_item;
-            tmp_item.text.append(QString::number(i.value().__id));
-            tmp_item.text.append(i.value().name);
+            tmp_item.text.append(QString::number(i.value()._imageId));
+            tmp_item.text.append(i.value()._imageName);
             tmpList.append(tmp_item);
         }
     } else if(type == type_effect) {

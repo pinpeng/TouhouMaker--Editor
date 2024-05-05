@@ -5,7 +5,7 @@
 
 namespace GlobalSource{
     FontManager::FontManager(){
-        _fontFilePath = ToolKit::FileOperator::GetSubModulePath(ToolKit::FileModule::SOURCE_FONT);
+        _fontFilePath = ToolKit::FileOperator::getEditorSubModulePath(ToolKit::FileModule::SOURCE_FONT);
         if(-1 == QFontDatabase::addApplicationFont(_fontFilePath.append(FONT_JCYT_500W))){
             qWarning() << "Cannot find font" << FONT_JCYT_500W << "in" << _fontFilePath;
         }
@@ -13,7 +13,7 @@ namespace GlobalSource{
         _fontMap[FONT_DEFAULT] = defaultFont;
     }
 
-    const QFont& FontManager::GetFont(const QString& fontName){
+    const QFont& FontManager::getFont(const QString& fontName){
         if(_fontMap.end() != _fontMap.find(fontName)){
             return _fontMap[fontName];
         }

@@ -7,9 +7,10 @@
 
 class SourceAgent{
 public:
-    static SourceAgent& GetInstance();
-    const QFont& GetFont(const QString& fontName);
-    const QSharedPointer<QTimer>& GetTimer(const QString& timerName);
+    static SourceAgent& getInstance();
+    const QFont& getFont(const QString& fontName);
+    const QSharedPointer<QTimer>& getTimer(const QString& timerName);
+    
     bool getImage(const QString& key,QSharedPointer<QPixmap> pngImage);
     bool getImage(const QString& key,QSharedPointer<QMovie> gifImage);
     bool setImage(const QString& key,QSharedPointer<QPixmap> pngImage);

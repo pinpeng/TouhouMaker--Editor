@@ -13,7 +13,7 @@ namespace GlobalSource{
         public:
         TimerManager();
         bool RegistNewTimer(const QString& timerName,int interval);
-        const QSharedPointer<QTimer>& GetTimer(const QString& timerName);
+        const QSharedPointer<QTimer>& getTimer(const QString& timerName);
         private:
         QSharedPointer<QTimer> _repaintTimer;
         QMap<QString,QSharedPointer<QTimer>> _timerMap;

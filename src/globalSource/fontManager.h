@@ -12,7 +12,7 @@ namespace GlobalSource{
     class FontManager{
     public:
         FontManager();
-        const QFont& GetFont(const QString& fontName);
+        const QFont& getFont(const QString& fontName);
     private:
         QString _fontFilePath;
         QMap<QString,QFont> _fontMap;

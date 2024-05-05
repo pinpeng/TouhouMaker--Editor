@@ -1,13 +1,19 @@
 #include "memoryCache/projectEntity/imageInfo.h"
 #include <QJsonObject>
 
-
 namespace MemoryCache{
+    int ImageInfo::globalImageId = 100;
+
     ImageInfo::ImageInfo():_imageId(0),_imageName(""),_imageType(ImageType::UNKNOWN)
     {}
 
     ImageInfo::ImageInfo(int imageId,const QString& imageName,ImageType type)
     :_imageId(imageId),_imageName(imageName),_imageType(type){}
+
+    ImageInfo ImageInfo::create(){
+        ImageInfo info(globalImageId++);
+        return info;
+    }
 
     QJsonObject ImageInfo::serialize(){
         QJsonObject json;

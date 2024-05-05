@@ -6,8 +6,9 @@
 
 #include <QFileDialog>
 #include <QDesktopServices>
+#include "globalSource/sourceAgent.h"
 
-Window_editor_menubar_image_edit::Window_editor_menubar_image_edit(ProjectData *_db, DB_image *_file, QWidget *parent) : Window_small(parent)
+Window_editor_menubar_image_edit::Window_editor_menubar_image_edit(ProjectData *_db, MemoryCache::ImageInfo *_file, QWidget *parent) : Window_small(parent)
 {
     setFixedSize(800, 240);
     setWindowTitle("编辑图像");
@@ -17,7 +18,7 @@ Window_editor_menubar_image_edit::Window_editor_menubar_image_edit(ProjectData *
 
     lineEdit = new Widget_LineEdit(this);
     lineEdit->setGeometry(32 + 120, 64 + 80 * 0, 620, 80);
-    lineEdit->setText(file->name);
+    lineEdit->setText(file->_imageName);
 
     button_open = new Widget_Button(this);
     button_open->setGeometry(32 + 260, 64 + 80 * 1, 240, 80);
@@ -32,13 +33,17 @@ Window_editor_menubar_image_edit::Window_editor_menubar_image_edit(ProjectData *
     connect(button_open, SIGNAL(pressed()), this, SLOT(open()));
     connect(button_preview, SIGNAL(pressed()), this, SLOT(preview()));
 
-    if(file->state != 0) {
+    if(file->_imageType != MemoryCache::ImageType::UNKNOWN) {
         QString basePath = CacheAgent::getInstance().database().info.projectPosition;
-        if(file->state == 1) basePath = basePath + "/image/" + QString::number(file->__id) + ".png";
-        if(file->state == 2) basePath = basePath + "/image/" + QString::number(file->__id) + ".gif";
+        if(file->_imageType == MemoryCache::ImageType::PNG){
+            basePath = basePath + "/image/" + QString::number(file->_imageId) + ".png";
+        }
+        if(file->_imageType == MemoryCache::ImageType::GIF){
+            basePath = basePath + "/image/" + QString::number(file->_imageId) + ".gif";
+        }
         if(!QFile::exists(basePath)) {
             Message_Box::play(this, "图像已丢失");
-            file->state = 0;
+            file->_imageType = MemoryCache::ImageType::UNKNOWN;
         }
     }
 
@@ -54,13 +59,15 @@ void Window_editor_menubar_image_edit::paintEvent(QPaintEvent *)
     setPenColor_c(c_textMain);
 
     Draw::text(32, 104 + 80 * 0, "名称", Qt::AlignLeft | Qt::AlignVCenter);
-    Draw::text(32, 104 + 80 * 1, "状态：" + state_arr[file->state], Qt::AlignLeft | Qt::AlignVCenter);
+    Draw::text(32, 104 + 80 * 1, "状态：" + state_arr[static_cast<int>(file->_imageType)], Qt::AlignLeft | Qt::AlignVCenter);
     Draw::end();
 }
 
 void Window_editor_menubar_image_edit::open()
 {
     QString basePath = CacheAgent::getInstance().database().info.projectPosition;
+    // TODO... 使用fileOperator替换当前的projectPosition
+    // QString basePath = ToolKit::FileOperator::getProjectSubModulePath(ToolKit::ProjectModule::IMAGE);
     QString str = QFileDialog::getOpenFileName(this, "打开图像", basePath, "(*.png *.gif)");
     if(!str.isEmpty()) {
         QFile fin(str);
@@ -68,32 +75,30 @@ void Window_editor_menubar_image_edit::open()
             Message_Box::play(this, "文件不存在");
             return;
         } else {
-            QString _spr_key = QString::number(file->__id) + "_" + QString::number(file->editTimer);
-
-            if(CacheAgent::getInstance().sprite_buffer.find(_spr_key) != CacheAgent::getInstance().sprite_buffer.end()) {
-                auto tmp = &CacheAgent::getInstance().sprite_buffer[_spr_key];
-                if(tmp->gif != nullptr) delete tmp->gif;
-                CacheAgent::getInstance().sprite_buffer.remove(_spr_key);
-            }
+            // 为了避免回退后找不到文件，当文件不被使用时不清除缓存
 
             QString suffix = QFileInfo(fin).suffix();
-            basePath = basePath + "/image/" + QString::number(file->__id) + "." + suffix;
-            if(QFile::exists(basePath)) QFile::remove(basePath);
-            if(!fin.copy(str, basePath)) {
+            QString filePath = basePath + QString::number(file->_imageId) + "." + suffix;
+
+            if(QFile::exists(filePath)){
+                QFile::remove(filePath);
+            }
+
+            if(!fin.copy(str, filePath)) {
                 Message_Box::play(this, "导入失败");
                 return;
             }
 
-            if(suffix == "png") file->state = 1;
-            if(suffix == "gif") file->state = 2;
-
-            file->editTimer ++;
-            sprite_buff _tmp_buff;
-            if(file->state == 1) _tmp_buff.png = QPixmap(basePath);
-            if(file->state == 2) {
-                _tmp_buff.gif = new QMovie(basePath);
+            if(suffix == "png"){
+                file->_imageType = MemoryCache::ImageType::PNG;
+                QSharedPointer<QPixmap> pngPtr = QSharedPointer<QPixmap>::create(filePath);
+                SourceAgent::getInstance().setImage(QString::number(file->_imageId),pngPtr);
             }
-            CacheAgent::getInstance().sprite_buffer.insert(QString::number(file->__id) + "_" + QString::number(file->editTimer), _tmp_buff);
+            else if(suffix == "gif"){
+                file->_imageType = MemoryCache::ImageType::GIF;
+                QSharedPointer<QMovie> gifPtr = QSharedPointer<QMovie>::create(filePath);
+                SourceAgent::getInstance().setImage(QString::number(file->_imageId),gifPtr);
+            }
 
             repaint();
         }
@@ -102,17 +107,21 @@ void Window_editor_menubar_image_edit::open()
 
 void Window_editor_menubar_image_edit::preview()
 {
-    if(file->state == 0) {
+    if(file->_imageType == MemoryCache::ImageType::UNKNOWN) {
         Message_Box::play(this, "还没导入哦");
         return;
     }
 
     QString basePath = CacheAgent::getInstance().database().info.projectPosition;
-    if(file->state == 1) basePath = basePath + "/image/" + QString::number(file->__id) + ".png";
-    if(file->state == 2) basePath = basePath + "/image/" + QString::number(file->__id) + ".gif";
+    if(file->_imageType == MemoryCache::ImageType::PNG){
+        basePath = basePath + "/image/" + QString::number(file->_imageId) + ".png";
+    }
+    if(file->_imageType == MemoryCache::ImageType::GIF){
+        basePath = basePath + "/image/" + QString::number(file->_imageId) + ".gif";
+    }
     if(!QFile::exists(basePath)) {
         Message_Box::play(this, "图像已丢失");
-        file->state = 0;
+        file->_imageType = MemoryCache::ImageType::UNKNOWN;
         return;
     }
     QDesktopServices::openUrl(QUrl::fromLocalFile(basePath));
@@ -120,7 +129,7 @@ void Window_editor_menubar_image_edit::preview()
 
 void Window_editor_menubar_image_edit::end()
 {
-    file->name = lineEdit->text();
+    file->_imageName = lineEdit->text();
 
     isClosing = true;
     emit closed();

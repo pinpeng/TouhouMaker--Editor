@@ -147,19 +147,3 @@ DB_audio::DB_audio(int _id, QString _name)
     name = _name;
     state = 0;
 }
-
-DB_image::DB_image()
-{
-    __id = 0;
-    name = "";
-    state = 0;
-    editTimer = 0;
-}
-
-DB_image::DB_image(int _id, QString _name)
-{
-    __id = _id;
-    name = _name;
-    state = 0;
-    editTimer = 0;
-}

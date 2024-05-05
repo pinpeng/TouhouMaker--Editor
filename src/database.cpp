@@ -133,7 +133,7 @@
 // {
 //     auto tmp = enemy.find(_id);
 //     if(tmp != enemy.end()) {
-//         image_delete(4, tmp.value().image_id);
+//         deleteImage(4, tmp.value().image_id);
 //         enemy.remove(tmp.key());
 //     }
 // }
@@ -186,13 +186,13 @@
 //     if(tmp != audio[_type].end()) audio[_type].remove(tmp.key());
 // }
 
-// void ProjectData::image_append(int _type, QString _name)
+// void ProjectData::addImage(int _type, QString _name)
 // {
 //     int tmp = ++CacheAgent::getInstance().image_id_top;
-//     image[_type].insert(tmp, DB_image(tmp, _name));
+//     image[_type].insert(tmp, MemoryCache::ImageInfo(tmp, _name));
 // }
 
-// void ProjectData::image_delete(int _type, int _id)
+// void ProjectData::deleteImage(int _type, int _id)
 // {
 //     auto tmp = image[_type].find(_id);
 //     if(tmp != image[_type].end()) image[_type].remove(tmp.key());

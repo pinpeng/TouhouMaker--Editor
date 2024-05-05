@@ -4,7 +4,7 @@
 #define DATABASE_LIST_MAX_LENGTH 20
 
 CacheAgent::CacheAgent()
-:setting(ToolKit::FileOperator::GetSubModulePath(ToolKit::FileModule::SETTING)+"editorSetting.ini")
+:setting(ToolKit::FileOperator::getEditorSubModulePath(ToolKit::FileModule::SETTING)+"editorSetting.ini")
 {
     stage_id_top = 100;
     stage_event_id_top = 100;
@@ -17,7 +17,6 @@ CacheAgent::CacheAgent()
 
     effect_id_top = 100;
     audio_id_top = 100;
-    image_id_top = 100;
 }
 
 CacheAgent& CacheAgent::getInstance(){
@@ -34,7 +33,6 @@ Database_info CacheAgent::databaseInfo(){
 }
 
 void CacheAgent::databaseInit(const QString& projectName,const QString& projectDir){
-    // TODO... stage_id_top,stage_event_id_top,text_id_top没清，不确定要不要清
     stage_id_top = 100;
 
     hero_id_top = 100;
@@ -44,7 +42,6 @@ void CacheAgent::databaseInit(const QString& projectName,const QString& projectD
 
     effect_id_top = 100;
     audio_id_top = 100;
-    image_id_top = 100;
 
     _databaseList.clear();
     _databaseList.push_back(ProjectData(projectName, projectDir));

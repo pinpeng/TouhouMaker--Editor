@@ -10,6 +10,8 @@
 #include <QApplication>
 #include <qt_windows.h>
 #include <QDesktopWidget>
+#include "toolkit/fileoperator.h"
+#include "globalSource/sourceAgent.h"
 
 Window_editor_menubar_hero_edit0::Window_editor_menubar_hero_edit0(ProjectData *_db, DB_hero *_file, QWidget *parent) : Window_small(parent)
 {
@@ -223,21 +225,40 @@ Window_editor_menubar_hero_edit1::Window_editor_menubar_hero_edit1(ProjectData *
         label->setGeometry(1382 - 400, 72, 192, 144);
     }
 
-    if(file->image_id != -1 &&
-            db->image[4].find(file->image_id) != db->image[4].end() &&
-            db->image[4][file->image_id].state) {
+    if(file->image_id != -1){
+        auto image = db->getImage(ImageType::OTHER,file->image_id);
+        if(image != nullptr && image->_imageType != MemoryCache::ImageType::UNKNOWN){
+            if(image->_imageType == MemoryCache::ImageType::PNG){
+                QSharedPointer<QPixmap> pngPtr = nullptr;
+                SourceAgent::getInstance().getImage(QString::number(image->_imageId),pngPtr);
+                if(pngPtr != nullptr){
+                    label->setPixmap(*pngPtr);
+                }
+            }
+            else if(image->_imageType == MemoryCache::ImageType::GIF){
 
-        QString _spr_key = QString::number(file->image_id) + "_" +
-                QString::number(db->image[4][file->image_id].editTimer);
-        auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
-        if(j != CacheAgent::getInstance().sprite_buffer.end()) {
-            if(db->image[4][file->image_id].state == 1) label->setPixmap(j.value().png);
-            if(db->image[4][file->image_id].state == 2) {
-                label->setMovie(j.value().gif);
-                j.value().gif->start();
             }
         }
+    }
 
+    if(file->image_id != -1){
+        auto tempImage = db->getImage(ImageType::OTHER,file->image_id);
+        if(tempImage != nullptr && tempImage->_imageType != MemoryCache::ImageType::UNKNOWN){
+            if(tempImage->_imageType == MemoryCache::ImageType::PNG){
+                QSharedPointer<QPixmap> pngPtr = nullptr;
+                SourceAgent::getInstance().getImage(QString::number(tempImage->_imageId),pngPtr);
+                if(pngPtr != nullptr){
+                    label->setPixmap(*pngPtr);
+                }
+            }
+            else if(tempImage->_imageType == MemoryCache::ImageType::GIF){
+                QSharedPointer<QMovie> gifPtr = nullptr;
+                SourceAgent::getInstance().getImage(QString::number(tempImage->_imageId),gifPtr);
+                if(gifPtr != nullptr){
+                    label->setMovie(gifPtr.data());
+                }
+            }
+        }
     }
 }
 
@@ -264,8 +285,7 @@ void Window_editor_menubar_hero_edit1::paintEvent(QPaintEvent *)
         setBrushColor_false();
         Draw::rect(1382, 72, 1382 + 192, 72 + 144, 2);
 
-        if(file->image_id == -1 || db->image[4].find(file->image_id) == db->image[4].end() ||
-                !db->image[4][file->image_id].state) {
+        if(file->image_id == -1 || !db->isImageValid(ImageType::OTHER,file->image_id)){
             Draw::setTextSize(16);
             Draw::text(1382 + 192 / 2, 72 + 144 / 2 + 2, "未设置图像\n点此设置", Qt::AlignCenter);
         }
@@ -299,8 +319,7 @@ void Window_editor_menubar_hero_edit1::paintEvent(QPaintEvent *)
         setBrushColor_false();
         Draw::rect(1382 - 400, 72, 1382 - 400 + 192, 72 + 144, 2);
 
-        if(file->image_id == -1 || db->image[4].find(file->image_id) == db->image[4].end() ||
-                !db->image[4][file->image_id].state) {
+        if(file->image_id == -1 || !db->isImageValid(ImageType::OTHER,file->image_id)) {
             Draw::setTextSize(16);
             Draw::text(1382 - 400 + 192 / 2, 72 + 144 / 2 + 2, "未设置图像\n点此设置", Qt::AlignCenter);
         }
@@ -327,9 +346,8 @@ void Window_editor_menubar_hero_edit1::mousePressEvent(QMouseEvent *event)
     if(1382 - 400 < mx && mx < 1382 - 400 + 192 &&
        72 < my && my < 72 + 144) {
         if(file->image_id == -1) {
-            int tmp = ++CacheAgent::getInstance().image_id_top;
-            db->image[4].insert(tmp, DB_image(tmp, ""));
-            file->image_id = tmp;
+            int tempId = db->addImage(ImageType::OTHER);
+            file->image_id = tempId;
         }
 
         QString basePath = CacheAgent::getInstance().database().info.projectPosition;
@@ -347,30 +365,27 @@ void Window_editor_menubar_hero_edit1::mousePressEvent(QMouseEvent *event)
                     Message_Box::play(this, "导入失败");
                     return;
                 }
-                if(suffix == "png") db->image[4][file->image_id].state = 1;
-                if(suffix == "gif") db->image[4][file->image_id].state = 2;
 
-                db->image[4][file->image_id].editTimer ++;
-                if(db->image[4][file->image_id].state) {
-                    flag = true;
-                    sprite_buff _tmp_buff;
-                    QString basePath = CacheAgent::getInstance().database().info.projectPosition;
-                    if(db->image[4][file->image_id].state == 1) _tmp_buff.png = QPixmap(basePath + "/image/" + QString::number(file->image_id) + ".png");
-                    if(db->image[4][file->image_id].state == 2) {
-                        _tmp_buff.gif = new QMovie(basePath + "/image/" + QString::number(file->image_id) + ".gif");
+                auto tempImage = db->getImage(ImageType::OTHER,file->image_id);
+                QString filePath = ToolKit::FileOperator::getProjectSubModulePath(ToolKit::ProjectModule::IMAGE);
+        
+                if(tempImage != nullptr){
+                    if(suffix == "png"){
+                        tempImage->_imageType = MemoryCache::ImageType::PNG;
+                        QSharedPointer<QPixmap> pngPtr = QSharedPointer<QPixmap>::create(filePath + QString::number(file->image_id) + ".png");
+                        SourceAgent::getInstance().setImage(QString::number(file->image_id),pngPtr);
+                        label->setPixmap(*pngPtr);
                     }
-                    QString _spr_key = QString::number(file->image_id) + "_" +
-                            QString::number(db->image[4][file->image_id].editTimer);
+                    else if(suffix == "gif"){
+                        tempImage->_imageType = MemoryCache::ImageType::GIF;
+                        QSharedPointer<QMovie> gifPtr = QSharedPointer<QMovie>::create(filePath + QString::number(file->image_id) + ".gif");
+                        SourceAgent::getInstance().setImage(QString::number(file->image_id),gifPtr);
+                        label->setMovie(gifPtr.data());
+                        gifPtr->start();
+                    }
 
-                    CacheAgent::getInstance().sprite_buffer.insert(_spr_key, _tmp_buff);
-
-                    auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
-                    if(j != CacheAgent::getInstance().sprite_buffer.end()) {
-                        if(db->image[4][file->image_id].state == 1) label->setPixmap(j.value().png);
-                        if(db->image[4][file->image_id].state == 2) {
-                            label->setMovie(j.value().gif);
-                            j.value().gif->start();
-                        }
+                    if(tempImage->_imageType != MemoryCache::ImageType::UNKNOWN){
+                        flag = true;
                     }
                 }
             }
@@ -453,24 +468,23 @@ Window_editor_menubar_hero_edit2::Window_editor_menubar_hero_edit2(ProjectData *
         label[i]->setScaledContents(false);
         label[i]->setGeometry(156 + i * 244 - 100, 224 + 8 + 180 - 100, 200, 200);
 
-        if(file->image_id[i] != -1 &&
-                db->image[4].find(file->image_id[i]) != db->image[4].end() &&
-                db->image[4][file->image_id[i]].state) {
-
-            QString _spr_key = QString::number(file->image_id[i]) + "_" +
-                    QString::number(db->image[4][file->image_id[i]].editTimer);
-            auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
-            if(j != CacheAgent::getInstance().sprite_buffer.end()) {
-                if(db->image[4][file->image_id[i]].state == 1) label[i]->setPixmap(j.value().png);
-                if(db->image[4][file->image_id[i]].state == 2) {
-                    label[i]->setMovie(j.value().gif);
-                    j.value().gif->start();
+        if(file->image_id[i] != -1){
+            auto tempImage = db->getImage(ImageType::OTHER,file->image_id[i]);
+            if(tempImage != nullptr && tempImage->_imageType != MemoryCache::ImageType::UNKNOWN){
+                if(tempImage->_imageType == MemoryCache::ImageType::PNG){
+                    QSharedPointer<QPixmap> pngPtr = nullptr;
+                    SourceAgent::getInstance().getImage(QString::number(tempImage->_imageId),pngPtr);
+                    label[i]->setPixmap(*pngPtr);
+                }
+                else if(tempImage->_imageType == MemoryCache::ImageType::GIF){
+                    QSharedPointer<QMovie> gifPtr = nullptr;
+                    SourceAgent::getInstance().getImage(QString::number(tempImage->_imageId),gifPtr);
+                    label[i]->setMovie(gifPtr.data());
+                    gifPtr->start();
                 }
             }
-
         }
     }
-
 }
 
 void Window_editor_menubar_hero_edit2::paintEvent(QPaintEvent *)
@@ -496,9 +510,7 @@ void Window_editor_menubar_hero_edit2::paintEvent(QPaintEvent *)
     Draw::rect(644 - 100, 224 + 8 + 180 - 100, 644 + 100, 224 + 8 + 180 + 100, 1);
 
     for(int i = 0; i < 3; i ++) {
-        if(file->image_id[i] == -1 ||
-                db->image[4].find(file->image_id[i]) == db->image[4].end() ||
-                !db->image[4][file->image_id[i]].state) {
+        if(file->image_id[i] == -1 || db->isImageValid(ImageType::OTHER,file->image_id[i])) {
             Draw::text(156 + i * 244, 224 + 8 + 182, "未设置", Qt::AlignCenter);
         }
     }
@@ -527,9 +539,8 @@ void Window_editor_menubar_hero_edit2::mousePressEvent(QMouseEvent *event)
 
     if(ind != -1) {
         if(file->image_id[ind] == -1) {
-            int tmp = ++CacheAgent::getInstance().image_id_top;
-            db->image[4].insert(tmp, DB_image(tmp, ""));
-            file->image_id[ind] = tmp;
+            int tempId = db->addImage(ImageType::OTHER);
+            file->image_id[ind] = tempId;
         }
 
         QString basePath = CacheAgent::getInstance().database().info.projectPosition;
@@ -542,36 +553,29 @@ void Window_editor_menubar_hero_edit2::mousePressEvent(QMouseEvent *event)
                 return;
             } else {
                 QString suffix = QFileInfo(fin).suffix();
-                basePath = basePath + "/image/" + QString::number(file->image_id[ind]) + "." + suffix;
+                QString filePath = ToolKit::FileOperator::getProjectSubModulePath(ToolKit::ProjectModule::IMAGE);
+                basePath = filePath + QString::number(file->image_id[ind]) + "." + suffix;
                 if(QFile::exists(basePath)) QFile::remove(basePath);
                 if(!fin.copy(str, basePath)) {
                     Message_Box::play(this, "导入失败");
                     return;
                 }
-                if(suffix == "png") db->image[4][file->image_id[ind]].state = 1;
-                if(suffix == "gif") db->image[4][file->image_id[ind]].state = 2;
 
-                db->image[4][file->image_id[ind]].editTimer ++;
-                if(db->image[4][file->image_id[ind]].state) {
+                auto tempImage = db->getImage(ImageType::OTHER,file->image_id[ind]);
 
-                    sprite_buff _tmp_buff;
-                    QString basePath = CacheAgent::getInstance().database().info.projectPosition;
-                    if(db->image[4][file->image_id[ind]].state == 1) _tmp_buff.png = QPixmap(basePath + "/image/" + QString::number(file->image_id[ind]) + ".png");
-                    if(db->image[4][file->image_id[ind]].state == 2) {
-                        _tmp_buff.gif = new QMovie(basePath + "/image/" + QString::number(file->image_id[ind]) + ".gif");
+                if(tempImage != nullptr){
+                    if(suffix == "png"){
+                        tempImage->_imageType = MemoryCache::ImageType::PNG;
+                        QSharedPointer<QPixmap> pngPtr = QSharedPointer<QPixmap>::create(filePath + QString::number(file->image_id[ind]) + ".png");
+                        SourceAgent::getInstance().setImage(QString::number(file->image_id[ind]),pngPtr);
+                        label[ind]->setPixmap(*pngPtr);
                     }
-                    QString _spr_key = QString::number(file->image_id[ind]) + "_" +
-                            QString::number(db->image[4][file->image_id[ind]].editTimer);
-
-                    CacheAgent::getInstance().sprite_buffer.insert(_spr_key, _tmp_buff);
-
-                    auto j = CacheAgent::getInstance().sprite_buffer.find(_spr_key);
-                    if(j != CacheAgent::getInstance().sprite_buffer.end()) {
-                        if(db->image[4][file->image_id[ind]].state == 1) label[ind]->setPixmap(j.value().png);
-                        if(db->image[4][file->image_id[ind]].state == 2) {
-                            label[ind]->setMovie(j.value().gif);
-                            j.value().gif->start();
-                        }
+                    else if(suffix == "gif"){
+                        tempImage->_imageType = MemoryCache::ImageType::GIF;
+                        QSharedPointer<QMovie> gifPtr = QSharedPointer<QMovie>::create(filePath + QString::number(file->image_id[ind]) + ".gif");
+                        SourceAgent::getInstance().setImage(QString::number(file->image_id[ind]),gifPtr);
+                        label[ind]->setMovie(gifPtr.data());
+                        gifPtr->start();
                     }
                 }
             }
