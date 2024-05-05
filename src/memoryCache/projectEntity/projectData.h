@@ -86,7 +86,7 @@ class ProjectData
     void audio_append(int _type, QString _name = "新建音频");
     void audio_delete(int _type, int _id);
 
-    int addImage(ImageType type, QString _name = "新建图像");
+    int addImage(ImageType type, QString name = "新建图像");
     MemoryCache::ImageInfo* getImage(ImageType type,int imageId);
     QMap<int,MemoryCache::ImageInfo>& getImageMap(ImageType type);
     void deleteImage(ImageType type, int imageId);
@@ -121,11 +121,16 @@ class ProjectData
     QMap<int, DB_audio>             audio[3]; // bgm, se, voice
 
     /**
+     * @brief 音频存储结构，AudioType-音频类型，int-音频索引，AudioInfo-音频数据
+     * @details 注意本结构体中并不真正存储音频，而是存储音频指向路径
+    */
+    QMap<AudioType,QMap<int,MemoryCache::AudioInfo>> _audioMap;
+
+    /**
      * @brief 图片存储结构，ImageType-图像类型，int-图片索引，ImageInfo-图片数据
-     * @brief 注意本结构体中并不真正存储图片，而是存储图片指向路径
+     * @details 注意本结构体中并不真正存储图片，而是存储图片指向路径
     */
     QMap<ImageType,QMap<int,MemoryCache::ImageInfo>> _imageMap;
-    // QMap<int, MemoryCache::ImageInfo>             image[5]; // background, effect, story character, bullet, other
 };
 
 #endif
